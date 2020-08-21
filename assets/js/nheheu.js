@@ -1,4 +1,4 @@
-var BASEURL = "http://localhost:8888/shop/nheheu.github/";
+var BASEURL = "https://vndecor.github.io/";
 var CURRENCY = "₫";
 var PRODUCTS = [];
 var PRODUCT = null;
@@ -148,12 +148,12 @@ var renderItem = function(obj, customclass){
     _html += '<div class="'+ customclass +'" style="display: block;">';
         _html += '<div class="product-image">';
             _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="product-img openlink">';
-                _html += '<img src="http://localhost:8888/shop/nheheu.github/assets/images/empty.png">';
+                _html += '<img src="https://vndecor.github.io/assets/images/empty.png">';
                 _html += '<img src="'+ obj.imgs[0] +'" class="img">';
                 // _html += '<img class="primary" src="'+ obj.imgs[0] +'">';
                 // _html += '<img class="hover" src="'+ obj.imgs[0] +'">';
                 if( obj.liked ) _html += '<div class="product-liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
-                if( obj.soldout ) _html += '<span class="sold-out"><img src="http://localhost:8888/shop/nheheu.github/assets/images/soldout2.png" ></span>';
+                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
             _html += '</a>';
         _html += '</div>';
 
