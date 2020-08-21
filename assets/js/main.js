@@ -1093,14 +1093,14 @@
 	/*--------------------------
       25. Product Page Popup
 	---------------------------- */
-    function video_popup(){
+    window.video_popup = function(){
 		if($('.popup-video').length){
 			$('.popup-video').magnificPopup({
 				type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
 			});
 		}
 	}
-	video_popup();
+	// video_popup();
 	
 	function size_popup(){
 		$('.sizelink').magnificPopup({

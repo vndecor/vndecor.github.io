@@ -335,6 +335,7 @@ var renderProd = function(obj){
 
     product_thumb1();
     product_zoom();
+    video_popup();
 
     // render detail
     var _detail = obj.detail? obj.detail : "<h3>Nội dung đang được cập nhật</h3>";
@@ -380,7 +381,7 @@ var renderProd = function(obj){
     $(".breadcrumbs").html(_breadcrumbs);
 
     // event Click 
-    $wrap.find(".btn-addToCartMain").off().on("click", function(){
+    $wrap.find(".btn-addToCartMain").off().on("click", function(e){
         if( !PRODUCT.soldout ){
             var pid = "";
             if( PRODUCT.prices ){
@@ -398,10 +399,10 @@ var renderProd = function(obj){
                 $("#minicart-drawer").modal('show');
             }, 100);
         }
-        return false;
+        e.preventDefault();
     });
 
-    $wrap.find(".btn-buyNow").off().on("click", function(){
+    $wrap.find(".btn-buyNow").off().on("click", function(e){
         if( !PRODUCT.soldout ){
             var pid = "";
             if( PRODUCT.prices ){
@@ -416,10 +417,10 @@ var renderProd = function(obj){
                 openUrl( getFullUrl("cart") );
             }, 100);
         }
-        return false;
+        e.preventDefault();
     });
 
-    $wrap.find(".btn-likeThisProduct").off().on("click", function(){
+    $wrap.find(".btn-likeThisProduct").off().on("click", function(e){
         var _i = LikedProds.indexOf(obj.id);
         if( _i != -1 ){ // đã like => xóa
             obj.liked -= 1;
@@ -433,7 +434,7 @@ var renderProd = function(obj){
 
         $wrap.find('.product-liked .num').html(obj.liked);
 
-        return false;
+        e.preventDefault();
     });
 
     // zooom
@@ -639,10 +640,10 @@ var renderMiniCart = function(prods){
 
     $wrap.find("h4").html("Giỏ hàng ("+ _totalProd +")");
 
-    $wrap.find(".remove").on("click", function(){
+    $wrap.find(".remove").on("click", function(e){
         updateCartProd($(this).attr("data-pid"), -1);
         renderMiniCart();
-        return false;
+        e.preventDefault();
     });
 };
 
@@ -665,7 +666,10 @@ var renderProductPage = function(_url){
     var slug = getQueryVariable("p", _url);
 
     for( var i=0; i<PRODUCTS.length; i++ ){
-        if( PRODUCTS[i].slug == slug ) PRODUCT = PRODUCTS[i];
+        if( PRODUCTS[i].slug == slug ){
+            PRODUCT = PRODUCTS[i];
+            break;
+        }
     }
 
     if( !PRODUCT ){
@@ -706,7 +710,7 @@ var renderProductPage = function(_url){
             _htmlsptt += renderItem(arrSP[i], "col-6 col-sm-6 col-md-3 col-lg-2 item");
         }
     }
-    $(".related-product>.row").html(_htmlsptt);
+    $(".related-product>.grid-products>.row").html(_htmlsptt);
 
     // SẢN PHẨM KHÁC
     var _htmlspk = "";
@@ -766,7 +770,9 @@ var renderCartPage = function(){
     $wrap.html( _html );
     $(".totalMoney").html(formatMoney(_totalMoney));
 
-    $wrap.find(".qtyBtn").on("click", function() {
+    $wrap.find(".qtyBtn").on("click", function(e) {
+        e.preventDefault();
+
         var $input = $(this).siblings(".cart__qty-input"),
             oldValue = $input.val(),
             newVal = 1,
@@ -798,7 +804,7 @@ var renderCartPage = function(){
         $(".totalMoney").html(formatMoney(total));
     });
 
-    $wrap.find(".cart__remove").on("click", function(){
+    $wrap.find(".cart__remove").on("click", function(e){
         updateCartProd($(this).attr("data-pid"), -1);
         $(this).closest(".cart__row").remove();
 
@@ -813,10 +819,11 @@ var renderCartPage = function(){
         }
 
         $(".totalMoney").html(formatMoney(total));
-        return false;
+        e.preventDefault();
     });
 
-    $("#cartCheckout").off().on("click", function(){
+    $("#cartCheckout").off().on("click", function(e){
+        e.preventDefault();
         var $form = $(".checkout-wrapper");
 
         var prods = getMyCart();
@@ -1004,10 +1011,10 @@ var renderPubPage = function(type){
 
     $page.find(".pub-fromto").html( dateFrom.getDate()+'/'+ (dateFrom.getMonth()+1)+'/'+ dateFrom.getFullYear() +' - '+ dateTo.getDate()+'/'+ (dateTo.getMonth()+1)+'/'+ dateTo.getFullYear() );
 
-    $page.find(".btn-pubdata").off().on("click", function(){
+    $page.find(".btn-pubdata").off().on("click", function(e){
         var _type = $(this).attr("data-type");
         renderPubPage(_type);
-        return false;
+        e.preventDefault();
     });
 
     $page.find(".btn-pubdata").each(function(){
@@ -1192,7 +1199,10 @@ firebase.auth().onAuthStateChanged(function(_user) {
             querySnapshot.forEach((doc) => {
                 var prod = doc.data();
                 if( !prod.draft ){ // bản nháp bỏ qua
-                    if( !prod.liked ) prod.liked = Math.floor(Math.random() * 850) + 102;
+                    if( !prod.liked ){
+                        prod.liked = Math.floor(Math.random() * 850) + 102;
+                        console.log("not like", prod);
+                    }
                     PRODUCTS.push( prod );
                 }
             });
@@ -1206,19 +1216,20 @@ firebase.auth().onAuthStateChanged(function(_user) {
             renderMiniCart();
         });
 
-        $("body").on("click", ".openlink", function(){
+        $("body").on("click", ".openlink", function(e){
             var _url = $(this).attr("href");
             openUrl(_url);
-            return false;
+            e.preventDefault();
         });
 
-        $(".btn-viewMyOrder").on("click", function(){
+        $(".btn-viewMyOrder").on("click", function(e){
             var _sdt = $("#settingsBox").find("input").val();
             if( _sdt ){
                 USERPHONE = _sdt.replace(/\s/g,'');
                 openUrl( getFullUrl("order") );
                 $("#settingsBox").removeClass("active");
             }
+            e.preventDefault();
         });
 
         var arr = getMyCart(),
@@ -1229,15 +1240,15 @@ firebase.auth().onAuthStateChanged(function(_user) {
         $(".site-cart-count").html( _total );
 
         // mhpopup
-        $(".mhpopup").find(".mhpopup-close").off().on("click", function(){
+        $(".mhpopup").find(".mhpopup-close").off().on("click", function(e){
             $(this).closest(".mhpopup").addClass("hide");
-            return false;
+            e.preventDefault();
         });
 
         //popup-login
         (function(){
             var $popup = $("#popup-login");
-            $popup.find(".btn-sendLogin").off().on("click", function(){
+            $popup.find(".btn-sendLogin").off().on("click", function(e){
                 var _mail = $popup.find(".customerEmail").val(),
                     _pass = $popup.find(".customerPassword").val();
 
@@ -1266,7 +1277,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
 
                     });
                 }
-                return false;
+                e.preventDefault();
             });
 
             $popup.find(".btn-quenmk").off().on("click", function(e){
@@ -1277,7 +1288,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
 
         (function(){
             var $popup = $("#popup-signup");
-            $popup.find(".btn-sendSignup").off().on("click", function(){
+            $popup.find(".btn-sendSignup").off().on("click", function(e){
                 var _mail = $popup.find(".customerEmail").val(),
                     _pass = $popup.find(".customerPassword").val(),
                     _repass = $popup.find(".customerRePassword").val();
@@ -1304,7 +1315,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
                         $popup.find(".alert-danger").html(mes).show().delay(4000).fadeOut();
                     });
                 }
-                return false;
+                e.preventDefault();
             });
         })();
 
@@ -1351,7 +1362,9 @@ function homeSlider(){
         }
     }, timeAuto);
 
-    $dots.children().on("click", function(){
+    $dots.children().on("click", function(e){
+        e.preventDefault();
+
         cr = $(this).index();
         $items.removeClass("active").eq(cr).addClass("active");
         $dots.children().removeClass("active").eq(cr).addClass("active");
