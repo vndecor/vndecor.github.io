@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Mua Sắm Phụ Kiện Trang Trí Nội Thất</title>
+        <meta name="description" content="description">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="https://vndecor.github.io/assets/images/favicon.png" />
+        <link rel="stylesheet" href="https://vndecor.github.io/assets/css/plugins.css">
+        <link rel="stylesheet" href="https://vndecor.github.io/assets/css/style.css">
+        <link rel="stylesheet" href="https://vndecor.github.io/assets/css/responsive.css">
+        <link rel="stylesheet" href="https://vndecor.github.io/assets/css/theme1.css">
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+        <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" /> -->
+    </head>
+    <body class="shop-listing shop-fullwidth-layout full-page-title">
+        <div class="page-wrapper">
+            <div id="main-seotag" class="invisible">
+                <img src="https://vndecor.github.io/assets/images/logo-square.png" alt="Logo Nhẹ hều">
+                <h1 title="Chuyên bán các sản phẩm decor, quà tặng đẹp giá rẻ; trang trí nhà cửa, trang trí nội thất, phòng khách, phòng ngủ, phòng làm việc, phòng học">Chuyên bán các sản phẩm decor, quà tặng đẹp giá rẻ; trang trí nhà cửa, trang trí nội thất, phòng khách, phòng ngủ, phòng làm việc, phòng học</h1>
+            </div>
+            <div class="notification-bar mobilehide">
+                <span class="notification-bar__message">
+                    Tưng bừng ngày quốc tế thiếu nhi giảm đến 50%, bấm để xem chi tiết
+                </span>
+            </div>
+            <header class="header animated d-flex align-items-center header-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-4 d-block d-lg-none mobile-icons">
+                            <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                                <i class="icon anm anm-times-l"></i>
+                                <i class="anm anm-bars-r"></i>
+                            </button>
+                        </div>
+                        <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
+                            <a href="https://vndecor.github.io/" class="openlink">
+                                <img src="https://vndecor.github.io/assets/images/logo.png" alt="" title=""/>
+                            </a>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-8 align-self-center d-menu-col">
+                            <nav class="grid__item" id="AccessibleNav">
+                                <ul id="siteNav" class="site-nav medium center hidearrow">
+                                    <li><a href="https://vndecor.github.io/" class="openlink">Trang Chủ </a></li>
+                                    <li><a href="https://vndecor.github.io/?t=hot" class="openlink">Xu hướng</a></li>
+                                    <li><a href="https://vndecor.github.io/" class="openlink">Quà tặng</a></li>
+                                    <li><a href="https://vndecor.github.io/?t=sale" class="openlink">Giảm Giá</a></li>
+                                    <li><a href="https://vndecor.github.io/" class="openlink">Tin tức</a></li>
+                                    <li><a href="https://vndecor.github.io/cart" class="openlink">Giỏ Hàng</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-2 align-self-center icons-col text-right">
+                            <div class="setting-link iconset">
+                                <i class="icon anm anm-user-circle-o"></i>
+                            </div>
+                            <div id="settingsBox">
+                                <div class="customer-links">
+                                    <p class="text-center">Kiểm tra đơn hàng đã đặt</p>
+                                    <p>
+                                        <input type="text" name="" placeholder="Nhập số điện thoại">
+                                    </p>
+                                    <p>
+                                        <button class="btn btn-viewMyOrder">Xem ngay</button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="header-cart iconset">
+                                <a href="#" class="site-header__cart btn-minicart" data-toggle="modal" data-target="#minicart-drawer">
+                                <i class="icon anm anm-cart-l"></i>
+                                <span class="site-cart-count">0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="mobile-nav-wrapper" role="navigation">
+                <div class="closemobileMenu">
+                    <i class="icon anm anm-times-l pull-right"></i> Đóng
+                </div>
+                <ul id="MobileNav" class="mobile-nav">
+                    <li><a href="https://vndecor.github.io/" class="openlink">Trang Chủ </a></li>
+                    <li><a href="https://vndecor.github.io/?t=hot" class="openlink">Xu hướng</a></li>
+                    <li><a href="https://vndecor.github.io/" class="openlink">Quà tặng</a></li>
+                    <li><a href="https://vndecor.github.io/?t=sale" class="openlink">Giảm Giá</a></li>
+                    <li><a href="https://vndecor.github.io/" class="openlink">Tin tức</a></li>
+                    <li><a href="https://vndecor.github.io/cart" class="openlink">Giỏ Hàng</a></li>
+                </ul>
+            </div>
+            <div id="page-content"></div><!-- END page-content -->
+            <div class="footer footer-1">
+                <div class="footer-top clearfix">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 about-us-col">
+                                <img src="https://vndecor.github.io/assets/images/logo.png" alt="Nhẹ Hều"/>
+                                <p>
+                                    <b>Kho hàng 1</b>: 2/123 Trần Cung, Từ Liêm, HN <br><br>
+                                    <b>Kho hàng 2</b>: 20 phố Đàm Quang Trung, Long Biên, HN
+                                </p>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
+                                <h4 class="h4">Liên Hệ</h4>
+                                <ul>
+                                    <li>
+                                        <b>Facebook</b>: <a href="#">fb.com/nhe.heu</a>
+                                    </li>
+                                    <li>
+                                        <b>Zalo</b>: <a href="#">zalo.me/0967681300</a>
+                                    </li>
+                                    <li>
+                                        <b>Phone1</b>: 09 6768 1300
+                                    </li>
+                                    <li>
+                                        <b>Phone2</b>: 035 6768 300
+                                    </li>
+                                    <li>
+                                        <b>Email&nbsp;</b>: daominhhoa93@gmail.com
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
+                                <h4 class="h4">Giới thiệu</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">Sứ mệnh của NhẹHều</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Giới thiệu NhẹHều</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://vndecor.github.io/payments" class="openlink">Cách thanh toán</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Hướng dẫn mua hàng</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Câu hỏi thường gặp</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
+                                <h4 class="h4">Chính sách</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">Chính sách bảo hành</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Chính sách giao hàng</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Chính sách đổi trả</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Trung tâm hỗ trợ</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Quy định khác</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
+                                <h4 class="h4">Đối tác tiếp thị</h4>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0);" class="openlink">Thể lệ chương trình</a>
+                                    </li>
+                                    <li class="not-login">
+                                        <a href="javascript:void(0);" class="btn-login">Đăng nhập</a>
+                                    </li>
+                                    <li class="has-login">
+                                        <a href="https://vndecor.github.io/pub/" class="openlink">Thống kê</a>
+                                    </li>
+                                    <li class="has-login">
+                                        <a href="javascript:void(0);" class="btn-logout">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom clearfix">
+                    <div class="container">
+                        <ul class="payment-icons list--inline">
+                            <li>
+                                <a href="javascript:void(0);"><img src="https://vndecor.github.io/assets/images/da-thong-bao.png" style="height: 35px;"></a>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-visa" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-mastercard" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-amex" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-paypal" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-discover" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-stripe" aria-hidden="true"></i>
+                            </li>
+                            <li>
+                                <i class="anm anm-cc-jcb" aria-hidden="true"></i>
+                            </li>
+                        </ul>
+                        <div class="copytext">
+                            &copy; 2020 nheheu.com. All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span id="site-scroll">
+                <i class="icon anm anm-arw-up"></i>
+            </span>
+            <div class="minicart-right-drawer modal right fade" id="minicart-drawer">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id="cart-drawer" class="block block-cart">
+                            <a href="javascript:void(0);" class="close-cart" data-dismiss="modal" aria-label="Close">
+                            <i class="anm anm-times-r"></i>
+                            </a>
+                            <h4>Giỏ hàng (2 sản phẩm)</h4>
+                            <div class="minicart-content">
+                                <ul class="clearfix"></ul>
+                            </div>
+                            <div class="minicart-bottom">
+                                <div class="subtotal">
+                                    <span>Tổng:</span>
+                                    <span class="product-price">150.000 ₫</span>
+                                </div>
+                                <a href="https://vndecor.github.io/cart" class="btn proceed-to-checkout openlink">Chi tiết giỏ hàng</a>
+                                <a href="https://vndecor.github.io/cart" class="btn btn-secondary cart-btn openlink">Đặt mua</a>
+                                <!-- <button type="button" class="btn proceed-to-checkout">Chi tiết giỏ hàng</button>
+                                <button type="button" class="btn btn-secondary cart-btn">Đặt mua</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="mfp-bg mfp-zoom-in mfp-ready"></div>
+        <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-zoom-in mfp-ready" tabindex="-1" style="overflow: hidden auto;"><div class="mfp-container mfp-s-ready mfp-inline-holder"><div class="mfp-content"><div id="quickView-modal" class="mfp-with-anim">
+            <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="product-brand"><a href="#">Charcoal</a></div>
+                    <h2 class="product-title">Product Quick View Popup</h2>
+                </div>
+            </div>
+        </div></div><div class="mfp-preloader">Loading...</div></div></div> -->
+
+        <div id="popup-login" class="mhpopup hide">
+            <div class="mhpopup-wrap">
+                <button title="Close (Esc)" type="button" class="mhpopup-close">×</button>
+                <div class="mhpopup-title">
+                    <p class="h1 text-center">Đăng nhập</p>
+                </div>
+                <div class="mhpopup-content">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Email <span class="required">*</span></label>
+                                <input type="email" name="" placeholder="nhập email" class="customerEmail" autocorrect="off" autocapitalize="off" autofocus="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập mật khẩu" class="customerPassword">                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-left col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <!-- <input type="button" class="btn mb-3" value="Đăng nhập"> -->
+                            <button class="btn mb-3 btn-sendLogin">Đăng nhập</button>
+                            <p class="mb-4">
+                                <a href="javascript:void(0);" class="btn-quenmk">Quên mật khẩu?</a> &nbsp; | &nbsp;
+                                <a href="javascript:void(0);" class="btn-signup">Tạo tài khoản mới</a>
+                            </p>
+
+                            <div class="alert alert-danger" role="alert"></div>
+                        </div>
+                    </div>
+                    <p class="text-center h5">Hoặc đăng nhập bằng</p>
+                    <p class="text-center">
+                        <button class="btn-loginFB">
+                            <i class="icon anm anm-facebook"></i>
+                        </button>
+                        <button class="btn-loginGoogle">
+                            <i class="icon anm anm-google-plus-g"></i>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="popup-signup" class="mhpopup hide">
+            <div class="mhpopup-wrap">
+                <button title="Close (Esc)" type="button" class="mhpopup-close">×</button>
+                <div class="mhpopup-title">
+                    <p class="h1 text-center">Đăng ký tài khoản</p>
+                </div>
+                <div class="mhpopup-content">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Email <span class="required">*</span></label>
+                                <input type="email" name="" placeholder="nhập email" class="customerEmail" autocorrect="off" autocapitalize="off" autofocus="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập mật khẩu" class="customerPassword">                            
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Nhập lại mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập lại mật khẩu" class="customerRePassword">                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-left col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <!-- <input type="button" class="btn mb-3" value="Đăng nhập"> -->
+                            <button class="btn mb-3 btn-sendSignup">Đăng Ký</button>
+                            <p class="mb-4">
+                                <a href="javascript:void(0);" class="btn-login">Quay lại đăng nhập</a>
+                            </p>
+                            <div class="alert alert-danger" role="alert"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://vndecor.github.io/assets/js/vendor/jquery-3.3.1.min.js"></script>
+        <script src="https://vndecor.github.io/assets/js/vendor/js.cookie.js"></script>
+        <script src="https://vndecor.github.io/assets/js/vendor/photoswipe.min.js"></script>
+        <!-- Including Javascript -->
+        <script src="https://vndecor.github.io/assets/js/plugins.js"></script>
+        <script src="https://vndecor.github.io/assets/js/main.js"></script>
+        <script src="https://vndecor.github.io/assets/js/nheheu.js"></script>
+    </body>
+</html>
