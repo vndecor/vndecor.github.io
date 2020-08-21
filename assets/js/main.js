@@ -234,13 +234,28 @@
   	$(selectors.navLinks).each(function(){
         if($(this).attr('href') == window.location.pathname) $(this).addClass('active');
     })
+
+    window.toggleMenuMobile = function(isShow){
+    	if( arguments.length == 0 ){
+    		$(selectors.mobilenav).toggleClass("active");
+			$(selectors.body).toggleClass("menuOn");
+			$(selectors.menuToggle).toggleClass('mobile-nav--open mobile-nav--close');
+    	}else{
+    		if( isShow ){
+    			$(selectors.mobilenav).addClass("active");
+				$(selectors.body).addClass("menuOn");
+				$(selectors.menuToggle).addClass('mobile-nav--open').removeClass('mobile-nav--close');
+    		}else{
+    			$(selectors.mobilenav).removeClass("active");
+				$(selectors.body).removeClass("menuOn");
+				$(selectors.menuToggle).removeClass('mobile-nav--open').addClass('mobile-nav--close');
+    		}
+    	}
+    };
 	
   	$(selectors.menuToggle).on("click",function(){
-      body: 'body',
-      $(selectors.mobilenav).toggleClass("active");
-      $(selectors.body).toggleClass("menuOn");
-      $(selectors.menuToggle).toggleClass('mobile-nav--open mobile-nav--close');
-    });
+  		toggleMenuMobile();
+  	});
   
     $(selectors.closemenu).on("click",function(){
       body: 'body',

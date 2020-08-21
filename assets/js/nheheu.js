@@ -1,4 +1,4 @@
-var BASEURL = "https://vndecor.github.io/";
+var BASEURL = "http://localhost:8888/shop/nheheu.github/";
 var CURRENCY = "₫";
 var PRODUCTS = [];
 var PRODUCT = null;
@@ -148,12 +148,12 @@ var renderItem = function(obj, customclass){
     _html += '<div class="'+ customclass +'" style="display: block;">';
         _html += '<div class="product-image">';
             _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="product-img openlink">';
-                _html += '<img src="https://vndecor.github.io/assets/images/empty.png">';
+                _html += '<img src="http://localhost:8888/shop/nheheu.github/assets/images/empty.png">';
                 _html += '<img src="'+ obj.imgs[0] +'" class="img">';
                 // _html += '<img class="primary" src="'+ obj.imgs[0] +'">';
                 // _html += '<img class="hover" src="'+ obj.imgs[0] +'">';
                 if( obj.liked ) _html += '<div class="product-liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
-                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
+                if( obj.soldout ) _html += '<span class="sold-out"><img src="http://localhost:8888/shop/nheheu.github/assets/images/soldout2.png" ></span>';
             _html += '</a>';
         _html += '</div>';
 
@@ -908,7 +908,7 @@ var renderOrderPage = function(){
                 else if( myorders[i].status >= 5 ) _status = 1;
             }
 
-            _htmlTabNav += '<li><a class="nav-link'+ (i==0?" active":"") +'" data-toggle="tab" href="#tab-pane-'+ myorders[i].created.seconds +'">Mã '+ myorders[i].created.seconds +'</a></li>';
+            _htmlTabNav += '<li><a class="nav-link'+ (i==0?" active":"") +'" data-toggle="tab" href="#tab-pane-'+ myorders[i].created.seconds +'">Đơn hàng '+ Math.floor(myorders[i].created.seconds/100) +'</a></li>';
             _htmlTabContent += '<div id="tab-pane-'+ myorders[i].created.seconds +'" class="tab-pane fade'+ (i==0?" active show":"") +'">';
             _htmlTabContent += '<h4>Ngày đặt hàng: <span class="time-now">'+ convertTime(myorders[i].created.seconds) +'</span></h4>';
             _htmlTabContent += '<div class="order-progress" data-step="'+ _status +'"><div style="left: 0;"><span>Đang xử lý</span></div><div style="left: 50%;"><span>Đang vận chuyển</span></div><div style="left: 100%;"><span>Đã giao hàng</span></div></div>';
@@ -1222,16 +1222,6 @@ firebase.auth().onAuthStateChanged(function(_user) {
             e.preventDefault();
         });
 
-        $(".btn-viewMyOrder").on("click", function(e){
-            var _sdt = $("#settingsBox").find("input").val();
-            if( _sdt ){
-                USERPHONE = _sdt.replace(/\s/g,'');
-                openUrl( getFullUrl("order") );
-                $("#settingsBox").removeClass("active");
-            }
-            e.preventDefault();
-        });
-
         var arr = getMyCart(),
             _total = 0;
         for( var i=0; i<arr.length; i++ ){
@@ -1335,6 +1325,23 @@ firebase.auth().onAuthStateChanged(function(_user) {
             e.preventDefault();
             firebase.auth().signOut();
         });
+
+        $(".btn-openOrder").off().on("click", function(e){
+            e.preventDefault();
+            $(".search-drawer").addClass("search-drawer-open");
+            toggleMenuMobile(false);
+        });
+
+        $(".btn-viewMyOrder").on("click", function(e){
+            var _sdt = $(this).siblings(".input-text").val();
+            if( _sdt ){
+                USERPHONE = _sdt.replace(/\s/g,'');
+                openUrl( getFullUrl("order") );
+                $(".search-drawer").removeClass("search-drawer-open");
+            }
+            e.preventDefault();
+        });
+
     })();
 });   
 

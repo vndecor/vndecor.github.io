@@ -191,3 +191,6 @@ a{
 	}
 }
 .top-header{height: 35px;}
+.search-drawer .input-box{display: block;}
+.dashboard-list li a{text-transform: none; padding-right: 0;}
+.dashboard-list li a.active, .dashboard-list li a:hover {background: transparent; color: #e95144;}

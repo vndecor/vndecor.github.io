@@ -2835,7 +2835,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     height: 6px;
     background-color: #ccc;
     display: block;
-    margin: 50px auto;
+    margin: 50px auto 75px auto;
     max-width: 75%;
 }
 .order-progress:after{
