@@ -13,14 +13,19 @@
                             <div class="product-details-img product-horizontal-style">
                                 <div class="zoompro-wrap product-zoom-right pl-20">
                                     <div class="zoompro-span">
+                                        <img src="https://vndecor.github.io/assets/images/empty.png" class="d-md-none" style="position: absolute;z-index: 10; top:0; left:0; width: 100%;">
                                         <img id="zoompro" class="zoompro" alt=""/>
                                     </div>
-                                    <div class="product-labels"><span class="lbl pr-label1">new</span></div>
+                                    <!-- <div class="product-labels"><span class="lbl pr-label1">new</span></div> -->
                                     <div class="product-buttons">
-                                        <a href="#" class="btn prlightbox" title="Zoom">
+                                        <a href="javascript:void(0);" class="btn prlightbox" title="Zoom">
                                             <i class="icon anm anm-expand-l-arrows" aria-hidden="true"></i>
                                             <span class="tooltip-label">Phóng to</span>
                                         </a>
+                                    </div>
+                                    <div class="product-liked tooltip bs-tooltip-top" role="tooltip">
+                                        <div class="arrow"></div>
+                                        <div class="tooltip-inner"><i class="icon anm anm-heart"></i> <span class="num">0</span></div>
                                     </div>
                                 </div>
                                 <div class="product-thumb product-horizontal-thumb">
@@ -39,21 +44,22 @@
                                 </div>
                                 <br>
                                 <p class="product-single__price product-single__price-product-template">
-                                    <span class="visually-hidden">Regular price</span>
-                                    <s id="ComparePrice-product-template"><span class="money"></span></s>
+                                    <s class="comparePrice-product-template"><span class="money"></span></s>
                                     <span class="product-price__price product-price__price-product-template product-price__sale product-price__sale--single">
-                                    <span id="ProductPrice-product-template"><span class="money"></span></span>
+                                        <span class="money"></span>
                                     </span>
-                                    <span class="discount-badge"> <span class="devider">|</span>&nbsp;
-                                    <span>Tiết kiệm</span>
-                                    <span class="product-single__save-amount"><span class="money"></span></span>
-                                    <span class="off">(<span></span>%)</span>
+                                    <span class="discount-badge">
+                                        <span class="off">-<span></span>%</span>
                                     </span>  
                                 </p>
                             </div>
                             <br>
                             <div class="mfp-link product-form product-form-product-template hidedropdown">
-                                <div class="swatch clearfix swatch-0 option1" data-option-index="0">
+                                <!-- <div class="swatch clearfix swatch-0 option0" data-option-index="0">
+                                    <label class="label">Khuyễn mãi:&nbsp;<span class="slVariant">Giảm thêm 5% cho đơn hang</span></label>
+                                </div>
+                                <br> -->
+                                <div class="swatch clearfix swatch-0 option1" data-option-index="1">
                                     <div class="product-form__item--type">
                                         <label class="label">Loại:<span class="required">*&nbsp;</span>&nbsp;<span class="slVariant">Chưa chọn</span></label>
                                     </div>
@@ -88,22 +94,29 @@
                                 <a target="_blank" href="#" class="btn btn--small btn--secondary btn--share share-twitter" title="Tweet on Twitter">
                                     <i class="fa fa-twitter" aria-hidden="true"></i> <span class="share-title" aria-hidden="true">Tweet</span>
                                 </a>
-                                <a href="#" title="Share on google+" class="btn btn--small btn--secondary btn--share" >
+                                <a href="#" class="btn btn--small btn--secondary btn--share share-pinterest" title="Share by Email" target="_blank">
+                                    <i class="icon anm anm-link"></i> <span class="share-title" aria-hidden="true">Copy link</span>
+                                </a>
+                                <!-- <a href="#" title="Share on google+" class="btn btn--small btn--secondary btn--share" >
                                     <i class="fa fa-google-plus" aria-hidden="true"></i> <span class="share-title" aria-hidden="true">Google+</span>
                                 </a>
                                 <a target="_blank" href="#" class="btn btn--small btn--secondary btn--share share-pinterest" title="Pin on Pinterest">
                                     <i class="fa fa-pinterest" aria-hidden="true"></i> <span class="share-title" aria-hidden="true">Pin it</span>
-                                </a>
-                                <a href="#" class="btn btn--small btn--secondary btn--share share-pinterest" title="Share by Email" target="_blank">
-                                    <i class="fa fa-envelope" aria-hidden="true"></i> <span class="share-title" aria-hidden="true">Email</span>
-                                </a>
-                             </div>
+                                </a> -->
+                            </div>
+                            <button class="btn-likeThisProduct">
+                                <i class="icon anm anm-heart-l"></i> Bạn thích sản phẩm này
+                            </button>
+
+                            <!-- <div class="type-product">
+                                <span>Danh mục:</span> <a href="#">Đồng hồ</a>
+                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-12 sidebar">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-12 sidebar sidebar-right">
             <div class="row">
                 <div class="col-12 product-protected">
                     <ul class="addressFooter">
@@ -154,7 +167,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-3 col-sm-12 col-12 sidebar order-3 order-md-3">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-12 sidebar sidebar-right order-3 order-md-3">
             <div class="row">
                 <div class="col-12 sidebar_widget">
                     <div class="widget-title"><h2>Sản phẩm đã xem</h2></div>

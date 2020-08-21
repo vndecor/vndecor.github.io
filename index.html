@@ -14,6 +14,10 @@
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+        <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" /> -->
     </head>
     <body class="shop-listing shop-fullwidth-layout full-page-title">
         <div class="page-wrapper">
@@ -22,10 +26,9 @@
                 <h1 title="Chuyên bán các sản phẩm decor, quà tặng đẹp giá rẻ; trang trí nhà cửa, trang trí nội thất, phòng khách, phòng ngủ, phòng làm việc, phòng học">Chuyên bán các sản phẩm decor, quà tặng đẹp giá rẻ; trang trí nhà cửa, trang trí nội thất, phòng khách, phòng ngủ, phòng làm việc, phòng học</h1>
             </div>
             <div class="notification-bar mobilehide">
-                <a href="#" class="notification-bar__message">
-                    Tưng bừng ngày quốc tế thiếu nhi giảm đến 50%, chi tiết <b>Tại đây</b>
-                </a>
-                <span class="close-announcement"><i class="anm anm-times-l" aria-hidden="true"></i></span>
+                <span class="notification-bar__message">
+                    Tưng bừng ngày quốc tế thiếu nhi giảm đến 50%, bấm để xem chi tiết
+                </span>
             </div>
             <header class="header animated d-flex align-items-center header-1">
                 <div class="container">
@@ -55,13 +58,13 @@
                         </div>
                         <div class="col-4 col-sm-4 col-md-4 col-lg-2 align-self-center icons-col text-right">
                             <div class="setting-link iconset">
-                                <i class="icon icon-settings"></i>
+                                <i class="icon anm anm-user-circle-o"></i>
                             </div>
                             <div id="settingsBox">
                                 <div class="customer-links">
-                                    <p class="text-center">Kiểm tra đơn hàng của bạn</p>
+                                    <p class="text-center">Kiểm tra đơn hàng đã đặt</p>
                                     <p>
-                                        <input type="text" name="" placeholder="Nhập mã đơn hàng hoặc sđt">
+                                        <input type="text" name="" placeholder="Nhập số điện thoại">
                                     </p>
                                     <p>
                                         <button class="btn btn-viewMyOrder">Xem ngay</button>
@@ -91,7 +94,7 @@
                     <li><a href="https://vndecor.github.io/cart" class="openlink">Giỏ Hàng</a></li>
                 </ul>
             </div>
-            <div id="page-content"></div>
+            <div id="page-content"></div><!-- END page-content -->
             <div class="footer footer-1">
                 <div class="footer-top clearfix">
                     <div class="container">
@@ -163,21 +166,22 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 newsletter-col">
-                                <h4 class="h4">Nhận Tin Khuyến Mãi</h4>
-                                <div class="display-table">
-                                    <div class="display-table-cell footer-newsletter">
-                                        <p>Nhập email của bạn để nhận tin khuyễn mãi mới và nhiều ưu đãi</p>
-                                        <div class="input-group">
-                                            <input type="email" class="input-group__field newsletter-input" name="EMAIL" value="" placeholder="Địa chỉ email" required>
-                                            <span class="input-group__btn">
-                                            <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
-                                                <span class="newsletter__submit-text--large">Nhận ngay</span>
-                                            </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 footer-links">
+                                <h4 class="h4">Đối tác tiếp thị</h4>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0);" class="openlink">Thể lệ chương trình</a>
+                                    </li>
+                                    <li class="not-login">
+                                        <a href="javascript:void(0);" class="btn-login">Đăng nhập</a>
+                                    </li>
+                                    <li class="has-login">
+                                        <a href="https://vndecor.github.io/pub/" class="openlink">Thống kê</a>
+                                    </li>
+                                    <li class="has-login">
+                                        <a href="javascript:void(0);" class="btn-logout">Đăng xuất</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -241,6 +245,108 @@
                                 <!-- <button type="button" class="btn proceed-to-checkout">Chi tiết giỏ hàng</button>
                                 <button type="button" class="btn btn-secondary cart-btn">Đặt mua</button> -->
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="mfp-bg mfp-zoom-in mfp-ready"></div>
+        <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-zoom-in mfp-ready" tabindex="-1" style="overflow: hidden auto;"><div class="mfp-container mfp-s-ready mfp-inline-holder"><div class="mfp-content"><div id="quickView-modal" class="mfp-with-anim">
+            <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="product-brand"><a href="#">Charcoal</a></div>
+                    <h2 class="product-title">Product Quick View Popup</h2>
+                </div>
+            </div>
+        </div></div><div class="mfp-preloader">Loading...</div></div></div> -->
+
+        <div id="popup-login" class="mhpopup hide">
+            <div class="mhpopup-wrap">
+                <button title="Close (Esc)" type="button" class="mhpopup-close">×</button>
+                <div class="mhpopup-title">
+                    <p class="h1 text-center">Đăng nhập</p>
+                </div>
+                <div class="mhpopup-content">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Email <span class="required">*</span></label>
+                                <input type="email" name="" placeholder="nhập email" class="customerEmail" autocorrect="off" autocapitalize="off" autofocus="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập mật khẩu" class="customerPassword">                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-left col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <!-- <input type="button" class="btn mb-3" value="Đăng nhập"> -->
+                            <button class="btn mb-3 btn-sendLogin">Đăng nhập</button>
+                            <p class="mb-4">
+                                <a href="javascript:void(0);" class="btn-quenmk">Quên mật khẩu?</a> &nbsp; | &nbsp;
+                                <a href="javascript:void(0);" class="btn-signup">Tạo tài khoản mới</a>
+                            </p>
+
+                            <div class="alert alert-danger" role="alert"></div>
+                        </div>
+                    </div>
+                    <p class="text-center h5">Hoặc đăng nhập bằng</p>
+                    <p class="text-center">
+                        <button class="btn-loginFB">
+                            <i class="icon anm anm-facebook"></i>
+                        </button>
+                        <button class="btn-loginGoogle">
+                            <i class="icon anm anm-google-plus-g"></i>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="popup-signup" class="mhpopup hide">
+            <div class="mhpopup-wrap">
+                <button title="Close (Esc)" type="button" class="mhpopup-close">×</button>
+                <div class="mhpopup-title">
+                    <p class="h1 text-center">Đăng ký tài khoản</p>
+                </div>
+                <div class="mhpopup-content">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Email <span class="required">*</span></label>
+                                <input type="email" name="" placeholder="nhập email" class="customerEmail" autocorrect="off" autocapitalize="off" autofocus="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập mật khẩu" class="customerPassword">                            
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="">Nhập lại mật khẩu <span class="required">*</span></label>
+                                <input type="password" value="" name="" placeholder="nhập lại mật khẩu" class="customerRePassword">                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-left col-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <!-- <input type="button" class="btn mb-3" value="Đăng nhập"> -->
+                            <button class="btn mb-3 btn-sendSignup">Đăng Ký</button>
+                            <p class="mb-4">
+                                <a href="javascript:void(0);" class="btn-login">Quay lại đăng nhập</a>
+                            </p>
+                            <div class="alert alert-danger" role="alert"></div>
                         </div>
                     </div>
                 </div>

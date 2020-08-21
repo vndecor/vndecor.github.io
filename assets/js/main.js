@@ -272,7 +272,7 @@
 		  $(".close-announcement").on('click',function() {
 			$(".notification-bar").slideUp();  
 			$.cookie('promotion', 'true', { expires: 1});  
-		  });    
+		  });
 	  }
 	  cookie_promo();
 	
@@ -838,7 +838,7 @@
 			}
 		});  
 	}
-	footer_dropdown();
+	// footer_dropdown();
 	
 	// Blog Pages Sidebar Widget +/-
 	function sidebar_dropdown(){
