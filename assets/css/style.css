@@ -3033,7 +3033,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     left: 0;
     top: 20px;
     background: #fff;
-    padding-left: 105px;
+    padding-left: 115px;
     padding-bottom: 8px;
     display: none;
     z-index: 5;
@@ -3042,7 +3042,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 }
 .product-selected-image{
 	position: absolute;
-    height: 90px;
+    height: 100px;
     left: 5px;
     top: -15px;
     border-radius: 5px;
@@ -3073,7 +3073,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 .btn-close-product-selected-wrap{
 	position: absolute;
     top: -27px;
-    right: 0;
+    right: 3px;
     z-index: 9;
     font-size: 18px;
 }
