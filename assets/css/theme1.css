@@ -120,6 +120,7 @@ a{
 	float: right;
 	border: none;
 	position: relative;
+	margin-top: 5px;
 }
 .btn-likeThisProduct .icon{
 	color: #e95144;
@@ -207,3 +208,4 @@ a{
 }
 .product-form-product-template{position: relative;}
 .product-form .swatch label{text-transform: none;}
+.product-single__price{display: block;margin-right: 0;}

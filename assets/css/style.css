@@ -233,7 +233,7 @@ label { margin-bottom:3px; }
 .cnrLangList li a:hover { color:#f04343; border:1px solid #f04343; opacity:1; text-decoration:none; }
 
 .stickyNav { position:fixed; top:0; z-index:1000; width:100%; left:0; background-color:#fff; border-bottom:0; box-shadow:0 0 4px rgba(0,0,0,0.4); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.4); }
-.site-cart-count { font-size:10px; font-family:'Poppins', sans-serif; display:inline-block; color:#fff; background-color:#000; border-radius:50%; text-align:center; width:14px; height:14px; line-height:14px; position:absolute; right:-4px; top:0; }
+.site-cart-count { font-size:10px; font-family:'Poppins', sans-serif; display:inline-block; color:#fff; background-color:#e95144; border-radius:50%; text-align:center; width:14px; height:14px; line-height:14px; position:absolute; right:-4px; top:0; }
 .minicart-right-drawer.right .modal-dialog { position:fixed; margin:auto; width:350px; max-width:100%; height:100%; z-index:1024;dz -webkit-transform:translate3d(0%,0,0); -ms-transform:translate3d(0%,0,0); -o-transform:translate3d(0%,0,0); transform:translate3d(0%,0,0); }
 .minicart-right-drawer.right .modal-content { border:none; border-radius:0; height:100%; overflow-y:auto; }
 .minicart-right-drawer.right.fade .modal-dialog { right:-350px; -webkit-transition:opacity 0.3s linear, right 0.3s ease-out; -moz-transition:opacity 0.3s linear, right 0.3s ease-out; -o-transition:opacity 0.3s linear, right 0.3s ease-out; transition:opacity 0.3s linear, right 0.3s ease-out; }
@@ -3059,23 +3059,26 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	z-index: 1006;
 	display: none;
 }
-.product-form-product-template.onselect{
-	position: fixed;
-    z-index: 1008;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: #fff;
-}
-.product-form-product-template.onselect + .cover-product-form-product-template{display: block;}
-.product-form-product-template.onselect .product-selected-wrap{display: block;}
-.btn-close-product-selected-wrap{
-	position: absolute;
-    top: -27px;
-    right: 3px;
-    z-index: 9;
-    font-size: 18px;
+
+@media (max-width: 767.98px) {
+	.product-form-product-template.onselect{
+		position: fixed;
+	    z-index: 1008;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    padding: 15px;
+	    background: #fff;
+	}
+	.product-form-product-template.onselect + .cover-product-form-product-template{display: block;}
+	.product-form-product-template.onselect .product-selected-wrap{display: block;}
+	.btn-close-product-selected-wrap{
+		position: absolute;
+	    top: -27px;
+	    right: 3px;
+	    z-index: 9;
+	    font-size: 18px;
+	}
 }
 
 .product-protected-mobile{position: relative; margin-bottom: 20px;}

@@ -394,7 +394,9 @@ var renderProd = function(obj){
                 if( !pid ){
                     // Không có mặc định, bắt phải chọn
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
-                    $wrap.find(".alert-warning").html("Chưa chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    $wrap.find(".product-form-product-template").addClass("onselect");
+                    $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
                     return;
                 }else{
                     $wrap.find(".product-form-product-template").removeClass("onselect");
@@ -425,7 +427,9 @@ var renderProd = function(obj){
             if( PRODUCT.prices ){
                 pid = $wrap.find(".swatchInput:checked").val();
                 if( !pid ){
-                    $wrap.find(".alert-warning").html("Chưa chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    $wrap.find(".product-form-product-template").addClass("onselect");
+                    $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
                     return;
                 }
             }else{
