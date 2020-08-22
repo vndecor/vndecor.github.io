@@ -194,3 +194,16 @@ a{
 .search-drawer .input-box{display: block;}
 .dashboard-list li a{text-transform: none; padding-right: 0;}
 .dashboard-list li a.active, .dashboard-list li a:hover {background: transparent; color: #e95144;}
+.product-form__item--type{position: relative;}
+.product-action{position: relative;}
+.product-action .alert{
+	position: absolute;
+    top: 12px;
+    left: 15px;
+    right: 15px;
+    z-index: 9;
+    padding: 30px 0;
+    display: none;
+}
+.product-form-product-template{position: relative;}
+.product-form .swatch label{text-transform: none;}

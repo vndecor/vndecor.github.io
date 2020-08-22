@@ -1040,7 +1040,7 @@
 			infinite: true,
 			slidesToShow: 6,
 			stageMargin: 5,
-			slidesToScroll: 1
+			slidesToScroll: 3
 		});
 	};
 	// product_thumb1();

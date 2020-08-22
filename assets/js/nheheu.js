@@ -251,26 +251,29 @@ var renderProd = function(obj){
     // Multiple type
     if( PRODUCT.prices ){
         var _multitype = "";
-        var _default = -1;
 
-        for( var i=0; i<PRODUCT.prices.length; i++ ){
-            if( _default == -1 && !PRODUCT.prices[i].soldout ){
-                _default = i;
-            }
-        }
+        // Mặc định chưa chọn
 
-        if( _default == -1 ){
-            _price = PRODUCT.prices[0].price || PRODUCT.price;
-            _price2 = PRODUCT.prices[0].price2 || PRODUCT.price2;
-        }else{
-            _price = PRODUCT.prices[_default].price || PRODUCT.price;
-            _price2 = PRODUCT.prices[_default].price2 || PRODUCT.price2;
-        }
+        // var _default = -1;
+
+        // for( var i=0; i<PRODUCT.prices.length; i++ ){
+        //     if( _default == -1 && !PRODUCT.prices[i].soldout ){
+        //         _default = i;
+        //     }
+        // }
+
+        // if( _default == -1 ){
+        //     _price = PRODUCT.prices[0].price || PRODUCT.price;
+        //     _price2 = PRODUCT.prices[0].price2 || PRODUCT.price2;
+        // }else{
+        //     _price = PRODUCT.prices[_default].price || PRODUCT.price;
+        //     _price2 = PRODUCT.prices[_default].price2 || PRODUCT.price2;
+        // }
 
         for( var i=0; i<PRODUCT.prices.length; i++ ){
             var item = PRODUCT.prices[i];
             _multitype += '<div data-value="'+ item.name +'" class="swatch-element'+ (item.soldout?" soldout":"") +'" data-image="'+ item.img +'" data-index="'+ i +'">';
-            _multitype += '<input class="swatchInput" id="swatch-0-'+ PRODUCT.id+'-'+item.id +'" type="radio" name="option--type" value="'+ PRODUCT.id+'-'+item.id +'"'+ (i==_default?"checked":"") +''+ (item.soldout?" disabled":"") +'>';
+            _multitype += '<input class="swatchInput" id="swatch-0-'+ PRODUCT.id+'-'+item.id +'" type="radio" name="option--type" value="'+ PRODUCT.id+'-'+item.id +'"'+ (item.soldout?" disabled":"") +'>';
             _multitype += '<label class="swatchLbl color medium" for="swatch-0-'+ PRODUCT.id+'-'+item.id +'" style="background-image:url('+ item.img +');"></label>';
             _multitype += '<span class="tooltip-label">'+item.name+'</span>';
             _multitype += '</div>';
@@ -279,7 +282,9 @@ var renderProd = function(obj){
         var $multitype = jQuery(_multitype);
 
         $wrap.find(".product-form__item--type").append($multitype);
-        $wrap.find(".slVariant").html(_default==-1?"___":PRODUCT.prices[_default].name);
+
+        // mặc định chưa chọn
+        // $wrap.find(".slVariant").html(_default==-1?"___":PRODUCT.prices[_default].name);
 
         $multitype.find("input").on("change", function(){
             var $thisParent = $(this).parent();
@@ -287,6 +292,8 @@ var renderProd = function(obj){
                 _img = $thisParent.attr("data-image");
 
             $wrap.find(".slVariant").html(_name);
+            $wrap.find(".product-selected-image").attr("src", _img);
+            $wrap.find(".product-form-product-template").addClass("onselect");
 
             $("#gallery a").each(function(){
                 if( $(this).attr("data-image") == _img ) $(this).addClass("active");
@@ -308,7 +315,7 @@ var renderProd = function(obj){
 
     }else{
         // remove
-        $wrap.find(".product-form-product-template").remove();
+        $wrap.find(".product-form__item--type").remove();
     }
 
     setPrice(_price, _price2);
@@ -379,11 +386,19 @@ var renderProd = function(obj){
 
     // event Click 
     $wrap.find(".btn-addToCartMain").off().on("click", function(e){
+        e.preventDefault();
         if( !PRODUCT.soldout ){
             var pid = "";
             if( PRODUCT.prices ){
                 pid = $wrap.find(".swatchInput:checked").val();
-                if( !pid ) pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
+                if( !pid ){
+                    // Không có mặc định, bắt phải chọn
+                    // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
+                    $wrap.find(".alert-warning").html("Chưa chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    return;
+                }else{
+                    $wrap.find(".product-form-product-template").removeClass("onselect");
+                }
             }else{
                 pid = PRODUCT.id;
             }
@@ -396,15 +411,23 @@ var renderProd = function(obj){
                 $("#minicart-drawer").modal('show');
             }, 100);
         }
+    });
+
+    $wrap.find(".cover-product-form-product-template, .btn-close-product-selected-wrap").off().on("click", function(e){
         e.preventDefault();
+        $wrap.find(".product-form-product-template").removeClass("onselect");
     });
 
     $wrap.find(".btn-buyNow").off().on("click", function(e){
+        e.preventDefault();
         if( !PRODUCT.soldout ){
             var pid = "";
             if( PRODUCT.prices ){
                 pid = $wrap.find(".swatchInput:checked").val();
-                if( !pid ) pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
+                if( !pid ){
+                    $wrap.find(".alert-warning").html("Chưa chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    return;
+                }
             }else{
                 pid = PRODUCT.id;
             }
@@ -414,7 +437,6 @@ var renderProd = function(obj){
                 openUrl( getFullUrl("cart") );
             }, 100);
         }
-        e.preventDefault();
     });
 
     $wrap.find(".btn-likeThisProduct").off().on("click", function(e){

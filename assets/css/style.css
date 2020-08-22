@@ -2292,7 +2292,7 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
 .contact-details { padding:60px 30px; background:#f8f8f8; color:#111111; }
 .visually-hidden, .icon__fallback-text { position:absolute !important; overflow:hidden; clip:rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0; }
 .addressFooter { list-style:none; padding:0; margin:0; }
-.addressFooter .icon { color:#000 !important; font-size:18px; float:left; margin-top:2px; }
+.addressFooter .icon { color:#000; font-size:18px; float:left; margin-top:2px; }
 .addressFooter li { padding-bottom:12px; }
 .addressFooter li p { padding-left:30px; }
 
@@ -3027,3 +3027,68 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	right: 15px;
 }
 .has-login, .not-login{ display: none; }
+
+.product-selected-wrap{
+	position: relative;
+    left: 0;
+    top: 20px;
+    background: #fff;
+    padding-left: 105px;
+    padding-bottom: 8px;
+    display: none;
+    z-index: 5;
+    width: 100%;
+    padding-top: 15px;
+}
+.product-selected-image{
+	position: absolute;
+    height: 90px;
+    left: 5px;
+    top: -15px;
+    border-radius: 5px;
+    border: 1px solid #bdbdbd;
+}
+.cover-product-form-product-template{
+	position: fixed;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right:0;
+	width: 100%;
+	background: rgb(0,0,0,0.5);
+	z-index: 1006;
+	display: none;
+}
+.product-form-product-template.onselect{
+	position: fixed;
+    z-index: 1008;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: #fff;
+}
+.product-form-product-template.onselect + .cover-product-form-product-template{display: block;}
+.product-form-product-template.onselect .product-selected-wrap{display: block;}
+.btn-close-product-selected-wrap{
+	position: absolute;
+    top: -27px;
+    right: 0;
+    z-index: 9;
+    font-size: 18px;
+}
+
+.product-protected-mobile{position: relative; margin-bottom: 20px;}
+.product-protected-mobile .addressFooter{position: relative; z-index: 5;}
+.product-protected-mobile p{ color: #888;}
+.product-protected-mobile p span{color: #000;}
+.product-protected-mobile:before{
+	content: "";
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    right: -15px;
+    bottom: -10px;
+    border-top: 10px solid #f9f9f9;
+    border-bottom: 10px solid #f9f9f9;
+}
