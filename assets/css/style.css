@@ -2434,7 +2434,7 @@ ol#compare-items li .btn-remove1 { position:absolute; right:5px; top:5px; }
 .cart th { padding:10px 0 8px; background:#f2f2f2; text-transform:uppercase; padding-left:15px; padding-right:15px; }
 .cart td { padding:10px; }
 .cart .cart__meta { padding-right:15px; }
-.cart th.cart__meta, .cart td.cart__meta { text-align:left; }
+.cart th.cart__meta, .cart td.cart__meta { text-align:left; position: relative; }
 .cart__image-wrapper a { display:block; }
 .cart .list-view-item__title { color:#000; font-size:1.15385em; min-width:100px; }
 .cart__image-wrapper { width:120px; }
@@ -3095,3 +3095,19 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     border-top: 10px solid #f9f9f9;
     border-bottom: 10px solid #f9f9f9;
 }
+.effect-addtocart{
+	position: absolute;
+	z-index: 1010;
+	width:50px;
+	line-height: 50px;
+	background: #e95144;
+	color:#fff;
+	text-align: center;
+	border-radius: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.5s;
+    transform-origin: 0 0;
+}
+.effect-addtocart.onmoving{transform: scale(0.3);}
+.cart td.cart__meta .cart__remove{position: absolute;top: 3px;right: -12px;z-index: 5;    background: transparent;color: #000;}

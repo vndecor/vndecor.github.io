@@ -389,8 +389,12 @@ var renderProd = function(obj){
         e.preventDefault();
         if( !PRODUCT.soldout ){
             var pid = "";
+
+            var $eff = $('<span class="effect-addtocart"></span>');
+            var _from;
             if( PRODUCT.prices ){
-                pid = $wrap.find(".swatchInput:checked").val();
+                var $swatchChecked = $wrap.find(".swatchInput:checked");
+                pid = $swatchChecked.val();
                 if( !pid ){
                     // Không có mặc định, bắt phải chọn
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
@@ -398,20 +402,42 @@ var renderProd = function(obj){
                     $wrap.find(".product-form-product-template").addClass("onselect");
                     $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
                     return;
-                }else{
-                    $wrap.find(".product-form-product-template").removeClass("onselect");
                 }
+
+                
+
             }else{
                 pid = PRODUCT.id;
             }
 
-            // showLoading(true, 1);
-            // addToCart(pid, $("#Quantity").val());
-            updateCartProd(pid, $("#Quantity").val());
+            var _from = $("#Quantity").offset(),
+                _to = $('.site-header__cart > .site-cart-count').offset(),
+                _num = $("#Quantity").val();
+
+            $eff.html(_num).css({top: _from.top-4, left: _from.left-10}).appendTo('body');
+
+            $eff.delay(100).animate({
+                top: _to.top,
+                left: _to.left
+            }, 'slow', function(){
+                $wrap.find(".product-form-product-template").removeClass("onselect");
+                $eff.remove();
+                updateCartProd(pid, _num, true);
+            });
 
             setTimeout(function(){
-                $("#minicart-drawer").modal('show');
-            }, 100);
+                $eff.addClass("onmoving");
+            }, 150);
+
+            // showLoading(true, 1);
+            // addToCart(pid, $("#Quantity").val());
+
+            // $wrap.find(".product-form-product-template").removeClass("onselect");
+            // updateCartProd(pid, $("#Quantity").val());
+
+            // setTimeout(function(){
+            //     $("#minicart-drawer").modal('show');
+            // }, 100);
         }
     });
 
@@ -577,7 +603,7 @@ var getItemInfo = function(pid){ // product or child
     return res;
 };
 
-var updateCartProd = function(pid, n){ // n <= 0 : remove cart item
+var updateCartProd = function(pid, n, isAdd){ // n <= 0 : remove cart item
     // EMPTY CART
     if( pid === "EMPTY" ){
         $.cookie('mycart', JSON.stringify([]), { expires: -7, path: '/' });
@@ -592,7 +618,10 @@ var updateCartProd = function(pid, n){ // n <= 0 : remove cart item
         for( var i=arr.length-1; i>=0; i-- ){
             if( arr[i].pid == pid ){
                 if( num <= 0 ) arr.splice(i, 1);
-                else arr[i].num = num;
+                else{
+                    if(isAdd) arr[i].num += num;
+                    else arr[i].num = num;
+                };
                 break;
             }else if( i == 0 && n > 0 ){
                 arr.push({
@@ -649,9 +678,9 @@ var renderMiniCart = function(prods){
 
             _html += '<div class="variant-cart">'+ (item.type||"&nbsp;") +'</div>';
 
-            _html += '<div class="priceRow"><div class="product-price">';
+            _html += '<div class="product-price"><span class="old-price">'+ formatMoney(item.price2) +'</span><span class="price">'+ formatMoney(item.price2) +'</span> x '+prods[j].num+'</div>';
 
-            _html += '<span class="money">'+ formatMoney(item.price) +'</span> x <span>'+ prods[j].num +'</span></div></div></div></li>';
+            _html += '</div></li>';
 
             _totalProd += prods[j].num;
             _totalMoney += item.price*prods[j].num;
@@ -767,9 +796,20 @@ var renderCartPage = function(){
                     _html += '<div class="cart__meta-text">';
                         _html += (item.type||"")+'<br>';
                     _html += '</div>';
+                    _html += '<div class="d-lg-none">';
+                        _html += '<div class="product-price"><span class="old-price">'+formatMoney(item.price2)+'</span><span class="price">'+formatMoney(item.price)+'</span></div>';
+                        _html += '<div class="cart__qty float-left">';
+                            _html += '<div class="qtyField">';
+                                _html += '<a class="qtyBtn minus" href="javascript:void(0);"><i class="icon icon-minus"></i></a>';
+                                _html += '<input class="cart__qty-input qty" type="text" name="updates[]" id="qty-'+ j +'" value="'+ prods[j].num +'" pattern="[0-9]*" data-pid="'+ item.id +'">';
+                                _html += '<a class="qtyBtn plus" href="javascript:void(0);"><i class="icon icon-plus"></i></a>';
+                            _html += '</div>';
+                        _html += '</div>';
+                        _html += '<a href="javascript:void(0);" class="btn btn--secondary cart__remove" title="Remove tem" data-pid="'+ item.id +'"><i class="icon icon anm anm-times-l"></i></a>';
+                    _html += '</div>'
                 _html += '</td>';
                 _html += '<td class="cart__price-wrapper cart-flex-item text-center">';
-                    _html += '<span class="money">'+ formatMoney(item.price) +'</span>';
+                    _html += '<div class="product-price"><span class="old-price">'+formatMoney(item.price2)+'</span><span class="price">'+formatMoney(item.price)+'</span></div>';
                 _html += '</td>';
                 _html += '<td class="cart__update-wrapper cart-flex-item text-center">';
                     _html += '<div class="cart__qty text-center">';
