@@ -291,9 +291,35 @@ var renderProd = function(obj){
             var _name = $thisParent.attr("data-value"),
                 _img = $thisParent.attr("data-image");
 
-            $wrap.find(".slVariant").html(_name);
-            $wrap.find(".product-selected-image").attr("src", _img);
-            $wrap.find(".product-form-product-template").addClass("onselect");
+            var $wrapSelect = $wrap.find(".product-form-product-template");
+            if( !$wrapSelect.hasClass("onselect") ){
+                var _bottom = $(window).height()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
+                $wrapSelect.css('bottom', _bottom );
+                // $wrapSelect.css('bottom', -$wrapSelect.height()-130);
+                // $wrapSelect.css('top', $wrapSelect.offset().top-$(window).scrollTop()+5);
+                setTimeout(function(){
+                    $wrapSelect.addClass("onselect");
+                    // $('body').addClass("disablescroll");
+                    $wrapSelect.find(".slVariant").html(_name);
+
+                    setTimeout(function(){
+                        if( _bottom < 0 ){
+                            $wrapSelect.css("bottom", 0);
+                            $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
+                        }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
+                            var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
+                            $wrapSelect.css("bottom", _nBottom);
+                            $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                        }
+                    }, 1000);
+                }, 50);
+
+            }else{
+                $wrapSelect.find(".slVariant").html(_name);
+            }
+
+            $wrapSelect.find(".product-selected-image").attr("src", _img);
+
 
             $("#gallery a").each(function(){
                 if( $(this).attr("data-image") == _img ) $(this).addClass("active");
@@ -311,6 +337,12 @@ var renderProd = function(obj){
                     setPrice( _pr1, _pr2 );
                 }
             }
+        });
+
+        $wrap.find(".cover-product-form-product-template").on("scroll mousewheel touchmove", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         });
 
     }else{
@@ -400,6 +432,7 @@ var renderProd = function(obj){
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
                     $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
                     $wrap.find(".product-form-product-template").addClass("onselect");
+                    // $('body').addClass("disablescroll");
                     $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
                     return;
                 }
@@ -421,6 +454,7 @@ var renderProd = function(obj){
                 left: _to.left
             }, 'slow', function(){
                 $wrap.find(".product-form-product-template").removeClass("onselect");
+                // $('body').removeClass("disablescroll");
                 $eff.remove();
                 updateCartProd(pid, _num, true);
             });
@@ -444,6 +478,7 @@ var renderProd = function(obj){
     $wrap.find(".cover-product-form-product-template, .btn-close-product-selected-wrap").off().on("click", function(e){
         e.preventDefault();
         $wrap.find(".product-form-product-template").removeClass("onselect");
+        // $('body').removeClass("disablescroll");
     });
 
     $wrap.find(".btn-buyNow").off().on("click", function(e){
@@ -455,6 +490,7 @@ var renderProd = function(obj){
                 if( !pid ){
                     $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
                     $wrap.find(".product-form-product-template").addClass("onselect");
+                    // $('body').addClass("disablescroll");
                     $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
                     return;
                 }
@@ -1184,10 +1220,7 @@ var openUrl = function(_url, notsave){
 
             $('html, body').animate({
                 scrollTop: 0
-            }, 200, function(){
-                // Add hash (#) to URL when done scrolling (default click behavior)
-                // window.location.hash = hash;
-            });
+            }, 200);
         }
     }
 };

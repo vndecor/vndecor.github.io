@@ -951,7 +951,7 @@
 	function scroll_top(){
 		$("#site-scroll").on("click", function() {
 			$("html, body").animate({ scrollTop: 0 }, 1000);
-				return false;
+			return false;
 		}); 
 	}
 	scroll_top();
