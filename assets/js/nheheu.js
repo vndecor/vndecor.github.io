@@ -12,7 +12,7 @@ var USER = {};
 
 var PUBLISHER = [];
 
-var VERSION = "1.0.1";
+var VERSION = "1.0.2";
 
 var formatMoney = function(n, nocurrency){
 	var res = (n+"").replace(/\B(?=(\d{3})+(?!\d))/g, '.');

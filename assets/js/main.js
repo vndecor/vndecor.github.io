@@ -1041,14 +1041,14 @@
 			slidesToShow: 6,
 			slidesToScroll: 3,
 			speed: 500,
-			draggable: true,
 			responsive:[
 				{
 			      breakpoint: 767,
 			      settings: {
 			        slidesToShow: 1,
 			        slidesToScroll: 1,
-					draggable: true
+			        swipeToSlide: true,
+			        speed: 1500
 			      }
 			    },
 			]
