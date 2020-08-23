@@ -143,27 +143,25 @@ var renderItem = function(obj, customclass){
         _price = obj.price,
         _price2 = obj.price2;
 
-    if( !customclass ) customclass = "col-6 col-sm-6 col-md-4 col-lg-3 item";
+    if( !customclass ) customclass = "col-6 col-sm-6 col-md-4 col-lg-3 item px-1 px-lg-2 mb-2 mb-lg-3";
 
     _html += '<div class="'+ customclass +'" style="display: block;">';
+    _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="item-inner openlink">';
         _html += '<div class="product-image">';
-            _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="product-img openlink">';
                 _html += '<img src="'+ obj.imgs[0] +'">';
                 if( obj.liked ) _html += '<div class="product-liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
                 if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
-            _html += '</a>';
         _html += '</div>';
 
         _html += '<div class="product-details text-center">';
-            _html += '<div class="product-name">';
-                _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="openlink">'+ obj.name +'</a>';
-            _html += '</div>';
+            _html += '<div class="product-name">'+ obj.name +'</div>';
             _html += '<div class="product-price">';
                 _html += '<span class="old-price">'+ formatMoney(_price2) +'</span>';
                 _html += '<span class="price">'+ formatMoney(_price) +'</span>';
             _html += '</div>';
             _html += '<div class="product-review">'+ renderStar(obj.review) +'</div>';
         _html += '</div>';
+    _html += '</a>';
     _html += '</div>';
 
     return _html;
@@ -252,24 +250,6 @@ var renderProd = function(obj){
     if( PRODUCT.prices ){
         var _multitype = "";
 
-        // Mặc định chưa chọn
-
-        // var _default = -1;
-
-        // for( var i=0; i<PRODUCT.prices.length; i++ ){
-        //     if( _default == -1 && !PRODUCT.prices[i].soldout ){
-        //         _default = i;
-        //     }
-        // }
-
-        // if( _default == -1 ){
-        //     _price = PRODUCT.prices[0].price || PRODUCT.price;
-        //     _price2 = PRODUCT.prices[0].price2 || PRODUCT.price2;
-        // }else{
-        //     _price = PRODUCT.prices[_default].price || PRODUCT.price;
-        //     _price2 = PRODUCT.prices[_default].price2 || PRODUCT.price2;
-        // }
-
         for( var i=0; i<PRODUCT.prices.length; i++ ){
             var item = PRODUCT.prices[i];
             _multitype += '<div data-value="'+ item.name +'" class="swatch-element'+ (item.soldout?" soldout":"") +'" data-image="'+ item.img +'" data-index="'+ i +'">';
@@ -293,14 +273,12 @@ var renderProd = function(obj){
 
             var $wrapSelect = $wrap.find(".product-form-product-template");
             if( !$wrapSelect.hasClass("onselect") ){
-                var _bottom = $(window).height()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
+                var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
                 $wrapSelect.css('bottom', _bottom );
                 // $wrapSelect.css('bottom', -$wrapSelect.height()-130);
                 // $wrapSelect.css('top', $wrapSelect.offset().top-$(window).scrollTop()+5);
                 setTimeout(function(){
                     $wrapSelect.addClass("onselect");
-                    // $('body').addClass("disablescroll");
-                    $wrapSelect.find(".slVariant").html(_name);
 
                     setTimeout(function(){
                         if( _bottom < 0 ){
@@ -313,18 +291,16 @@ var renderProd = function(obj){
                         }
                     }, 1000);
                 }, 50);
-
-            }else{
-                $wrapSelect.find(".slVariant").html(_name);
             }
 
             $wrapSelect.find(".product-selected-image").attr("src", _img);
-
+            $wrapSelect.find(".slVariant").html(_name);
 
             $("#gallery a").each(function(){
                 if( $(this).attr("data-image") == _img ) $(this).addClass("active");
                 else $(this).removeClass('active');
             });
+
             $(".zoompro").data('elevateZoom').swaptheimage(_img, _img);
 
             // set price
@@ -370,7 +346,7 @@ var renderProd = function(obj){
     $wrap.find(".lightboximages").html(_zoomImg);
 
     product_thumb1();
-    product_zoom();
+    // product_zoom();
     video_popup();
 
     // render detail
@@ -746,7 +722,7 @@ var renderHomePage = function(_url){
     for( var i=0; i<PRODUCTS.length; i++ ){
         _html += renderItem(PRODUCTS[i]);
     }
-    $(".grid-products>.row").html( _html );
+    $(".grid-products").html( _html );
 };
 
 var renderProductPage = function(_url){
@@ -795,10 +771,10 @@ var renderProductPage = function(_url){
 
     for( var i=0; i<arrSP.length; i++ ){
         if( i< 6 ){
-            _htmlsptt += renderItem(arrSP[i], "col-6 col-sm-6 col-md-3 col-lg-2 item");
+            _htmlsptt += renderItem(arrSP[i], "col-6 col-sm-6 col-md-3 col-lg-2 px-1 px-lg-2 item");
         }
     }
-    $(".related-product>.grid-products>.row").html(_htmlsptt);
+    $(".related-product>.row").html(_htmlsptt);
 
     // SẢN PHẨM KHÁC
     var _htmlspk = "";

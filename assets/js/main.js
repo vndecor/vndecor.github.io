@@ -1039,8 +1039,18 @@
 		$('.product-thumb-style1').slick({
 			infinite: true,
 			slidesToShow: 6,
-			stageMargin: 5,
-			slidesToScroll: 3
+			slidesToScroll: 3,
+			speed: 300,
+			responsive:[
+				{
+			      breakpoint: 767,
+			      settings: {
+			        slidesToShow: 1,
+			        slidesToScroll: 1,
+			        swipeToSlide: true
+			      }
+			    },
+			]
 		});
 	};
 	// product_thumb1();
@@ -1103,7 +1113,7 @@
 			$(".selectedOpt").text(a), $(".stickyCart .selectbox").val(t).trigger("change"), $(".stickyOptions ul").slideUp("fast"), this.productvariants = JSON.parse(document.getElementById("ProductJson-" + i).innerHTML), $(".stickyCart .product-featured-img").attr("src", this.productvariants.variants[s].featured_image.src.replace(/(\.[^\.]*$|$)/, "_60x60$&"))
 		})
 	}
-	sticky_cart();
+	// sticky_cart();
 	
 	/*--------------------------
       25. Product Page Popup
