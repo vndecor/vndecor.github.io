@@ -1040,14 +1040,15 @@
 			infinite: true,
 			slidesToShow: 6,
 			slidesToScroll: 3,
-			speed: 300,
+			speed: 500,
+			draggable: true,
 			responsive:[
 				{
 			      breakpoint: 767,
 			      settings: {
 			        slidesToShow: 1,
 			        slidesToScroll: 1,
-			        swipeToSlide: true
+					draggable: true
 			      }
 			    },
 			]

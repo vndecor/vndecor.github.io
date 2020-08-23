@@ -12,6 +12,8 @@ var USER = {};
 
 var PUBLISHER = [];
 
+var VERSION = "1.0.1";
+
 var formatMoney = function(n, nocurrency){
 	var res = (n+"").replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 	if(!nocurrency ) res += " "+CURRENCY;
@@ -1413,6 +1415,8 @@ firebase.auth().onAuthStateChanged(function(_user) {
             }
             e.preventDefault();
         });
+
+        $(".footer .copytext").html(VERSION);
 
     })();
 });   
