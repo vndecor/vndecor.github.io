@@ -12,8 +12,6 @@ var USER = {};
 
 var PUBLISHER = [];
 
-var VERSION = "1.0.2";
-
 var formatMoney = function(n, nocurrency){
 	var res = (n+"").replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 	if(!nocurrency ) res += " "+CURRENCY;
@@ -298,12 +296,12 @@ var renderProd = function(obj){
             $wrapSelect.find(".product-selected-image").attr("src", _img);
             $wrapSelect.find(".slVariant").html(_name);
 
-            $("#gallery a").each(function(){
-                if( $(this).attr("data-image") == _img ) $(this).addClass("active");
-                else $(this).removeClass('active');
-            });
+            // $("#gallery a").each(function(){
+            //     if( $(this).attr("data-image") == _img ) $(this).addClass("active");
+            //     else $(this).removeClass('active');
+            // });
 
-            $(".zoompro").data('elevateZoom').swaptheimage(_img, _img);
+            // $(".zoompro").data('elevateZoom').swaptheimage(_img, _img);
 
             // set price
             var _i = $thisParent.attr("data-index");
@@ -332,20 +330,26 @@ var renderProd = function(obj){
 
     // images
     var imgs = obj.imgs;
-    var _gallery = "",
-        _zoomImg = "";
+    var _gallery = "";
+    var items = [];
     for( var i=0; i<imgs.length; i++){
-        _gallery += '<a data-image="'+ imgs[i] +'" data-zoom-image="'+ imgs[i] +'" class="slick-slide" data-slick-index="'+ (i+1) +'" aria-hidden="true" tabindex="-1"><img src="'+ imgs[i] +'" alt="" /></a>';
-        _zoomImg += '<a href="'+ imgs[i] +'" data-size="600x600"></a>';
+        _gallery += '<a data-image="'+ imgs[i] +'" aria-hidden="true" tabindex="-1"><img src="'+ imgs[i] +'"/></a>';
+        items.push({
+            src : imgs[i],
+            w: 600,
+            h: 600
+        })
     }
 
-    $wrap.find(".zoompro").attr({
-        "src": imgs[0],
-        "data-zoom-image": imgs[0] 
-    });
+    $wrap.find(".zoompro").attr("src", imgs[0]);
 
-    $wrap.find("#gallery").html(_gallery);
-    $wrap.find(".lightboximages").html(_zoomImg);
+    $wrap.find(".product-thumb-style1").html(_gallery).on("click", "a", function(e){
+        e.preventDefault();
+        var _src = $(this).attr("data-image");
+        if( _src ){
+            $wrap.find(".zoompro").attr("src", _src);
+        }
+    });
 
     product_thumb1();
     // product_zoom();
@@ -387,8 +391,6 @@ var renderProd = function(obj){
     }else{
         $("#spr-reviews .section-header-score").remove();
     }
-        
-
 
     // Breadcrumb
     var _breadcrumbs = '<a href="'+ BASEURL +'" class="openlink" title="Trở về trang chủ">Shop</a><i class="fa fa-caret-right"></i><span> '+ PRODUCT.name +'</span>';
@@ -409,9 +411,27 @@ var renderProd = function(obj){
                     // Không có mặc định, bắt phải chọn
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
                     $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
-                    $wrap.find(".product-form-product-template").addClass("onselect");
-                    // $('body').addClass("disablescroll");
-                    $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+                    
+                    var $wrapSelect = $wrap.find(".product-form-product-template");
+                    if( !$wrapSelect.hasClass("onselect") ){
+                        var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
+                        $wrapSelect.css('bottom', _bottom );
+                        $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+                        setTimeout(function(){
+                            $wrapSelect.addClass("onselect");
+
+                            setTimeout(function(){
+                                if( _bottom < 0 ){
+                                    $wrapSelect.css("bottom", 0);
+                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
+                                }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
+                                    var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
+                                    $wrapSelect.css("bottom", _nBottom);
+                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                                }
+                            }, 1000);
+                        }, 50);
+                    }
                     return;
                 }
 
@@ -467,9 +487,27 @@ var renderProd = function(obj){
                 pid = $wrap.find(".swatchInput:checked").val();
                 if( !pid ){
                     $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
-                    $wrap.find(".product-form-product-template").addClass("onselect");
-                    // $('body').addClass("disablescroll");
-                    $wrap.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+
+                    var $wrapSelect = $wrap.find(".product-form-product-template");
+                    if( !$wrapSelect.hasClass("onselect") ){
+                        var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
+                        $wrapSelect.css('bottom', _bottom );
+                        $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+                        setTimeout(function(){
+                            $wrapSelect.addClass("onselect");
+
+                            setTimeout(function(){
+                                if( _bottom < 0 ){
+                                    $wrapSelect.css("bottom", 0);
+                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
+                                }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
+                                    var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
+                                    $wrapSelect.css("bottom", _nBottom);
+                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                                }
+                            }, 1000);
+                        }, 50);
+                    }
                     return;
                 }
             }else{
@@ -501,29 +539,19 @@ var renderProd = function(obj){
     });
 
     // zooom
-    var items = [];
-    $('.lightboximages a').each(function() {
-        var $href   = $(this).attr('href'),
-            $size   = $(this).data('size').split('x'),
-            item = {
-                src : $href,
-                w: $size[0],
-                h: $size[1]
-            }
-            items.push(item);
-    });
 
-    $('.prlightbox').on('click', function (event) {
+    $wrap.find('.prlightbox').on('click', function (event) {
         event.preventDefault();
-      
-        var $index = $(".active-thumb").parent().attr('data-slick-index');
-        $index++;
-        $index = $index-1;
+        var _src = $(this).children().attr('src');
+
+        var $index = PRODUCT.imgs.indexOf(_src);
+        if($index == -1) $index = 0;
 
         var options = {
             index: $index,
             bgOpacity: 0.9,
-            showHideOpacity: true
+            showHideOpacity: true,
+            history: false
         }
         var lightBox = new PhotoSwipe($('.pswp')[0], PhotoSwipeUI_Default, items, options);
         lightBox.init();
@@ -1415,8 +1443,6 @@ firebase.auth().onAuthStateChanged(function(_user) {
             }
             e.preventDefault();
         });
-
-        $(".footer .copytext").html(VERSION);
 
     })();
 });   

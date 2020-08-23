@@ -1036,23 +1036,12 @@
 	
 	/* Product Detail Page Horizontal Thumb Slider */
 	window.product_thumb1 = function(){
-		$('.product-thumb-style1').slick({
+		$('.product-thumb-style1.slick-slider').slick({
 			infinite: true,
 			slidesToShow: 6,
 			slidesToScroll: 3,
-			speed: 500,
-			responsive:[
-				{
-			      breakpoint: 767,
-			      settings: {
-			        slidesToShow: 1,
-			        slidesToScroll: 1
-			      }
-			    },
-			]
+			speed: 500
 		});
-
-		$(".footer .copytext").html(VERSION+1);
 	};
 	// product_thumb1();
 	

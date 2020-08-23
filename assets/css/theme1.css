@@ -194,4 +194,14 @@ a{
 /*.product-form-product-template{position: relative;}*/
 .product-form .swatch label{text-transform: none;}
 .product-single__price{display: block;margin-right: 0;}
-html{width: 100%; height: 100%;}
+.product-horizontal-thumb-mobile{
+	white-space: nowrap;
+	overflow-y: scroll;
+}
+.product-horizontal-thumb-mobile > a{
+	display: inline-block;
+	margin-right: 5px;
+}
+.product-horizontal-thumb-mobile img{
+	width: 50px;
+}
