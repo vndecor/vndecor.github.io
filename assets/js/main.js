@@ -1046,13 +1046,13 @@
 			      breakpoint: 767,
 			      settings: {
 			        slidesToShow: 1,
-			        slidesToScroll: 1,
-			        swipeToSlide: true,
-			        speed: 1500
+			        slidesToScroll: 1
 			      }
 			    },
 			]
 		});
+
+		$(".footer .copytext").html(VERSION+1);
 	};
 	// product_thumb1();
 	
