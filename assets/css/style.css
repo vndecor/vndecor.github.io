@@ -3116,7 +3116,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     font-weight: bold;
     transform-origin: 0 0;
     transform: scale(1);
-    transition: all 0.7s;
+    transition: transform 0.7s;
 }
 .effect-addtocart.onmoving{transform: scale(0.3);}
 .cart td.cart__meta .cart__remove{position: absolute;top: 3px;right: -12px;z-index: 5;    background: transparent;color: #000;}
