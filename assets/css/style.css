@@ -3129,12 +3129,13 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	}
 }
 .product-details-img .zoompro-span{position: absolute; top:0; left: 0; width: 100%; z-index: 5;}
-.pswp.slide-mobile .pswp__top-bar{height: 0; position: static;}
-.pswp.slide-mobile .pswp__ui--idle .pswp__top-bar{opacity: 1; visibility: visible;}
+.pswp.slide-mobile .pswp__ui--idle{position: static;}
+.pswp.slide-mobile .pswp__top-bar{height: 0; position: static;z-index: 99;opacity: 1; visibility: visible;}
 .pswp.slide-mobile .pswp__counter{
-	bottom: 10px;
     position: absolute;
+    z-index: 99;
     top: auto;
+    bottom: 10px;
     left: 10px;
     right: auto;
     height: auto;
@@ -3157,6 +3158,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 .pswp.slide-mobile .pswp__caption{
 	bottom: 10px;
     position: absolute;
+    z-index: 99;
     top: auto;
     right: auto;
     left: 50%;
