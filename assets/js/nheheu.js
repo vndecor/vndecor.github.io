@@ -273,24 +273,18 @@ var renderProd = function(obj){
 
             var $wrapSelect = $wrap.find(".product-form-product-template");
             if( !$wrapSelect.hasClass("onselect") ){
-
-                // var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
-
                 var _top = $wrapSelect.offset().top - $(window).scrollTop() - 88 - 15;
-
                 $wrapSelect.css('top', _top );
-                // $wrapSelect.css('bottom', -$wrapSelect.height()-130);
-                // $wrapSelect.css('top', $wrapSelect.offset().top-$(window).scrollTop()+5);
                 setTimeout(function(){
                     $wrapSelect.addClass("onselect");
                     setTimeout(function(){
-                        if( _top < 60 ){
-                            $wrapSelect.css("top", 60);
-                            $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
-                        }else if( _top+$wrapSelect.innerHeight() > $(window).height() ){
+                        if( _top+$wrapSelect.innerHeight() > $(window).height() ){
                             var _nTop = $(window).height()-$wrapSelect.innerHeight();
                             $wrapSelect.css("top", _nTop);
                             $("html, body").animate({ scrollTop: "+="+ Math.abs(_nTop-_top) }, 300);
+                        }else if( _top < 60 ){
+                            $wrapSelect.css("top", 60);
+                            $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
                         }
                     }, 1000);
                 }, 50);
@@ -423,24 +417,22 @@ var renderProd = function(obj){
                 if( !pid ){
                     // Không có mặc định, bắt phải chọn
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
-                    $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    showMessage("Chưa chọn loại hàng", "warning", "d-none d-md-block");
                     
                     var $wrapSelect = $wrap.find(".product-form-product-template");
                     if( !$wrapSelect.hasClass("onselect") ){
-                        var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
-                        $wrapSelect.css('bottom', _bottom );
-                        $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+                        var _top = $wrapSelect.offset().top - $(window).scrollTop() - 88 - 15;
+                        $wrapSelect.css('top', _top );
                         setTimeout(function(){
                             $wrapSelect.addClass("onselect");
-
                             setTimeout(function(){
-                                if( _bottom < 0 ){
-                                    $wrapSelect.css("bottom", 0);
-                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
-                                }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
-                                    var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
-                                    $wrapSelect.css("bottom", _nBottom);
-                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                                if( _top+$wrapSelect.innerHeight() > $(window).height() ){
+                                    var _nTop = $(window).height()-$wrapSelect.innerHeight();
+                                    $wrapSelect.css("top", _nTop);
+                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_nTop-_top) }, 300);
+                                }else if( _top < 60 ){
+                                    $wrapSelect.css("top", 60);
+                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
                                 }
                             }, 1000);
                         }, 50);
@@ -454,9 +446,9 @@ var renderProd = function(obj){
                 pid = PRODUCT.id;
             }
 
-            var _from = $("#Quantity").offset(),
+            var _from = $wrap.find(".product-form__input.qty").offset(),
                 _to = $('.site-header__cart > .site-cart-count').offset(),
-                _num = $("#Quantity").val();
+                _num = $wrap.find(".product-form__input.qty").val();
 
             $eff.html(_num).css({top: _from.top-4, left: _from.left-10}).appendTo('body');
 
@@ -465,9 +457,11 @@ var renderProd = function(obj){
                 left: _to.left
             }, 'slow', function(){
                 $wrap.find(".product-form-product-template").removeClass("onselect");
-                // $('body').removeClass("disablescroll");
                 $eff.remove();
                 updateCartProd(pid, _num, true);
+                setTimeout(function(){
+                    showMessage("Thêm vào giỏ thành công", "success");
+                }, 800);
             });
 
             setTimeout(function(){
@@ -493,24 +487,22 @@ var renderProd = function(obj){
             if( PRODUCT.prices ){
                 pid = $wrap.find(".swatchInput:checked").val();
                 if( !pid ){
-                    $wrap.find(".alert-warning").html("chọn loại hàng").show().delay( 2500 ).fadeOut( 300 );
+                    showMessage("Chưa chọn loại hàng", "warning", "d-none d-md-block");
 
                     var $wrapSelect = $wrap.find(".product-form-product-template");
                     if( !$wrapSelect.hasClass("onselect") ){
-                        var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
-                        $wrapSelect.css('bottom', _bottom );
-                        $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+                        var _top = $wrapSelect.offset().top - $(window).scrollTop() - 88 - 15;
+                        $wrapSelect.css('top', _top );
                         setTimeout(function(){
                             $wrapSelect.addClass("onselect");
-
                             setTimeout(function(){
-                                if( _bottom < 0 ){
-                                    $wrapSelect.css("bottom", 0);
-                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
-                                }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
-                                    var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
-                                    $wrapSelect.css("bottom", _nBottom);
-                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                                if( _top+$wrapSelect.innerHeight() > $(window).height() ){
+                                    var _nTop = $(window).height()-$wrapSelect.innerHeight();
+                                    $wrapSelect.css("top", _nTop);
+                                    $("html, body").animate({ scrollTop: "+="+ Math.abs(_nTop-_top) }, 300);
+                                }else if( _top < 60 ){
+                                    $wrapSelect.css("top", 60);
+                                    $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
                                 }
                             }, 1000);
                         }, 50);
@@ -521,7 +513,7 @@ var renderProd = function(obj){
                 pid = PRODUCT.id;
             }
 
-            updateCartProd(pid, $("#Quantity").val());
+            updateCartProd(pid, $wrap.find(".product-form__input.qty").val());
             setTimeout(function(){
                 openUrl( getFullUrl("cart") );
             }, 100);
@@ -749,6 +741,25 @@ var showLoading = function(visible, _t){
             $body.removeClass("loading");
         }, _t*1000);
     }else $body.removeClass("loading");
+};
+
+var showMessage = function(_s, _type, _class){
+    var $body = $('body');
+    $body.children('.shop-message').remove();
+
+    if( !_s ) return;
+
+    if( !_type ) _type = 'warning';
+
+    if( !_class ) _class = "";
+    else _class = " "+_class; 
+
+    var _html = '<div class="shop-message'+_class+'"><div class="alert alert-'+_type+' text-center animated fadeInDown" role="alert">'+_s+'</div></div>';
+    var $mes = $(_html).appendTo('body').delay(4000).animate({
+        top: -100
+    }, function(){
+        $mes.remove();
+    });
 };
 
 var renderMiniCart = function(prods){
