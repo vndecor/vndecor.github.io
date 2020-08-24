@@ -589,6 +589,10 @@ var renderProd = function(obj){
         });
     });
 
+    sliderMobile.listen('preventDragEvent', function(e, isDown, preventObj) {
+        preventObj.prevent = !('ontouchstart' in document.documentElement);
+    });
+
     $wrap.find(".product-thumb-style1").on("click mouseenter", "a", function(e){
         e.preventDefault();
         var $this = $(this);

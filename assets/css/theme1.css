@@ -209,3 +209,7 @@ a{
 }
 .product-thumb-style1 .slick-slide a{border: 2px solid #fff;}
 .product-thumb-style1 .slick-slide a.active{border-color: #e95144;}
+
+.pswp.slide-mobile, .pswp.slide-mobile .pswp__container, .pswp.slide-mobile .pswp__zoom-wrap {
+	touch-action: auto;
+}
