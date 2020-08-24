@@ -1241,7 +1241,9 @@ var openUrl = function(_url, notsave){
         }else{
             PAGENAME = pname;
             $("#page-content").html(TEMPLATE[pname]);
-            $(".zoomContainer").remove();
+            $("body").removeClass (function (index, className) {
+                return (className.match (/(^|\s)page-\S+/g) || []).join(' ');
+            }).addClass("page-"+pname);
             switch(pname){
                 case "home":
                     renderHomePage(_url);

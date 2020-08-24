@@ -214,3 +214,7 @@ a{
 	touch-action: auto;
 }
 .stickyNav ~ #page-content{margin-top: 60px;}
+.breadcrumbs-wrapper{display: none}
+@media (min-width: 768px){
+	.breadcrumbs-wrapper{display: block}
+}

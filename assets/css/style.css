@@ -213,8 +213,7 @@ label { margin-bottom:3px; }
 .header-1 { background-color:#ffffff; border-bottom:1px solid #eeeeee; position: relative; z-index: 100; }
 
 .logo { margin:0; }
-.logo a { float:left; display:block; }
-.logo img { display:block; max-height:45px; }
+.logo img { display:inline-block; max-height:33px; }
 
 .iconset .icon { font-size:18px; vertical-align:middle; text-decoration:none; }
 .iconset { display:inline-block; position:relative; color:#030505; height:30px; line-height:30px; text-align:center; padding:0 9px; cursor:pointer; }
@@ -232,7 +231,8 @@ label { margin-bottom:3px; }
 .cnrLangList li a { color:#000000; display:block; font-size:12px; text-transform:uppercase; padding:1px 10px; opacity:0.6; border:1px solid rgba(0,0,0,0.3);}
 .cnrLangList li a:hover { color:#f04343; border:1px solid #f04343; opacity:1; text-decoration:none; }
 
-.stickyNav { position:fixed; top:0; z-index:1000; width:100%; left:0; background-color:#fff; border-bottom:0; box-shadow:0 0 4px rgba(0,0,0,0.4); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.4); }
+.stickyNav { position:fixed; top:0; z-index:1000; width:100%; right:0; background-color:#fff; border-bottom:0; box-shadow:0 0 4px rgba(0,0,0,0.4); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.4);  -ms-transition:all 0.4s ease-in-out; -webkit-transition:all 0.4s ease-in-out; transition:all 0.4s ease-in-out;}
+.menuOn .stickyNav{right: 270px;}
 .site-cart-count { font-size:10px; font-family:'Poppins', sans-serif; display:inline-block; color:#fff; background-color:#e95144; border-radius:50%; text-align:center; width:14px; height:14px; line-height:14px; position:absolute; right:-4px; top:0; }
 .minicart-right-drawer.right .modal-dialog { position:fixed; margin:auto; width:350px; max-width:100%; height:100%; z-index:1024;dz -webkit-transform:translate3d(0%,0,0); -ms-transform:translate3d(0%,0,0); -o-transform:translate3d(0%,0,0); transform:translate3d(0%,0,0); }
 .minicart-right-drawer.right .modal-content { border:none; border-radius:0; height:100%; overflow-y:auto; }
@@ -3191,3 +3191,9 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	-webkit-animation-duration: 0.3s;
     animation-duration: 0.3s;
 }
+
+.header .btn-back{min-width: 35px; }
+.header .btn-back .icon:nth-child(1){display: none;}
+.header .btn-back .icon:nth-child(2){display: inline-block;}
+.page-home .header .btn-back .icon:nth-child(2){display: none;}
+.page-home .header .btn-back .icon:nth-child(1){display: inline-block;}

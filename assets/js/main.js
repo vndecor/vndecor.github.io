@@ -211,10 +211,10 @@
 	  -----------------------------------------*/
 	window.onscroll = function(){ myFunction() };
     function myFunction() {
-		if($(window).scrollTop()>145){
-		  $('.header').addClass("stickyNav animated fadeIn");                   
+		if($(window).scrollTop()>35){
+		  $('.header').addClass("stickyNav"); //animated slideInDown
 		} else {
-		  $('.header').removeClass("stickyNav fadeIn");              
+		  $('.header').removeClass("stickyNav");              
 		}
     }
 	

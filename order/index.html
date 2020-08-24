@@ -16,7 +16,7 @@
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
     </head>
-    <body class="shop-listing shop-fullwidth-layout full-page-title">
+    <body class="shop-listing shop-fullwidth-layout full-page-title page-home">
         <div class="page-wrapper">
             <div id="main-seotag" class="invisible">
                 <img src="https://vndecor.github.io/assets/images/logo-square.png" alt="Logo Nhẹ hều">
@@ -51,18 +51,18 @@
             <header class="header animated d-flex align-items-center header-1">
                 <div class="container">
                     <div class="row">
-                        <div class="col-4 col-sm-4 col-md-4 d-block d-lg-none mobile-icons">
-                            <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
-                                <i class="icon anm anm-times-l"></i>
-                                <i class="anm anm-bars-r"></i>
-                            </button>
-                        </div>
-                        <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
+                        <div class="logo col-7 col-lg-2 align-self-center">
+                            <div class="iconset d-lg-none btn-back">
+                                <a href="https://vndecor.github.io/" class="openlink">
+                                    <i class="icon anm anm-home"></i>
+                                    <i class="icon anm anm-chevron-left"></i>
+                                </a>
+                            </div>
                             <a href="https://vndecor.github.io/" class="openlink">
                                 <img src="https://vndecor.github.io/assets/images/logo.png" alt="" title=""/>
                             </a>
                         </div>
-                        <div class="col-1 col-sm-1 col-md-1 col-lg-8 align-self-center d-menu-col">
+                        <div class="col-8 align-self-center d-menu-col d-none d-lg-block">
                             <nav class="grid__item" id="AccessibleNav">
                                 <ul id="siteNav" class="site-nav medium center hidearrow">
                                     <li><a href="https://vndecor.github.io/" class="openlink">Trang Chủ </a></li>
@@ -70,16 +70,21 @@
                                     <li><a href="https://vndecor.github.io/" class="openlink">Quà tặng</a></li>
                                     <li><a href="https://vndecor.github.io/?t=sale" class="openlink">Giảm Giá</a></li>
                                     <li><a href="https://vndecor.github.io/" class="openlink">Tin tức</a></li>
-                                    <!-- <li><a href="https://vndecor.github.io/cart" class="openlink">Giỏ Hàng</a></li> -->
                                 </ul>
                             </nav>
                         </div>
-                        <div class="col-4 col-sm-4 col-md-4 col-lg-2 align-self-center icons-col text-right">
+                        <div class="col-5 col-lg-2 align-self-center icons-col text-right">
                             <div class="header-cart iconset">
                                 <a href="https://vndecor.github.io/cart/" class="site-header__cart btn-minicart openlink">
-                                    <i class="icon anm anm-cart-l"></i> <span class="d-none d-sm-none d-md-none d-lg-inline">Giỏ hàng</span>
+                                    <i class="icon anm anm-cart-r"></i> <span class="d-none d-sm-none d-md-none d-lg-inline">Giỏ hàng</span>
                                     <span class="site-cart-count">0</span>
                                 </a>
+                            </div>
+                            <div class="iconset d-lg-none mobile-icons ml-3">
+                                <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                                    <i class="icon anm anm-times-r"></i>
+                                    <i class="icon anm anm-bars-r"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
