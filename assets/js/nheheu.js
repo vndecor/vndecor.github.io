@@ -571,7 +571,10 @@ var renderProd = function(obj){
         history: false,
         focus: false,
         modal:false,
-        closeOnScroll:false
+        closeOnScroll:false,
+        pinchToClose: false,
+        closeOnVerticalDrag: false,
+        escKey: false
     };
     var sliderMobile = new PhotoSwipe($('.pswp.slide-mobile')[0], PhotoSwipeUI_Default2, items, slmbOptions);
     sliderMobile.init();
