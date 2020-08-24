@@ -411,7 +411,7 @@
 	
 	.about-us-col { margin-bottom:20px; }
 	.footer .footer-top .footer-links { padding-top:8px; padding-bottom:8px }
-	.footer .footer-top .footer-links .h4 { cursor:pointer; border-bottom:1px dotted #d0d0d0; padding-bottom:15px; margin-bottom:0; }
+	.footer .footer-top .footer-links .h4 { cursor:pointer; border-top:1px dotted #d0d0d0; padding-top:15px; margin-bottom:0; }
 	.footer .footer-top .footer-links .h4:after { content: "\e64b"; font-family:'themify'; font-size:12px; display:block; position:absolute; right:30px; top:12px; }
 	.footer .footer-top .footer-links .h4.active:after { content: "\e648"; }
 	.footer .footer-top .footer-links ul { display:none; padding-top:10px; }
