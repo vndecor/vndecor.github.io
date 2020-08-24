@@ -35,38 +35,41 @@
 
 		<div class="container mt-4 checkout-wrapper">
 			<div class="row">
-				<div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4 cart-col">
+				<div class="col-12 col-sm-12 col-md-8 mb-4 cart-col">
 					<h5>Thông tin nhận hàng</h5>
+					<div class="row">
+						<div class="col-12 col-sm-12 col-md-6">
+							<div class="form-group">
+								<label>Họ và tên <span class="required-f">*</span></label>
+								<input type="text" class="cart_input-name" name="coupon" placeholder="Nguyễn Văn A" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label>Số điện thoại <span class="required-f">*</span></label>
+								<input type="text" class="cart_input-phone" name="coupon" placeholder="09xxxxxxx" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label>Địa chỉ <span class="required-f">*</span></label>
+								<input type="text" class="cart_input-address" name="coupon" placeholder="Địa chỉ nhận hàng" autocomplete="false">
+							</div>
+						</div>
+						<div class="col-12 col-sm-12 col-md-6">
+							<div class="form-group">
+								<label>Hình thức thanh toán <span class="required-f">*</span></label>
+								<div class="form-group select-wrapper">
+									<select class="cart_input-payment">
+			                            <option value="0">Thanh toán khi nhận hàng</option>
+			                            <option value="1">Chuyển khoản Ngân hàng/MoMo</option>
+			                        </select>
+		                    	</div>
+							</div>
+							<div class="form-group">
+								<label>Ghi chú đơn hàng</label>
+								<textarea style="height: 118px;" class="cart_input-note" placeholder="Thông tin bổ sung nếu có. Ví dụ ngày giờ địa chỉ nhận hàng"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
 
-					<div class="form-group">
-						<label>Họ và tên <span class="required-f">*</span></label>
-						<input type="text" class="cart_input-name" name="coupon" placeholder="Nguyễn Văn A" autocomplete="off">
-					</div>
-					<div class="form-group">
-						<label>Số điện thoại <span class="required-f">*</span></label>
-						<input type="text" class="cart_input-phone" name="coupon" placeholder="09xxxxxxx" autocomplete="off">
-					</div>
-					<div class="form-group">
-						<label>Địa chỉ <span class="required-f">*</span></label>
-						<input type="text" class="cart_input-address" name="coupon" placeholder="Địa chỉ nhận hàng" autocomplete="false">
-					</div>
-				</div>
-				<div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-4 cart-col">
-					<h5>&nbsp;</h5>
-					<div class="form-group">
-						<label>Hình thức thanh toán <span class="required-f">*</span></label>
-						<div class="form-group select-wrapper">
-							<select class="cart_input-payment">
-	                            <option value="0">Thanh toán khi nhận hàng</option>
-	                            <option value="1">Chuyển khoản Ngân hàng/MoMo</option>
-	                        </select>
-                    	</div>
-					</div>
-					<div class="form-group">
-						<label>Ghi chú đơn hàng</label>
-						<textarea style="height: 118px;" class="cart_input-note" placeholder="Thông tin bổ sung nếu có. Ví dụ ngày giờ địa chỉ nhận hàng"></textarea>
-					</div>
-				</div>
 				<div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
 					<div class="solid-border">
 						<!-- <div class="row">

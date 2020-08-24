@@ -213,3 +213,4 @@ a{
 .pswp.slide-mobile, .pswp.slide-mobile .pswp__container, .pswp.slide-mobile .pswp__zoom-wrap {
 	touch-action: auto;
 }
+.stickyNav ~ #page-content{margin-top: 60px;}

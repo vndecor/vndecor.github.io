@@ -273,21 +273,24 @@ var renderProd = function(obj){
 
             var $wrapSelect = $wrap.find(".product-form-product-template");
             if( !$wrapSelect.hasClass("onselect") ){
-                var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
-                $wrapSelect.css('bottom', _bottom );
+
+                // var _bottom = $(window).innerHeight()-$wrapSelect.offset().top+$(window).scrollTop()-$wrapSelect.innerHeight()-15;
+
+                var _top = $wrapSelect.offset().top - $(window).scrollTop() - 88 - 15;
+
+                $wrapSelect.css('top', _top );
                 // $wrapSelect.css('bottom', -$wrapSelect.height()-130);
                 // $wrapSelect.css('top', $wrapSelect.offset().top-$(window).scrollTop()+5);
                 setTimeout(function(){
                     $wrapSelect.addClass("onselect");
-
                     setTimeout(function(){
-                        if( _bottom < 0 ){
-                            $wrapSelect.css("bottom", 0);
-                            $("html, body").animate({ scrollTop: "+="+ Math.abs(_bottom) }, 300);
-                        }else if( _bottom+$wrapSelect.innerHeight()+60 > $(window).height() ){
-                            var _nBottom = $(window).height()-$wrapSelect.innerHeight()-60;
-                            $wrapSelect.css("bottom", _nBottom);
-                            $("html, body").animate({ scrollTop: "-="+ Math.abs(_nBottom-_bottom) }, 300);
+                        if( _top < 60 ){
+                            $wrapSelect.css("top", 60);
+                            $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
+                        }else if( _top+$wrapSelect.innerHeight() > $(window).height() ){
+                            var _nTop = $(window).height()-$wrapSelect.innerHeight();
+                            $wrapSelect.css("top", _nTop);
+                            $("html, body").animate({ scrollTop: "+="+ Math.abs(_nTop-_top) }, 300);
                         }
                     }, 1000);
                 }, 50);
