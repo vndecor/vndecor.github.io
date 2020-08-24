@@ -200,8 +200,12 @@ a{
 }
 .product-horizontal-thumb-mobile > a{
 	display: inline-block;
-	margin-right: 5px;
+	margin-right: 0px;
+	border: 2px solid #fff;
 }
+.product-horizontal-thumb-mobile a.active{border-color: #e95144;}
 .product-horizontal-thumb-mobile img{
-	width: 50px;
+	width: 55px;
 }
+.product-thumb-style1 .slick-slide a{border: 2px solid #fff;}
+.product-thumb-style1 .slick-slide a.active{border-color: #e95144;}

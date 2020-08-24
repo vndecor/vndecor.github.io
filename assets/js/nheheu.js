@@ -303,6 +303,10 @@ var renderProd = function(obj){
 
             // $(".zoompro").data('elevateZoom').swaptheimage(_img, _img);
 
+            $wrap.find(".zoompro").attr("src", _img);
+            $wrap.find(".product-thumb-style1 a").removeClass("active");
+
+
             // set price
             var _i = $thisParent.attr("data-index");
             if( _i ){
@@ -334,22 +338,28 @@ var renderProd = function(obj){
     var items = [];
     for( var i=0; i<imgs.length; i++){
         _gallery += '<a data-image="'+ imgs[i] +'" aria-hidden="true" tabindex="-1"><img src="'+ imgs[i] +'"/></a>';
-        items.push({
+
+        var itemSl = {
             src : imgs[i],
             w: 600,
             h: 600
-        })
+        };
+
+        if( PRODUCT.prices ){
+            for( var j=0; j< PRODUCT.prices.length; j++){
+                if( imgs[i] == PRODUCT.prices[j].img ){
+                    itemSl.title = PRODUCT.prices[j].name;
+                    break;
+                }
+            }
+        }
+
+        items.push(itemSl);
     }
 
     $wrap.find(".zoompro").attr("src", imgs[0]);
 
-    $wrap.find(".product-thumb-style1").html(_gallery).on("click", "a", function(e){
-        e.preventDefault();
-        var _src = $(this).attr("data-image");
-        if( _src ){
-            $wrap.find(".zoompro").attr("src", _src);
-        }
-    });
+    $wrap.find(".product-thumb-style1").html(_gallery);
 
     product_thumb1();
     // product_zoom();
@@ -473,12 +483,6 @@ var renderProd = function(obj){
         }
     });
 
-    $wrap.find(".cover-product-form-product-template, .btn-close-product-selected-wrap").off().on("click", function(e){
-        e.preventDefault();
-        $wrap.find(".product-form-product-template").removeClass("onselect");
-        // $('body').removeClass("disablescroll");
-    });
-
     $wrap.find(".btn-buyNow").off().on("click", function(e){
         e.preventDefault();
         if( !PRODUCT.soldout ){
@@ -521,6 +525,11 @@ var renderProd = function(obj){
         }
     });
 
+    $wrap.find(".cover-product-form-product-template, .btn-close-product-selected-wrap").off().on("click", function(e){
+        e.preventDefault();
+        $wrap.find(".product-form-product-template").removeClass("onselect");
+    });
+
     $wrap.find(".btn-likeThisProduct").off().on("click", function(e){
         var _i = LikedProds.indexOf(obj.id);
         if( _i != -1 ){ // đã like => xóa
@@ -539,7 +548,6 @@ var renderProd = function(obj){
     });
 
     // zooom
-
     $wrap.find('.prlightbox').on('click', function (event) {
         event.preventDefault();
         var _src = $(this).children().attr('src');
@@ -550,11 +558,44 @@ var renderProd = function(obj){
         var options = {
             index: $index,
             bgOpacity: 0.9,
-            showHideOpacity: true,
-            history: false
+            history: false,
         }
-        var lightBox = new PhotoSwipe($('.pswp')[0], PhotoSwipeUI_Default, items, options);
+        var lightBox = new PhotoSwipe($('.pswp.slide-fullpage')[0], PhotoSwipeUI_Default, items, options);
         lightBox.init();
+    });
+
+    // mobile auto slide
+    var slmbOptions = {
+        index: 0,
+        bgOpacity: 0,
+        history: false,
+        focus: false,
+        modal:false,
+        closeOnScroll:false
+    };
+    var sliderMobile = new PhotoSwipe($('.pswp.slide-mobile')[0], PhotoSwipeUI_Default2, items, slmbOptions);
+    sliderMobile.init();
+
+    sliderMobile.listen('afterChange', function() {
+        // console.log("changeeeee", sliderMobile.currItem);
+        var _src = sliderMobile.currItem.src;
+        $wrap.find(".product-thumb-style1 a").each(function(){
+            var $this = $(this);
+            if( $this.attr("data-image") == _src ) $this.addClass("active");
+            else $this.removeClass("active");
+        });
+    });
+
+    $wrap.find(".product-thumb-style1").on("click mouseenter", "a", function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var _src = $this.attr("data-image");
+        if( _src ){
+            $wrap.find(".zoompro").attr("src", _src);
+            // $this.addClass("active").closest(".product-thumb-style1").find("a").not(this).removeClass("active");
+            var _index = PRODUCT.imgs.indexOf(_src);
+            if( _index >=0 && _index < PRODUCT.imgs.length ) sliderMobile.goTo(_index);
+        }
     });
 };
 

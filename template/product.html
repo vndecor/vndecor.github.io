@@ -11,10 +11,59 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-5 col-sm-12 col-12">
                             <div class="product-details-img product-horizontal-style mx-n3 mx-lg-0 mt-n3 mt-lg-0">
-                                <div class="zoompro-wrap product-zoom-right pl-20">
-                                    <div class="zoompro-span prlightbox">
+                                <div class="zoompro-wrap product-zoom-right">
+                                    <div class="cover-product-details-img"></div>
+
+                                    <div class="zoompro-span prlightbox d-none d-lg-block">
                                         <img class="zoompro" alt=""/>
                                     </div>
+
+                                    <div class="pswp slide-mobile" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <!-- Background of PhotoSwipe. 
+                                             It's a separate element, as animating opacity is faster than rgba(). -->
+                                        <div class="pswp__bg"></div>
+                                        <!-- Slides wrapper with overflow:hidden. -->
+                                        <div class="pswp__scroll-wrap">
+                                            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+                                            <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+                                            <div class="pswp__container">
+                                                <div class="pswp__item"></div>
+                                                <div class="pswp__item"></div>
+                                                <div class="pswp__item"></div>
+                                            </div>
+                                            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                                            <div class="pswp__ui pswp__ui--hidden">
+                                                <div class="pswp__top-bar">
+                                                    <!--  Controls are self-explanatory. Order can be changed. -->
+                                                    <div class="pswp__counter"></div>
+                                                    <button class="pswp__button pswp__button--close hide" title="Close (Esc)"></button>
+                                                    <button class="pswp__button pswp__button--share hide" title="Share"></button>
+                                                    <button class="pswp__button pswp__button--fs hide" title="Toggle fullscreen"></button>
+                                                    <button class="pswp__button pswp__button--zoom hide" title="Zoom in/out"></button>
+
+                                                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                                                    <!-- element will get class pswp__preloader--active when preloader is running -->
+
+                                                    <div class="pswp__preloader">
+                                                        <div class="pswp__preloader__icn">
+                                                            <div class="pswp__preloader__cut">
+                                                                <div class="pswp__preloader__donut"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                                                    <div class="pswp__share-tooltip"></div>
+                                                </div>
+                                                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                                                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                                                <div class="pswp__caption">
+                                                    <div class="pswp__caption__center"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- <div class="product-labels"><span class="lbl pr-label1">new</span></div> -->
                                     <div class="product-buttons">
                                         <a href="https://www.youtube.com/watch?v=93A2jOW5Mog" class="mfpbox mfp-with-anim btn popup-video" title="View Video">
@@ -108,7 +157,7 @@
 
                             <div class="cover-product-form-product-template"></div>
 
-                            <div class="contact-details px-4 py-3 mb-2">
+                            <div class="contact-details px-4 py-3 mb-2 d-none d-lg-block">
                                 <strong>nheheu.com</strong> chuyên sản phẩm đồ trang trí đẹp được mọi người ưa chuộng. Giao hàng toàn quốc.
                             </div>
                                 
@@ -208,7 +257,7 @@
     </div>
 </div><!--End Body Container-->
 
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="pswp slide-fullpage" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="pswp__bg"></div>
     <div class="pswp__scroll-wrap">
         <div class="pswp__container">
