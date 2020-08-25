@@ -129,7 +129,7 @@
 	#MobileNav { height:100%; overflow:auto; list-style:none; padding:0; margin:0; }
 	.mobile-nav-wrapper .closemobileMenu { color:#000; font-size:13px; padding:8px 10px; background-color:#eee; cursor:pointer; }
 	.mobile-nav-wrapper .closemobileMenu .anm { font-size:13px; padding:2px; float:right; }
-	.mobile-nav-wrapper { width:270px; height:100%;position:fixed; right:-280px; top:0; z-index:10000; background-color:#ffffff; box-shadow:0 0 5px rgba(0,0,0,0.3); opacity:0; visibility:hidden;-ms-transition:all 0.4s ease-in-out; -webkit-transition:all 0.4s ease-in-out; transition:all 0.4s ease-in-out; }
+	.mobile-nav-wrapper { width:270px; height:100%;position:fixed; right:-280px; top:0; z-index:10000; box-shadow:0 0 5px rgba(0,0,0,0.3); opacity:0; visibility:hidden;-ms-transition:all 0.4s ease-in-out; -webkit-transition:all 0.4s ease-in-out; transition:all 0.4s ease-in-out; }
 	.mobile-nav-wrapper.active { right:0; opacity:1; visibility:visible; }
 	#MobileNav li { border-top:1px solid #eeeeee; position:relative }
 	#MobileNav li.grid__item {float:none;padding:0 }
@@ -162,7 +162,7 @@
 	
 	.template-collection .collection-header { margin-bottom:20px; }
 	
-	.product-details-img { margin-bottom:20px; overflow:hidden; }
+	.product-details-img { overflow:hidden; }
 	h1.product-single__title, .product-single__title.h1 { font-size:16px; }
 	.template-product .tabs-listing .product-tabs a { padding:15px 10px; }
 	
@@ -280,9 +280,9 @@
 }
 
 @media only screen and (max-width: 767px) {
-	h1, .h1 { font-size:1.69231em }
-	h2, .h2 { font-size:1.38462em; text-transform:uppercase; letter-spacing:0.03em }
-	h3, .h3 { font-size:1.15385em; text-transform:uppercase }
+	h1, .h1 { font-size:1.69231em; }
+	h2, .h2 { font-size:1.38462em; }
+	h3, .h3 { font-size:1.15385em; }
 	
 	.mobile-hide { display:none; }
 	.container { padding-left:15px; padding-right:15px; }
@@ -408,8 +408,7 @@
 	.list-view-items .button-box > div .btn-icon { width:35px; }
 	
 	 h2, .h2, .home2-default .section-header h2, .home2-default .section-header .h2 { font-size:18px; }
-	
-	.about-us-col { margin-bottom:20px; }
+
 	.footer .footer-top .footer-links { padding-top:8px; padding-bottom:8px }
 	.footer .footer-top .footer-links .h4 { cursor:pointer; border-top:1px dotted #d0d0d0; padding-top:15px; margin-bottom:0; }
 	.footer .footer-top .footer-links .h4:after { content: "\e64b"; font-family:'themify'; font-size:12px; display:block; position:absolute; right:30px; top:12px; }

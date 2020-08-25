@@ -146,10 +146,10 @@ var renderItem = function(obj, customclass){
     if( !customclass ) customclass = "col-6 col-sm-6 col-md-4 col-lg-3 item px-1 px-lg-2 mb-2 mb-lg-3";
 
     _html += '<div class="'+ customclass +'" style="display: block;">';
-    _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="item-inner openlink">';
+    _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="item-inner openlink bg-w">';
         _html += '<div class="product-image">';
                 _html += '<img src="'+ obj.imgs[0] +'">';
-                if( obj.liked ) _html += '<div class="product-liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
+                if( obj.liked ) _html += '<div class="product-liked liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
                 if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
         _html += '</div>';
 
@@ -197,7 +197,7 @@ var renderStar = function(data){
         pointReview = Math.round(10*_total/data.length)/10;
     }
 
-    pointReview = 5;
+    // pointReview = 5;
 
     for( var i=1; i<=pointReview; i++ ){
         _reviewStar += '<i class="font-13 fa fa-star"></i>';
@@ -224,12 +224,15 @@ var renderProd = function(obj){
     if( obj.soldout ){ // hết hàng
         $wrap.find(".instock").addClass("hide");
         $wrap.find(".outstock").removeClass("hide");
-
         $wrap.find(".btn-buyNow").html("Hết hàng");
     }
 
     if( LikedProds.indexOf(obj.id) != -1 ){
-        $wrap.find(".btn-likeThisProduct >.icon").removeClass("anm-heart-l").addClass("anm-heart");
+        $wrap.find(".btn-likeThisProduct >.icon").removeClass("anm-heart-r").addClass("anm-heart");
+        $wrap.find('.product-liked').addClass("liked");
+    }else{
+        $wrap.find('.product-liked').removeClass("liked");
+        $wrap.find(".btn-likeThisProduct >.icon").addClass("anm-heart-r").removeClass("anm-heart");
     }
 
     // 
@@ -362,46 +365,7 @@ var renderProd = function(obj){
     // product_zoom();
     video_popup();
 
-    // render detail
-    var _detail = obj.detail? obj.detail : "<h3>Nội dung đang được cập nhật</h3>";
-    $(".description-inner").html(_detail);
 
-    // render review
-    var _review = "";
-    if( obj.review ){
-        for( var i=0; i< obj.review.length; i++ ){
-            _review += '<div class="spr-review"><div class="spr-review-header"><span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
-            _review += '<div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div>';
-            _review += '</div><div class="spr-review-content">';
-            _review += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
-            if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
-            _review += '</div>';
-
-            if( obj.review[i].reply ) _review += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
-
-            _review += '</div>';
-        }
-    }else{
-        _review = "<h3>Chưa có nhận xét nào</h3>";
-    }
-
-    $("#spr-reviews .review-inner").html( _review );
-
-    if( obj.review && obj.review.length ){
-        var _total = 0;
-        for( var i=0; i<obj.review.length; i++ ){
-            _total += obj.review[i].vote;
-        }
-        var pointReview = Math.round(10*_total/obj.review.length)/10;
-        $("#spr-reviews .section-header-score .score").html(pointReview);
-        $("#spr-reviews .section-header .count").html(obj.review.length);
-    }else{
-        $("#spr-reviews .section-header-score").remove();
-    }
-
-    // Breadcrumb
-    var _breadcrumbs = '<a href="'+ BASEURL +'" class="openlink" title="Trở về trang chủ">Shop</a><i class="fa fa-caret-right"></i><span> '+ PRODUCT.name +'</span>';
-    $(".breadcrumbs").html(_breadcrumbs);
 
     // event Click 
     $wrap.find(".btn-addToCartMain").off().on("click", function(e){
@@ -526,20 +490,21 @@ var renderProd = function(obj){
     });
 
     $wrap.find(".btn-likeThisProduct").off().on("click", function(e){
+        e.preventDefault();
         var _i = LikedProds.indexOf(obj.id);
         if( _i != -1 ){ // đã like => xóa
             obj.liked -= 1;
             LikedProds.splice(_i, 1);
-            $(this).children(".icon").addClass("anm-heart-l").removeClass("anm-heart");
+            $wrap.find(".btn-likeThisProduct>.icon").addClass("anm-heart-r").removeClass("anm-heart");
+            $wrap.find('.product-liked').removeClass("liked");
         }else{ // thêm
             obj.liked += 1;
             LikedProds.push(obj.id);
-            $(this).children(".icon").removeClass("anm-heart-l").addClass("anm-heart");
+            $wrap.find(".btn-likeThisProduct>.icon").removeClass("anm-heart-r").addClass("anm-heart");
+            $wrap.find('.product-liked').addClass("liked");
         }
 
         $wrap.find('.product-liked .num').html(obj.liked);
-
-        e.preventDefault();
     });
 
     // zooom
@@ -599,6 +564,67 @@ var renderProd = function(obj){
             if( _index >=0 && _index < PRODUCT.imgs.length ) sliderMobile.goTo(_index);
         }
     });
+
+    /*========== RENDER CONTENT ===============================*/ 
+    // Breadcrumb
+    var _breadcrumbs = '<a href="'+ BASEURL +'" class="openlink" title="Trở về trang chủ">Shop</a><i class="fa fa-caret-right"></i><span> '+ PRODUCT.name +'</span>';
+    $(".breadcrumbs").html(_breadcrumbs);
+
+    // render detail
+    var _detail = obj.detail? obj.detail : "<h3>Nội dung đang được cập nhật</h3>";
+    $(".description-inner").html(_detail);
+
+    // render review
+    var _review = "";
+    if( obj.review ){
+        for( var i=0; i< obj.review.length; i++ ){
+            _review += '<div class="spr-review"><div class="spr-review-header"><span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
+            _review += '<div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div>';
+            _review += '</div><div class="spr-review-content">';
+            _review += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
+            if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
+            _review += '</div>';
+
+            if( obj.review[i].reply ) _review += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
+
+            _review += '</div>';
+        }
+    }else{
+        _review = "<h3>Chưa có nhận xét nào</h3>";
+    }
+
+    $(".spr-reviews .review-inner").html( _review );
+
+    if( obj.review && obj.review.length ){
+        var _total = 0;
+        for( var i=0; i<obj.review.length; i++ ){
+            _total += obj.review[i].vote;
+        }
+        var pointReview = Math.round(10*_total/obj.review.length)/10;
+        $(".spr-reviews .section-header-score .score").html(pointReview);
+        $(".spr-reviews .section-header .count").html(obj.review.length);
+    }else{
+        $(".spr-reviews .section-header-score").remove();
+    }
+
+    // render questions
+    var _question = "";
+    if( obj.review ){
+        for( var i=0; i< obj.review.length; i++ ){
+            _question += '<div class="spr-review"><div class="spr-review-header">';
+            _question += '<div class="spr-review-header-avt">'+ obj.review[i]["name"][0] +'</div>';
+            _question += '<h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3>';
+            _question += '</div><div class="spr-review-content">';
+            _question += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
+            _question += '</div>';
+            if( obj.review[i].reply ) _question += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
+            _question += '</div>';
+        }
+    }else{
+        _question = "<h3>Chưa có câu hỏi nào</h3>";
+    }
+
+    $(".spr-questions .review-inner").html( _question );
 };
 
 var getMyCart = function(){ // return array
@@ -889,7 +915,7 @@ var renderCartPage = function(){
             var item = getItemInfo(prods[j].pid);
             _totalMoney += prods[j].num*item.price;
 
-            _html += '<tr class="cart__row border-bottom line1 cart-flex border-top">';
+            _html += '<tr class="cart__row border-bottom line1 cart-flex">';
                 _html += '<td class="cart__image-wrapper cart-flex-item">';
                     _html += '<a href="'+ getFullUrl("product/?p="+item.slug) +'" class="openlink"><img class="cart__image" src="'+item.img+'" alt="'+ item.name +'"></a>';
                 _html += '</td>';
@@ -1232,7 +1258,7 @@ var openUrl = function(_url, notsave){
 
 
     if( pname ){
-        $("#page-content").addClass("invisible");
+        // $("#page-content").addClass("invisible");
         if( !TEMPLATE[pname] ){
             $.get(BASEURL+"/template/"+ pname +".html?t="+Date.now(), function(data){
                 TEMPLATE[pname] = data;
