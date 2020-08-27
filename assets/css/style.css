@@ -222,7 +222,7 @@ label { margin-bottom:3px; }
 
 #settingsBox, #cart-drawer, #searchPopup { color:#050000; text-align:left; background-color:#ffffff; box-shadow:0 0 15px rgba(5,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(5,0,0,0.1); -ms-transition:all 0.3s ease-in-out; -webkit-transition:all 0.3s ease-in-out; transition:all 0.3s ease-in-out; }
 #settingsBox { visibility:hidden; opacity:0; padding:20px; width:300px; position:absolute; top:130%; right:15px; z-index:99; }
-#settingsBox.active { visibility:visible; opacity:1; top:100%; }
+#settingsBox.active { visibility:visible; opacity:1; top:45px; }
 #settingsBox .btn { width:100%; }
 .icons-col .customer-links { font-size:12px; text-transform:uppercase; }
 .icons-col .customer-links .register { text-decoration:underline; }
@@ -3228,3 +3228,60 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     font-weight: bold;
 }
 .spr-review-header-avt + .spr-review-header-title{padding-left: 30px;}
+
+.share_social_list_btn>a{
+	border: 0;
+    float: left;
+    padding: 0;
+
+	width: 48%;
+    background: #f2f2f2;
+    border-radius: 50px;
+    line-height: 28px;
+    margin-bottom: 8px;
+    margin-right: 0;
+    position: relative;
+}
+.share_social_list_btn a:nth-child(2n+1){float: right;}
+.share_social_list_btn .share_text{
+	position: absolute;
+	top:0;
+	left: 43px;
+    margin-bottom: 0;
+    line-height: 36px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #515151;
+    white-space: nowrap;
+}
+.share_social_list_btn i{
+	background-size: contain;
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    float: left;
+}
+.share_social_list_btn .share_social_call .share_call_desc {
+    position: absolute;
+    font-size: 12px;
+    width: 100%;
+    left: 43px;
+    line-height: 21px;
+    color: #515151;
+}
+.share_social_list_btn .share_social_call .share_call_phone {
+    position: absolute;
+    top: 18px;
+    left: 43px;
+    font-size: 15px;
+    width: 100%;
+    line-height: 17px;
+    color: #515151;
+    font-weight: 500;
+}
+.icon-zalo-circle{background: url(https://vndecor.github.io//assets/images/icon-zalo-circle.svg) no-repeat;}
+.icon-facebook-circle{background: url(https://vndecor.github.io//assets/images/icon-facebook-circle.svg) no-repeat;}
+.icon-chat-circle{background: url(https://vndecor.github.io//assets/images/icon-chat-circle.png) no-repeat;}
+.icon-phone-circle{background: url(https://vndecor.github.io//assets/images/icon-phone-circle.png) no-repeat;}
+.icon-sms-circle{background: url(https://vndecor.github.io//assets/images/icon-sms-circle.svg) no-repeat;}
+.icon-link-circle{background: url(https://vndecor.github.io//assets/images/icon-link-circle.svg) no-repeat;}

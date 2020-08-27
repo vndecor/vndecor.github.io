@@ -1,4 +1,4 @@
-var BASEURL = "https://vndecor.github.io/";
+var BASEURL = "https://vndecor.github.io//";
 var CURRENCY = "₫";
 var PRODUCTS = [];
 var PRODUCT = null;
@@ -148,9 +148,9 @@ var renderItem = function(obj, customclass){
     _html += '<div class="'+ customclass +'" style="display: block;">';
     _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="item-inner openlink bg-w">';
         _html += '<div class="product-image">';
-                _html += '<img src="'+ obj.imgs[0] +'">';
+                _html += '<img data-src="'+ obj.imgs[0] +'" class="lazyload" alt="'+ obj.name +'">';
                 if( obj.liked ) _html += '<div class="product-liked liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
-                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
+                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io//assets/images/soldout2.png" ></span>';
         _html += '</div>';
 
         _html += '<div class="product-details text-center">';
@@ -174,7 +174,7 @@ var renderItem2 = function(obj){ // list item right sidebar
 
     _html += '<div class="grid__item"><div class="mini-list-item"><div class="mini-view_image">';
     _html += '<a class="grid-view-item__link openlink" href="'+ getFullUrl('product/?p='+ obj.slug) +'">';
-    _html += '<img class="grid-view-item__image ls-is-cached" src="'+ obj.imgs[0] +'" alt="">';
+    _html += '<img class="grid-view-item__image ls-is-cached lazyload" data-src="'+ obj.imgs[0] +'" alt="'+ obj.name +'">';
     _html += '</a></div><div class="details">';
     _html += '<a class="grid-view-item__title openlink" href="'+ getFullUrl('product/?p='+ obj.slug) +'">'+ obj.name +'</a>';
     _html += '<div class="grid-view-item__meta"><span class="product-price__price"><span class="money">'+ formatMoney(_price) +'</span></span></div>';
@@ -362,8 +362,10 @@ var renderProd = function(obj){
     $wrap.find(".product-thumb-style1").html(_gallery);
 
     product_thumb1();
-    // product_zoom();
-    video_popup();
+
+    $wrap.find('.popup-video').magnificPopup({
+        type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
+    });
 
 
 
@@ -1534,6 +1536,20 @@ firebase.auth().onAuthStateChanged(function(_user) {
             e.preventDefault();
         });
 
+        (function(){
+            var _fixed = false,
+                $header = $('.header'),
+                $window = $(window);
+            window.onscroll = function(){
+                if( $window.scrollTop()>35 ){
+                    if(!_fixed) $header.addClass("stickyNav");
+                    _fixed = true;
+                } else {
+                    if(_fixed) $header.removeClass("stickyNav");
+                    _fixed = false;
+                }
+            };
+        })();
     })();
 });   
 
@@ -1581,4 +1597,13 @@ function homeSlider(){
             }
         }, timeAuto);
     });
+}
+
+window.onscroll = function(){ myFunction() };
+function myFunction() {
+    if($(window).scrollTop()>35){
+      $('.header').addClass("stickyNav"); //animated slideInDown
+    } else {
+      $('.header').removeClass("stickyNav");              
+    }
 }

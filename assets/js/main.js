@@ -209,14 +209,14 @@
 	/*-----------------------------------------
 	  7. Sticky Header
 	  -----------------------------------------*/
-	window.onscroll = function(){ myFunction() };
-    function myFunction() {
-		if($(window).scrollTop()>35){
-		  $('.header').addClass("stickyNav"); //animated slideInDown
-		} else {
-		  $('.header').removeClass("stickyNav");              
-		}
-    }
+	// window.onscroll = function(){ myFunction() };
+ //    function myFunction() {
+	// 	if($(window).scrollTop()>35){
+	// 	  $('.header').addClass("stickyNav"); //animated slideInDown
+	// 	} else {
+	// 	  $('.header').removeClass("stickyNav");              
+	// 	}
+ //    }
 	
 	/*-----------------------------------------
 	  8. Mobile Main Menu
@@ -1108,14 +1108,6 @@
 	/*--------------------------
       25. Product Page Popup
 	---------------------------- */
-    window.video_popup = function(){
-		if($('.popup-video').length){
-			$('.popup-video').magnificPopup({
-				type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
-			});
-		}
-	}
-	// video_popup();
 	
 	function size_popup(){
 		$('.sizelink').magnificPopup({
