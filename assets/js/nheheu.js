@@ -1,4 +1,4 @@
-var BASEURL = "https://vndecor.github.io//";
+var BASEURL = "https://vndecor.github.io/";
 var CURRENCY = "₫";
 var PRODUCTS = [];
 var PRODUCT = null;
@@ -150,7 +150,7 @@ var renderItem = function(obj, customclass){
         _html += '<div class="product-image">';
                 _html += '<img data-src="'+ obj.imgs[0] +'" class="lazyload" alt="'+ obj.name +'">';
                 if( obj.liked ) _html += '<div class="product-liked liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
-                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io//assets/images/soldout2.png" ></span>';
+                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
         _html += '</div>';
 
         _html += '<div class="product-details text-center">';
@@ -1268,57 +1268,59 @@ var openUrl = function(_url, notsave){
             });
         }else{
             PAGENAME = pname;
-            $("#page-content").html(TEMPLATE[pname]);
-            $("body").removeClass (function (index, className) {
-                return (className.match (/(^|\s)page-\S+/g) || []).join(' ');
-            }).addClass("page-"+pname);
-            switch(pname){
-                case "home":
-                    renderHomePage(_url);
-                    _url = BASEURL;
-                    break;
-                case "product":
-                    renderProductPage(_url);
-                    break;
-                case "cart":
-                    renderCartPage();
-                    break;
-                case "order":
-                    renderOrderPage();
-                    break;
-                case "pub":
-                    PUBLISHER = [];
-                    var tt = 0;
-                    db.collection("pub-click").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            PUBLISHER.push(doc.data());
-                            tt++;
-                            if( tt === 2 ) renderPubPage();
-                        });
-                    }).catch(function(error) {
-                        console.log("Error get click");
-                    });
 
-                    db.collection("publisher").get().then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            PUBLISHER.push(doc.data());
-                            tt++;
-                            if( tt === 2 ) renderPubPage();
-                        });
-                    }).catch(function(error) {
-                        console.log("Error getting publisher");
-                    });
-                    break;
-            }
+            $("#page-content").addClass("onopenUrl");
 
             setTimeout(function(){
-                $("#page-content").removeClass("invisible");
-                if( !notsave ) window.history.pushState("object or string", "", _url);
-            }, 100);
+                $('html, body').scrollTop(0);
 
-            $('html, body').animate({
-                scrollTop: 0
-            }, 200);
+                $("#page-content").html(TEMPLATE[pname]);
+
+                $("body").removeClass (function (index, className) {
+                    return (className.match (/(^|\s)page-\S+/g) || []).join(' ');
+                }).addClass("page-"+pname);
+
+                switch(pname){
+                    case "home":
+                        renderHomePage(_url);
+                        _url = BASEURL;
+                        break;
+                    case "product":
+                        renderProductPage(_url);
+                        break;
+                    case "cart":
+                        renderCartPage();
+                        break;
+                    case "order":
+                        renderOrderPage();
+                        break;
+                    case "pub":
+                        PUBLISHER = [];
+                        var tt = 0;
+                        db.collection("pub-click").get().then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                PUBLISHER.push(doc.data());
+                                tt++;
+                                if( tt === 2 ) renderPubPage();
+                            });
+                        }).catch(function(error) {
+                            console.log("Error get click");
+                        });
+
+                        db.collection("publisher").get().then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                PUBLISHER.push(doc.data());
+                                tt++;
+                                if( tt === 2 ) renderPubPage();
+                            });
+                        }).catch(function(error) {
+                            console.log("Error getting publisher");
+                        });
+                        break;
+                }
+                if( !notsave ) window.history.pushState("object or string", "", _url);
+                $("#page-content").removeClass("onopenUrl");
+            }, 300);
         }
     }
 };
