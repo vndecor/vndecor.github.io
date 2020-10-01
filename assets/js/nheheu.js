@@ -1,6 +1,7 @@
 var BASEURL = "https://vndecor.github.io/";
 var CURRENCY = "₫";
 var PRODUCTS = [];
+var ORDERS = [];
 var PRODUCT = null;
 var TEMPLATE = {};
 var PAGENAME = "";
@@ -11,6 +12,19 @@ var USERPHONE = "";
 var USER = {};
 
 var PUBLISHER = [];
+
+var ADMINS = ["daominhhoa93@gmail.com", "daothithuhien1705@gmail.com"];
+
+var PAYMENTS = ['Thanh toán khi nhận hàng','Thanh toán chuyển khoản Ngân hàng/MoMo']; // 0, 1
+
+var ORDER_STATUS = {
+    "0": "Mới, chưa gọi xác nhận",
+    "1": "Đang giao, đã đưa cho bên vận chuyển",
+    "2": "Hoàn thành, đã nhận hàng",
+    "3": "Chờ chuyển khoản, đã gọi xác nhận",
+    "4": "Đang gói hàng, đã gọi xác nhận",
+    "5": "Hủy đơn, sai sđt/không nhận hàng"
+};
 
 var formatMoney = function(n, nocurrency){
 	var res = (n+"").replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -75,6 +89,25 @@ var getQueryVariable = function(variable, _url){
 
 var getFullUrl = function(path){
     return BASEURL + path;
+};
+
+var getImgSrc = function(_url){
+    if( _url.indexOf("daohoa.github.io") == -1 ){
+        var arr = _url.split("/");
+        return "https://daohoa.github.io/nheheu/imgs/"+arr[ arr.length-1 ];
+    }
+    return _url;
+};
+
+var copyString = function(str){
+    var el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    el.setSelectionRange(0, 99999); /*For mobile devices*/
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showMessage("Đã copy", "success");
 };
 
 var shuffleArray = function(array) {
@@ -148,7 +181,7 @@ var renderItem = function(obj, customclass){
     _html += '<div class="'+ customclass +'" style="display: block;">';
     _html += '<a href="'+ getFullUrl('product/?p='+ obj.slug) +'" class="item-inner openlink bg-w">';
         _html += '<div class="product-image">';
-                _html += '<img data-src="'+ obj.imgs[0] +'" class="lazyload" alt="'+ obj.name +'">';
+                _html += '<img data-src="'+ getImgSrc(obj.imgs[0]) +'" class="lazyload" alt="'+ obj.name +'">';
                 if( obj.liked ) _html += '<div class="product-liked liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
                 if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
         _html += '</div>';
@@ -174,7 +207,7 @@ var renderItem2 = function(obj){ // list item right sidebar
 
     _html += '<div class="grid__item"><div class="mini-list-item"><div class="mini-view_image">';
     _html += '<a class="grid-view-item__link openlink" href="'+ getFullUrl('product/?p='+ obj.slug) +'">';
-    _html += '<img class="grid-view-item__image ls-is-cached lazyload" data-src="'+ obj.imgs[0] +'" alt="'+ obj.name +'">';
+    _html += '<img class="grid-view-item__image ls-is-cached lazyload" data-src="'+ getImgSrc(obj.imgs[0]) +'" alt="'+ obj.name +'">';
     _html += '</a></div><div class="details">';
     _html += '<a class="grid-view-item__title openlink" href="'+ getFullUrl('product/?p='+ obj.slug) +'">'+ obj.name +'</a>';
     _html += '<div class="grid-view-item__meta"><span class="product-price__price"><span class="money">'+ formatMoney(_price) +'</span></span></div>';
@@ -213,8 +246,6 @@ var renderStar = function(data){
 };
 
 var renderProd = function(obj){
-    document.title = obj.name + " - Nhẹ Hều";
-
     var $wrap = $(".product-single");
     $wrap.find(".product-single__title").html(obj.name);
     $wrap.find(".variant-sku").html(obj.id);
@@ -255,9 +286,9 @@ var renderProd = function(obj){
 
         for( var i=0; i<PRODUCT.prices.length; i++ ){
             var item = PRODUCT.prices[i];
-            _multitype += '<div data-value="'+ item.name +'" class="swatch-element'+ (item.soldout?" soldout":"") +'" data-image="'+ item.img +'" data-index="'+ i +'">';
+            _multitype += '<div data-value="'+ item.name +'" class="swatch-element'+ (item.soldout?" soldout":"") +'" data-image="'+ getImgSrc(item.img) +'" data-index="'+ i +'">';
             _multitype += '<input class="swatchInput" id="swatch-0-'+ PRODUCT.id+'-'+item.id +'" type="radio" name="option--type" value="'+ PRODUCT.id+'-'+item.id +'"'+ (item.soldout?" disabled":"") +'>';
-            _multitype += '<label class="swatchLbl color medium" for="swatch-0-'+ PRODUCT.id+'-'+item.id +'" style="background-image:url('+ item.img +');"></label>';
+            _multitype += '<label class="swatchLbl color medium" for="swatch-0-'+ PRODUCT.id+'-'+item.id +'" style="background-image:url('+ getImgSrc(item.img) +');"></label>';
             _multitype += '<span class="tooltip-label">'+item.name+'</span>';
             _multitype += '</div>';
         }
@@ -337,7 +368,7 @@ var renderProd = function(obj){
     var _gallery = "";
     var items = [];
     for( var i=0; i<imgs.length; i++){
-        _gallery += '<a data-image="'+ imgs[i] +'" aria-hidden="true" tabindex="-1"><img src="'+ imgs[i] +'"/></a>';
+        _gallery += '<a data-image="'+ getImgSrc(imgs[i])  +'" aria-hidden="true" tabindex="-1"><img src="'+ getImgSrc(imgs[i]) +'"/></a>';
 
         var itemSl = {
             src : imgs[i],
@@ -363,11 +394,13 @@ var renderProd = function(obj){
 
     product_thumb1();
 
-    $wrap.find('.popup-video').magnificPopup({
-        type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
-    });
-
-
+    if( 0 ){
+        $wrap.find('.popup-video').magnificPopup({
+            type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
+        });
+    }else{
+        $wrap.find('.popup-video').hide();
+    }
 
     // event Click 
     $wrap.find(".btn-addToCartMain").off().on("click", function(e){
@@ -509,6 +542,13 @@ var renderProd = function(obj){
         $wrap.find('.product-liked .num').html(obj.liked);
     });
 
+    // BTN 
+    $wrap.find(".btn-copy").off().on("click", function(){
+        copyString( getFullUrl('product/?p='+ PRODUCT.slug) );
+        return false;
+    });
+
+
     // zooom
     $wrap.find('.prlightbox').on('click', function (event) {
         event.preventDefault();
@@ -577,11 +617,12 @@ var renderProd = function(obj){
     $(".description-inner").html(_detail);
 
     // render review
+    var avid = [100005000658220,100005745693949,100006998850665,100009263884994,100011117342566,100011698776212,100011807980754,100011931403557,100012259721773,100015036102748,100015396722688,100015595813708,100016698197233,100016931407385,100018610283509,100020902751223,100027380944993,100029627467266,100036321704386,100038160021615,100038587060598,100038656590932,100041879354045,100049427670729,100049750311552,100052024964559,100053223889371,"100024356736945","100030506206917","100041129792066","100010455919612","100004213142802","100054349191821","100014209244658","100014794145995","100041929506129","100010582727745","100051513442819","100050411920341","100049947427823","100003792418362","100013889040983","100009739625625","100025678697656","100007359736117","100013215076733","100042089654474","100029933432192","100026841510255","100007470310791","100006060404733","100015243815541","100043542337305","100027799839218","100009264069750","100007924681710","100005955634953","100054527936898","100054222011923","100044943874082","100041879354045","100041654270038","100039973741733","100039159664381","100035429615348","100030437588572","100029647820128","100023908908556","100022926943900","100022773858722","100019055294957","100016990690477","100016763145077","100016626041093","100014961935348","100014797564671","100014621622661","100014258468374","100012357248145","100011679842135","100011558225636","100011117342566","100010743945622","100010711920565","100010648380631","100010409708485","100010283746657","100010272246035","100010067499081","100009767556708","100009509466760","100009327881437","100009189392028","100008667127564","100008412690930","100008288299718","100008193705703","100007983783201","100007943115574","100007899852671","100007800930644","100006617371881","100006414434431","100006322903290","100006303931252","100006008880565","100005651713227","100005082999488","100004937074652","100004652641702","100004595593974","100004570982788","100004497438699","100004488665289","100004310834088","100004279601180","100004257757880","100004236968622","100004080967256","100004056091279","100003980217205","100003857893962","100003723669823","100003636221413","100000267943600"];
+
     var _review = "";
     if( obj.review ){
         for( var i=0; i< obj.review.length; i++ ){
-            _review += '<div class="spr-review"><div class="spr-review-header"><span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
-            _review += '<div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div>';
+            _review += '<div class="spr-review"><img src="https://daohoa.github.io/nheheu/ava/'+  avid[Math.floor(Math.random() * avid.length)] +'.jpg" class="avatar"><div class="spr-review-header"> <div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div> <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
             _review += '</div><div class="spr-review-content">';
             _review += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
             if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
@@ -611,22 +652,23 @@ var renderProd = function(obj){
 
     // render questions
     var _question = "";
-    if( obj.review ){
-        for( var i=0; i< obj.review.length; i++ ){
+    if( obj.asks ){
+        for( var i=0; i< obj.asks.length; i++ ){
             _question += '<div class="spr-review"><div class="spr-review-header">';
-            _question += '<div class="spr-review-header-avt">'+ obj.review[i]["name"][0] +'</div>';
-            _question += '<h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3>';
+            _question += '<div class="spr-review-header-avt">'+ obj.asks[i]["name"][0] +'</div>';
+            _question += '<h3 class="spr-review-header-title">'+ obj.asks[i].name +'</h3>';
             _question += '</div><div class="spr-review-content">';
-            _question += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
+            _question += '<p class="spr-review-content-body">'+ obj.asks[i].content +'</p>';
             _question += '</div>';
-            if( obj.review[i].reply ) _question += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
+            if( obj.asks[i].reply ) _question += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.asks[i].reply +'</p></div>';
             _question += '</div>';
         }
-    }else{
-        _question = "<h3>Chưa có câu hỏi nào</h3>";
-    }
 
-    $(".spr-questions .review-inner").html( _question );
+        $(".spr-questions .review-inner").html( _question );
+    }else{
+        // _question = "<h3>Chưa có câu hỏi nào</h3>";
+        $(".spr-questions").remove();
+    }
 };
 
 var getMyCart = function(){ // return array
@@ -790,48 +832,8 @@ var showMessage = function(_s, _type, _class){
     });
 };
 
-var renderMiniCart = function(prods){
-    var $wrap = $("#minicart-drawer");
-
-    if( !prods ) prods = getMyCart();
-
-    var _html = "",
-        _totalMoney = 0,
-        _totalProd = 0;
-
-    if( prods.length ){
-
-        for( var j=prods.length-1; j>=0; j-- ){
-            var item = getItemInfo(prods[j].pid);
-
-            _html += '<li class="item clearfix"><a class="product-image openlink" href="'+ getFullUrl("product/?p="+item.slug) +'"><img src="'+ item.img +'" alt="" title="">';
-            _html += '</a><div class="product-details"><a href="javascript:void(0);" class="remove" data-pid="'+ item.id +'"><i class="anm anm-times-sql" aria-hidden="true"></i></a>';
-            _html += '<a class="product-title openlink" href="'+ getFullUrl("product/?p="+item.slug) +'">'+ item.name +'</a>';
-
-            _html += '<div class="variant-cart">'+ (item.type||"&nbsp;") +'</div>';
-
-            _html += '<div class="product-price"><span class="old-price">'+ formatMoney(item.price2) +'</span><span class="price">'+ formatMoney(item.price2) +'</span> x '+prods[j].num+'</div>';
-
-            _html += '</div></li>';
-
-            _totalProd += prods[j].num;
-            _totalMoney += item.price*prods[j].num;
-        }
-    }
-
-    $wrap.find(".minicart-content>ul").html( _html );
-    $wrap.find(".minicart-bottom .product-price").html(formatMoney(_totalMoney));
-
-    $wrap.find("h4").html("Giỏ hàng ("+ _totalProd +")");
-
-    $wrap.find(".remove").on("click", function(e){
-        updateCartProd($(this).attr("data-pid"), -1);
-        renderMiniCart();
-        e.preventDefault();
-    });
-};
-
 var renderHomePage = function(_url){
+    document.title = "Phụ Kiện Trang Trí, Quà Tặng - Nhẹ Hều";
     homeSlider();
 
     var filter = getQueryVariable("t", _url);
@@ -861,6 +863,8 @@ var renderProductPage = function(_url){
         window.location.href = BASEURL;
         return;
     }
+
+    document.title = PRODUCT.name + " - Nhẹ Hều";
 
     renderProd(PRODUCT);
 
@@ -906,6 +910,8 @@ var renderProductPage = function(_url){
 };
 
 var renderCartPage = function(){
+    document.title = "Giỏ Hàng - Nhẹ Hều";
+
     var $wrap = $(".cart__list");
     var prods = getMyCart();
 
@@ -919,7 +925,7 @@ var renderCartPage = function(){
 
             _html += '<tr class="cart__row border-bottom line1 cart-flex">';
                 _html += '<td class="cart__image-wrapper cart-flex-item">';
-                    _html += '<a href="'+ getFullUrl("product/?p="+item.slug) +'" class="openlink"><img class="cart__image" src="'+item.img+'" alt="'+ item.name +'"></a>';
+                    _html += '<a href="'+ getFullUrl("product/?p="+item.slug) +'" class="openlink"><img class="cart__image" src="'+getImgSrc(item.img)+'" alt="'+ item.name +'"></a>';
                 _html += '</td>';
                 _html += '<td class="cart__meta small--text-left cart-flex-item">';
                     _html += '<div class="list-view-item__title">';
@@ -928,12 +934,12 @@ var renderCartPage = function(){
                     _html += '<div class="cart__meta-text">';
                         _html += (item.type||"")+'<br>';
                     _html += '</div>';
-                    _html += '<div class="d-lg-none">';
+                    _html += '<div class="d-md-none">';
                         _html += '<div class="product-price"><span class="old-price">'+formatMoney(item.price2)+'</span><span class="price">'+formatMoney(item.price)+'</span></div>';
                         _html += '<div class="cart__qty float-left">';
                             _html += '<div class="qtyField">';
                                 _html += '<a class="qtyBtn minus" href="javascript:void(0);"><i class="icon icon-minus"></i></a>';
-                                _html += '<input class="cart__qty-input qty" type="text" name="updates[]" id="qty-'+ j +'" value="'+ prods[j].num +'" pattern="[0-9]*" data-pid="'+ item.id +'">';
+                                _html += '<input class="cart__qty-input qty" type="text" name="updates[]" value="'+ prods[j].num +'" pattern="[0-9]*" data-pid="'+ item.id +'">';
                                 _html += '<a class="qtyBtn plus" href="javascript:void(0);"><i class="icon icon-plus"></i></a>';
                             _html += '</div>';
                         _html += '</div>';
@@ -947,7 +953,7 @@ var renderCartPage = function(){
                     _html += '<div class="cart__qty text-center">';
                         _html += '<div class="qtyField">';
                             _html += '<a class="qtyBtn minus" href="javascript:void(0);"><i class="icon icon-minus"></i></a>';
-                            _html += '<input class="cart__qty-input qty" type="text" name="updates[]" id="qty-'+ j +'" value="'+ prods[j].num +'" pattern="[0-9]*" data-pid="'+ item.id +'">';
+                            _html += '<input class="cart__qty-input qty" type="text" name="updates[]" value="'+ prods[j].num +'" pattern="[0-9]*" data-pid="'+ item.id +'">';
                             _html += '<a class="qtyBtn plus" href="javascript:void(0);"><i class="icon icon-plus"></i></a>';
                         _html += '</div>';
                     _html += '</div>';
@@ -1041,7 +1047,7 @@ var renderCartPage = function(){
                     address: _address,
                     note: _note,
                     prods: prods,
-                    payment: $(".cart_input-payment").val(),
+                    payment: parseInt($(".cart_input-payment").val()),
                     created: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
@@ -1052,16 +1058,13 @@ var renderCartPage = function(){
                     // empty cart, save phone => goto my order
                     updateCartProd("EMPTY");
                     USERPHONE = _phone;
-                    openUrl(BASEURL+"order");
+                    openUrl( getFullUrl("order") );
                 }).catch(function(error) {
                     $("#cartCheckout").next().show().delay( 5000 ).fadeOut( 300 ).children(".cart_notify-inner").html("Lỗi hệ thống, vui lòng thử lại");
                 });
             }
         }
     });
-
-    // close minicarrt
-    $('#minicart-drawer').modal('hide');
 
     // auto complete off
     $("#page-content").find('input').each(function(){
@@ -1079,6 +1082,8 @@ var renderOrderPage = function(){
     if( !USERPHONE ){
         openUrl(BASEURL); return;
     }
+
+    document.title = "Đơn Hàng - Nhẹ Hều";
 
     var myorders = [];
 
@@ -1098,9 +1103,8 @@ var renderOrderPage = function(){
             var totalMoney = 0,
                 _status = 0;
 
-            if( myorders[i].status ){
-                if( myorders[i].status == 10 ) _status = 2;
-                else if( myorders[i].status >= 5 ) _status = 1;
+            if( myorders[i].status && myorders[i].status <=2 ){
+                _status = myorders[i].status;
             }
 
             _htmlTabNav += '<li><a class="nav-link'+ (i==0?" active":"") +'" data-toggle="tab" href="#tab-pane-'+ myorders[i].created.seconds +'">Đơn hàng '+ Math.floor(myorders[i].created.seconds/100) +'</a></li>';
@@ -1114,21 +1118,22 @@ var renderOrderPage = function(){
             for( var j=0; j<myorders[i].prods.length; j++ ){
                 var item = getItemInfo(myorders[i].prods[j].pid);
                 _htmlTabContent += '<tr class="cart__row border-bottom line1 cart-flex border-top">';
-                _htmlTabContent += '<td class="cart__image-wrapper cart-flex-item"><a href="'+ getFullUrl('product/?p='+ item.slug) +'" class="openlink"><img class="cart__image" src="'+ item.img +'" alt="'+ item.name +'"></a></td>';
+                _htmlTabContent += '<td class="cart__image-wrapper cart-flex-item"><a href="'+ getFullUrl('product/?p='+ item.slug) +'" class="openlink"><img class="cart__image" src="'+ getImgSrc(item.img) +'" alt="'+ item.name +'"></a></td>';
                 _htmlTabContent += '<td class="cart__meta small--text-left cart-flex-item">';
                 _htmlTabContent += '<div class="list-view-item__title"><a href="'+ getFullUrl('product/?p='+ item.slug) +'" class="openlink">'+ item.name +'</a></div>';
-                _htmlTabContent += '<div class="cart__meta-text"><br></div></td>';
+                _htmlTabContent += '<p class="cart__meta-text">'+ (item.type||'&nbsp;') +'</p><p class="cart__meta-text d-md-none">'+ formatMoney(item.price) + ' x '+ myorders[i].prods[j].num +'</p>';
+                _htmlTabContent += '</td>';
                 _htmlTabContent += '<td class="cart__price-wrapper cart-flex-item text-center"><span class="money">'+ formatMoney(item.price) +'</span></td>';
                 _htmlTabContent += '<td class="cart__update-wrapper cart-flex-item text-center"><span>'+ myorders[i].prods[j].num +'</span></td>';
                 _htmlTabContent += '<td class="small--hide cart-price text-center"><div><span class="money">'+ formatMoney(myorders[i].prods[j].num*item.price) +'</span></div></td></tr>';
 
                 totalMoney += (myorders[i].prods[j].num*item.price);
             }
-            _htmlTabContent += '</tbody></table></div></div><div class="container mt-4 checkout-wrapper"><div class="row"><div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-6 cart-col"><h5>Thông tin người nhận</h5>';
+            _htmlTabContent += '</tbody></table></div></div><div class="container mt-4 checkout-wrapper"><div class="row"><div class="col-12 col-md-6 cart-col order-2 order-md-1"><h5>Thông tin người nhận</h5>';
             _htmlTabContent += '<p>'+ myorders[i].name +'</p><p>'+ myorders[i].phone +'</p><p>'+ myorders[i].address +'</p><p>'+ myorders[i].note +'</p>';
-            _htmlTabContent += '<p>'+ (!myorders[i].payment?'Thanh toán khi nhận hàng':'Thanh toán chuyển khoản Ngân hàng/MoMo') +'</p>';
-            _htmlTabContent += '</div><div class="col-12 col-sm-12 col-md-6 col-lg-6 cart__footer"><div class="solid-border"><div class="row border-bottom pb-2 pt-2"><span class="col-12 col-sm-6 cart__subtotal-title"><strong>Tổng tiền</strong></span>';
-            _htmlTabContent += '<span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money totalMoney">'+ formatMoney(totalMoney) +'</span></span>';
+            _htmlTabContent += '<p>'+ (!myorders[i].payment? PAYMENTS[0] : PAYMENTS[myorders[i].payment]) +'</p>';
+            _htmlTabContent += '</div><div class="col-12 col-md-6 order-1 order-md-2 cart__footer"><div class="solid-border"><div class="row border-bottom pb-2 pt-2"><span class="col-6 cart__subtotal-title"><strong>Tổng tiền</strong></span>';
+            _htmlTabContent += '<span class="col-6  cart__subtotal-title cart__subtotal text-right"><span class="money totalMoney">'+ formatMoney(totalMoney) +'</span></span>';
             _htmlTabContent += '</div></div></div></div></div></div></div>';
         }
 
@@ -1144,6 +1149,7 @@ var renderOrderPage = function(){
 };
 
 var renderPubPage = function(type){
+    document.title = "Thống Kê Tiếp Thị Liên Kết - Nhẹ Hều";
     if( !type ) type === 'today';
 
     var _now = new Date();
@@ -1235,11 +1241,110 @@ var renderPubPage = function(type){
     console.log("PUBLISHER", PUBLISHER);
 };
 
+var renderAdminOrders = function(){
+    // get order
+    // get adminOrder
+    ORDERS = [];
+    db.collection("order").orderBy("created", "desc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var iorder  = doc.data();
+            iorder.id = doc.id;
+            if(!iorder.status) iorder.status = 0;
+            ORDERS.push( iorder );
+        });
+
+        var _html = '';
+        for( var i=0; i<ORDERS.length; i++ ){
+            _html += '<tr>';
+                _html += '<td>'+ (i+1) +'</td>';
+                _html += '<td>'+ ORDERS[i].name +'</td>';
+                _html += '<td>'+ convertTime(ORDERS[i].created.seconds) +'</td>';
+                _html += '<td>'+ ORDER_STATUS[ORDERS[i].status+""].split(",")[0] +'</td>';
+                _html += '<td><a class="openlink" href="'+getFullUrl('quan-ly/order.html?id='+ ORDERS[i].id) +'">xem</a></td>';
+            _html += '</tr>';
+        }
+        $(".order-list").html(_html);
+    }).catch(function(error) {
+        console.log("Error getting products: ", error);
+    });
+};
+
+var renderAdminOrder = function(_url){
+    var thisOrder = null;
+
+    var oid = getQueryVariable("id", _url);
+
+    for( var i=0; i<ORDERS.length; i++ ){
+        if( ORDERS[i].id == oid ){
+            thisOrder = ORDERS[i];
+            break;
+        }
+    }
+
+    if( !thisOrder ){
+        openUrl(BASEURL);
+        return;
+    }
+
+    var _html = '';
+    _html += '<h6>Ngày đặt: '+ convertTime(thisOrder.created.seconds) +'</h6>';
+    _html += '<p>'+ thisOrder.name +'</p>';
+    _html += '<p>'+ thisOrder.phone +'</p>';
+    _html += '<p>'+ thisOrder.address +'</p>';
+    _html += '<p>'+ PAYMENTS[ thisOrder.payment ] +'</p>';
+    _html += '<p>'+ thisOrder.note +'</p>';
+
+    $('.contact-details').html(_html);
+
+    _html = '';
+    for( var k in ORDER_STATUS ){
+        if( thisOrder.status+"" == k ) _html += '<option value="'+k+'" selected>'+ORDER_STATUS[k]+'</option>';
+        else _html += '<option value="'+k+'">'+ORDER_STATUS[k]+'</option>';
+    }
+    $(".cart_input-payment").html(_html);
+
+    if( thisOrder._node ) $(".cart_input-note").html(thisOrder._node);
+
+    _html = '';
+    var totalMoney = 0;
+    for( var j=0; j<thisOrder.prods.length; j++ ){
+        var item = getItemInfo(thisOrder.prods[j].pid);
+        // console.log("item", item);
+        _html += '<tr class="cart__row border-bottom line1 cart-flex border-top">';
+        _html += '<td class="cart__image-wrapper cart-flex-item"><a href="'+ getFullUrl('product/?p='+ item.slug) +'" class="openlink"><img class="cart__image" src="'+ getImgSrc(item.img) +'" alt="'+ item.name +'"></a></td>';
+        _html += '<td class="cart__meta small--text-left cart-flex-item">';
+        _html += '<div class="list-view-item__title"><a href="'+ getFullUrl('product/?p='+ item.slug) +'" class="openlink">'+ item.name +'</a><p class="cart__meta-text">'+ item.type +'</p><p class="cart__meta-text d-md-none">'+ formatMoney(item.price) + ' x '+ thisOrder.prods[j].num +'</p></div>';
+        _html += '<div class="cart__meta-text"><br></div></td>';
+        _html += '<td class="cart__price-wrapper cart-flex-item text-center"><span class="money">'+ formatMoney(item.price) +'</span></td>';
+        _html += '<td class="cart__update-wrapper cart-flex-item text-center"><span>'+ thisOrder.prods[j].num +'</span></td>';
+        _html += '<td class="small--hide cart-price text-center"><div><span class="money">'+ formatMoney(thisOrder.prods[j].num*item.price) +'</span></div></td></tr>';
+
+        totalMoney += (thisOrder.prods[j].num*item.price);
+    }
+    $(".cart__list").html(_html);
+    $(".totalMoney").html( formatMoney(totalMoney) );
+
+    //
+    $(".btn-saveChange").on("click", function(){
+        db.collection("order").doc(thisOrder.id).update({
+            status: parseInt($(".cart_input-payment").val()),
+            _note: $(".cart_input-note").val()
+        }).then(function(){
+            showMessage("Cập nhật thành công", "success");
+        });
+        return false;
+    });
+};
+
+
 var openUrl = function(_url, notsave){
-    
     // var currenturl = window.location.href;
     var pname = "";
-    if( _url.indexOf("/product/?p=") !== -1 ){
+    if(_url.indexOf("/quan-ly/order.html") !== -1 ){
+        pname = "admin-order";
+    }else if(_url.indexOf("/quan-ly") !== -1 ){
+        pname = "admin-orders";
+    }else if( _url.indexOf("/product/?p=") !== -1 ){
         pname = "product";
     }else if(_url.indexOf("/cart") !== -1 ){
         pname = "cart";
@@ -1257,12 +1362,10 @@ var openUrl = function(_url, notsave){
         pname = "home";
     }
 
-
-
     if( pname ){
         // $("#page-content").addClass("invisible");
         if( !TEMPLATE[pname] ){
-            $.get(BASEURL+"/template/"+ pname +".html?t="+Date.now(), function(data){
+            $.get( getFullUrl( "template/"+ pname +".html?t="+Date.now() ), function(data){
                 TEMPLATE[pname] = data;
                 openUrl(_url);
             });
@@ -1272,9 +1375,10 @@ var openUrl = function(_url, notsave){
             $("#page-content").addClass("onopenUrl");
 
             setTimeout(function(){
-                $('html, body').scrollTop(0);
-
                 $("#page-content").html(TEMPLATE[pname]);
+
+                if( $(window).scrollTop() > 35 ) $('html, body').scrollTop(35);
+                $('html, body').animate({scrollTop: 0}, 300);
 
                 $("body").removeClass (function (index, className) {
                     return (className.match (/(^|\s)page-\S+/g) || []).join(' ');
@@ -1293,6 +1397,12 @@ var openUrl = function(_url, notsave){
                         break;
                     case "order":
                         renderOrderPage();
+                        break;
+                    case "admin-orders":
+                        renderAdminOrders();
+                        break;
+                    case "admin-order":
+                        renderAdminOrder(_url);
                         break;
                     case "pub":
                         PUBLISHER = [];
@@ -1362,11 +1472,14 @@ firebase.auth().onAuthStateChanged(function(_user) {
         USER.isAnonymous = isAnonymous;
         USER.uid = uid;
         USER.providerData = providerData;
-        console.log("login", USER);
+        // console.log("login", USER);
         // ...
 
         $(".not-login").hide();
         $(".has-login").show();
+
+        if( ADMINS.indexOf(USER.email) !== -1 ) $(".is-admin").removeClass("hide").show();
+        else $(".is-admin").remove();
 
         jQuery("body").children(".mhpopup").addClass("hide");
 
@@ -1374,9 +1487,9 @@ firebase.auth().onAuthStateChanged(function(_user) {
     } else {
         // User is signed out.
         USER = {};
-        console.log("logout");
         $(".not-login").show();
         $(".has-login").hide();
+        $(".is-admin").remove();
 
         if( PAGENAME == "pub" ) openUrl(BASEURL);
     }
@@ -1401,15 +1514,22 @@ firebase.auth().onAuthStateChanged(function(_user) {
                     }
                     PRODUCTS.push( prod );
                 }
+                for( var i=0; i<prod.imgs.length; i++ ){
+                    prod.imgs[i] = getImgSrc(prod.imgs[i]);
+                }
+
+                if( prod.prices ){
+                    for( var i=0; i<prod.prices.length; i++ ){
+                        prod.prices[i].img = getImgSrc(prod.prices[i].img);
+                    }
+                }
+
             });
+
             $('#page-content').removeClass('invisible');
             openUrl(window.location.href);
         }).catch(function(error) {
             console.log("Error getting products: ", error);
-        });
-
-        $('#minicart-drawer').on('shown.bs.modal', function () {
-            renderMiniCart();
         });
 
         $("body").on("click", ".openlink", function(e){
@@ -1439,7 +1559,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
                     _pass = $popup.find(".customerPassword").val();
 
                 if( !_mail || !_pass ){
-                    $popup.find(".alert-danger").html("Chưa nhập đủ thông tin").show().delay(4000).fadeOut();
+                    showMessage("Chưa nhập đủ thông tin");
                 }else{
                     firebase.auth().signInWithEmailAndPassword(_mail, _pass).catch(function(error) {
                         // Handle Errors here.
@@ -1459,7 +1579,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
                         // }
                         if( errorCode == "auth/user-disabled" ) mes = "Tài khoản này bị khóa do vi phạm điều khoản";
 
-                        $popup.find(".alert-danger").html(mes).show().delay(4000).fadeOut();
+                        showMessage(mes);
 
                     });
                 }
@@ -1467,8 +1587,10 @@ firebase.auth().onAuthStateChanged(function(_user) {
             });
 
             $popup.find(".btn-quenmk").off().on("click", function(e){
-                $popup.find(".alert-danger").html("Để lấy lại mật khẩu vui lòng liên hệ quả trị viên.").show().delay(4000).fadeOut();
                 e.preventDefault();
+                showMessage("Để lấy lại mật khẩu vui lòng liên hệ quả trị viên")
+                // $popup.find(".alert-danger").html().show().delay(4000).fadeOut();
+                
             });
         })();
 
@@ -1480,9 +1602,9 @@ firebase.auth().onAuthStateChanged(function(_user) {
                     _repass = $popup.find(".customerRePassword").val();
 
                 if( !_mail || !_pass || !_repass ){
-                    $popup.find(".alert-danger").html("Chưa nhập đủ thông tin").show().delay(4000).fadeOut();
+                    showMessage("Chưa nhập đủ thông tin");
                 }else if(_pass != _repass){
-                    $popup.find(".alert-danger").html("Nhập lại mật khẩu không khớp").show().delay(4000).fadeOut();
+                    showMessage("Nhập lại mật khẩu không khớp");
                 }else{
                     firebase.auth().createUserWithEmailAndPassword(_mail, _pass).catch(function(error) {
                         var errorCode = error.code;
@@ -1498,7 +1620,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
                             mes = errorMessage;
                         }
                         // console.log(error);
-                        $popup.find(".alert-danger").html(mes).show().delay(4000).fadeOut();
+                        showMessage(mes);
                     });
                 }
                 e.preventDefault();
@@ -1520,6 +1642,15 @@ firebase.auth().onAuthStateChanged(function(_user) {
         $body.on("click",".btn-logout", function(e){
             e.preventDefault();
             firebase.auth().signOut();
+        });
+
+        $body.on("click",".btn-back", function(e){
+            e.preventDefault();
+            if( $body.hasClass("page-admin-order") ){
+                openUrl( getFullUrl("quan-ly") );
+            }else{
+                openUrl(BASEURL);
+            }
         });
 
         $(".btn-openOrder").off().on("click", function(e){
@@ -1559,7 +1690,8 @@ window.addEventListener("popstate", function(e) {
     openUrl(location.href, true);
 });
 
-function homeSlider(){
+var homeSlider = function(){
+    return;
     var $items = $(".home-slider").children(".item");
     var $dots = $('<div class="dots"><span class="active"></span><span></span><span></span></div>');
     var cr = 0;
@@ -1599,13 +1731,5 @@ function homeSlider(){
             }
         }, timeAuto);
     });
-}
-
-window.onscroll = function(){ myFunction() };
-function myFunction() {
-    if($(window).scrollTop()>35){
-      $('.header').addClass("stickyNav"); //animated slideInDown
-    } else {
-      $('.header').removeClass("stickyNav");              
-    }
-}
+};
+document.addEventListener('contextmenu', event => event.preventDefault());

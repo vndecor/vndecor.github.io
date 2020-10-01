@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="logo col-6 col-lg-2 align-self-center">
                             <div class="iconset d-lg-none btn-back">
-                                <a href="https://vndecor.github.io/" class="openlink">
+                                <a href="javascript:void(0)">
                                     <i class="icon anm anm-home"></i>
                                     <i class="icon anm anm-chevron-r-left"></i>
                                 </a>
@@ -71,6 +71,7 @@
                                     <li><a href="https://vndecor.github.io/" class="openlink">Quà tặng</a></li>
                                     <li><a href="https://vndecor.github.io/?t=sale" class="openlink">Giảm Giá</a></li>
                                     <li><a href="https://vndecor.github.io/" class="openlink">Tin tức</a></li>
+                                    <li class="is-admin hide" style="display: none;"><a href="https://vndecor.github.io/quan-ly" class="openlink">Quản lý</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -79,11 +80,15 @@
                                 <i class="icon anm anm-user-circle-o"></i>
                             </div>
                             <div id="settingsBox">
-                                <div class="customer-links">
+                                <div class="customer-links not-loged">
                                     <p><a href="javascript:void(0);" class="btn setting-link btn-login">Đăng nhập</a></p>
                                     <p class="text-center">Chưa có tải khoản? <a href="javascript:void(0);" class="setting-link btn-signup"><u>Tạo tài khoản</u></a></p>
                                 </div>
-                                <div class="currency-picker text-center">
+                                <div class="customer-links loged">
+                                    <p class="u-email text-center"></p>
+                                    <p><a href="javascript:void(0);" class="btn setting-link btn-logout">Đăng xuất</a></p>
+                                </div>
+                                <div class="currency-picker text-center hide">
                                     <span class="ttl">Hoặc đăng nhập bằng</span>
                                     <ul class="cnrLangList">
                                         <li>
@@ -120,6 +125,7 @@
                     <i class="icon anm anm-times-l pull-right"></i> Đóng
                 </div>
                 <ul id="MobileNav" class="mobile-nav">
+                    <li class="is-admin hide"><a href="https://vndecor.github.io/quan-ly" class="openlink">Quản lý</a></li>
                     <li><a href="https://vndecor.github.io/" class="openlink">Trang Chủ </a></li>
                     <li><a href="https://vndecor.github.io/?t=hot" class="openlink">Xu hướng</a></li>
                     <li><a href="https://vndecor.github.io/" class="openlink">Quà tặng</a></li>

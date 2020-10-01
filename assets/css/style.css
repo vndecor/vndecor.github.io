@@ -1864,7 +1864,6 @@ cursor:pointer; display:block; font-size:14px; font-weight:400; line-height:1; t
 .spr-review-reply{
 	background: #e2e0e0;
     margin-top: 15px;
-    margin-left: 30px;
     padding: 10px 15px;
 }
 .spr-form-actions .spr-button-primary { float:left; }
@@ -3019,6 +3018,8 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	margin: 0 5px;
 }
 
+.is-admin{display: none;}
+
 .thongke-pub li{
 	width: 33%;
 	display: inline-block;
@@ -3192,7 +3193,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 
 .shop-message{
 	position: fixed;
-	top: 20px;
+	top: 60px;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 999999;

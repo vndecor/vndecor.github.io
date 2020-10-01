@@ -30,6 +30,14 @@
 						</tr>
 					</tfoot>
 				</table>
+				<div class="row pt-4 pb-3 d-md-none">
+					<div class="col-6">
+						<h5>Tổng tiền</h5>
+					</div>
+					<div class="col-6">
+						<h5 class="totalMoney text-right"></h5>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -78,9 +86,9 @@
                                 <input type="button" class="btn btn--secondary btn-appendGiftcode" value="Áp dụng">
                             </div>
                         </div> -->
-						<div class="row border-bottom pb-2 pt-2">
-							<span class="col-12 col-sm-6 cart__subtotal-title"><strong>Tổng tiền</strong></span>
-							<span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money totalMoney">_ đ</span></span>
+						<div class="row border-bottom pb-2 pt-2 d-none d-md-block">
+							<span class="col-6 cart__subtotal-title"><strong>Tổng tiền</strong></span>
+							<span class="col-6 cart__subtotal-title cart__subtotal text-right"><span class="money totalMoney">_ đ</span></span>
 						</div>
 						<button id="cartCheckout" class="btn btn--small-wide checkout">Đặt hàng ngay</button>
 						<div class="cart_notify-wrap">
