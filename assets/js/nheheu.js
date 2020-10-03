@@ -1479,7 +1479,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
         $(".has-login").show();
 
         if( ADMINS.indexOf(USER.email) !== -1 ) $(".is-admin").removeClass("hide").show();
-        else $(".is-admin").remove();
+        else $(".is-admin").addClass("hide").hide();
 
         jQuery("body").children(".mhpopup").addClass("hide");
 
@@ -1489,7 +1489,7 @@ firebase.auth().onAuthStateChanged(function(_user) {
         USER = {};
         $(".not-login").show();
         $(".has-login").hide();
-        $(".is-admin").remove();
+        $(".is-admin").addClass("hide").hide();
 
         if( PAGENAME == "pub" ) openUrl(BASEURL);
     }
