@@ -245,20 +245,20 @@
         if($(this).attr('href') == window.location.pathname) $(this).addClass('active');
     })
 
-    window.toggleMenuMobile = function(isShow){
+    var toggleMenuMobile = function(isShow){
+    	// console.log("toggleMenuMobile", isShow);
     	if( arguments.length == 0 ){
-    		$(selectors.mobilenav).toggleClass("active");
-			$(selectors.body).toggleClass("menuOn");
-			$(selectors.menuToggle).toggleClass('mobile-nav--open mobile-nav--close');
+    		if( $(selectors.mobilenav).hasClass("active") ) toggleMenuMobile(false);
+    		else toggleMenuMobile(true);
     	}else{
     		if( isShow ){
     			$(selectors.mobilenav).addClass("active");
 				$(selectors.body).addClass("menuOn");
-				$(selectors.menuToggle).addClass('mobile-nav--open').removeClass('mobile-nav--close');
+				$(selectors.menuToggle).addClass('mobile-nav--close').removeClass('mobile-nav--open');
     		}else{
     			$(selectors.mobilenav).removeClass("active");
 				$(selectors.body).removeClass("menuOn");
-				$(selectors.menuToggle).removeClass('mobile-nav--open').addClass('mobile-nav--close');
+				$(selectors.menuToggle).addClass('mobile-nav--open').removeClass('mobile-nav--close');
     		}
     	}
     };
@@ -266,26 +266,27 @@
   	$(selectors.menuToggle).on("click",function(){
   		toggleMenuMobile();
   	});
-  
-    $(selectors.closemenu).on("click",function(){
-      body: 'body',
-      $(selectors.mobilenav).toggleClass("active");
-      $(selectors.body).toggleClass("menuOn");
-      $(selectors.menuToggle).toggleClass('mobile-nav--open mobile-nav--close');
+    // $(selectors.closemenu).on("click",function(){
+    // 	toggleMenuMobile(false)
+    // });
+    $(selectors.mobilenav).on('click', "a", function(){
+    	if( $(selectors.mobilenav).hasClass("active") ) toggleMenuMobile(false);
     });
-    $("body").on('click', function (event) {
-      var $target = $(event.target);
-      if(!$target.parents().is(selectors.mobilenav) && !$target.parents().is(selectors.menuToggle) && !$target.is(selectors.menuToggle)){
-          $(selectors.mobilenav).removeClass("active");
-          $(selectors.body).removeClass("menuOn");
-          $(selectors.menuToggle).removeClass('mobile-nav--close').addClass('mobile-nav--open');
-      }
-    });
-	$(selectors.menuLinks).on('click', function(e) {
-		e.preventDefault();
-		$(this).toggleClass('anm-plus-l anm-minus-l');
-		$(this).parent().next().slideToggle();
-    });
+
+  //   $("body").on('click', function (event) {
+		// var $target = $(event.target);
+		// 	if(!$target.parents().is(selectors.mobilenav) && !$target.parents().is(selectors.menuToggle) && !$target.is(selectors.menuToggle)){
+		// 	$(selectors.mobilenav).removeClass("active");
+		// 	$(selectors.body).removeClass("menuOn");
+		// 	$(selectors.menuToggle).removeClass('mobile-nav--close').addClass('mobile-nav--open');
+		// }
+  //   });
+
+	// $(selectors.menuLinks).on('click', function(e) {
+	// 	e.preventDefault();
+	// 	$(this).toggleClass('anm-plus-l anm-minus-l');
+	// 	$(this).parent().next().slideToggle();
+ //    });
 	
 	/*--------------------------------------
 	  10. Promotion / Notification Cookie Bar 

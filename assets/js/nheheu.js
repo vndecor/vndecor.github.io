@@ -543,11 +543,7 @@ var renderProd = function(obj){
     });
 
     // BTN 
-    $wrap.find(".btn-copy").off().on("click", function(){
-        copyString( getFullUrl('product/?p='+ PRODUCT.slug) );
-        return false;
-    });
-
+    $wrap.find(".btn-copy").attr("data-text", getFullUrl('product/?p='+ PRODUCT.slug));
 
     // zooom
     $wrap.find('.prlightbox').on('click', function (event) {
@@ -1303,7 +1299,7 @@ var renderAdminOrder = function(_url){
     }
     $(".cart_input-payment").html(_html);
 
-    if( thisOrder._node ) $(".cart_input-note").html(thisOrder._node);
+    if( thisOrder._note ) $(".cart_input-note").val(thisOrder._note);
 
     _html = '';
     var totalMoney = 0;
@@ -1336,7 +1332,6 @@ var renderAdminOrder = function(_url){
     });
 };
 
-
 var openUrl = function(_url, notsave){
     // var currenturl = window.location.href;
     var pname = "";
@@ -1344,6 +1339,8 @@ var openUrl = function(_url, notsave){
         pname = "admin-order";
     }else if(_url.indexOf("/quan-ly") !== -1 ){
         pname = "admin-orders";
+    }else if(_url.indexOf("/bao-hanh") !== -1 ){
+        pname = "baohanh";
     }else if( _url.indexOf("/product/?p=") !== -1 ){
         pname = "product";
     }else if(_url.indexOf("/cart") !== -1 ){
@@ -1504,38 +1501,53 @@ firebase.auth().onAuthStateChanged(function(_user) {
         //
         checkPublisher();
         //
-        db.collection("product").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var prod = doc.data();
-                if( !prod.draft ){ // bản nháp bỏ qua
-                    if( !prod.liked ){
-                        prod.liked = Math.floor(Math.random() * 850) + 102;
-                        console.log("not like", prod);
-                    }
-                    PRODUCTS.push( prod );
-                }
-                for( var i=0; i<prod.imgs.length; i++ ){
-                    prod.imgs[i] = getImgSrc(prod.imgs[i]);
-                }
 
-                if( prod.prices ){
-                    for( var i=0; i<prod.prices.length; i++ ){
-                        prod.prices[i].img = getImgSrc(prod.prices[i].img);
-                    }
-                }
 
-            });
 
+        $.getJSON(getFullUrl("products.json?t="+Date.now()), function(data){
+            PRODUCTS = data;
             $('#page-content').removeClass('invisible');
-            openUrl(window.location.href);
-        }).catch(function(error) {
-            console.log("Error getting products: ", error);
+
+            if( ADMINS.indexOf(USER.email) !== -1 ) openUrl( getFullUrl("quan-ly") );
+            else openUrl(window.location.href);
         });
 
+        // db.collection("product").get().then((querySnapshot) => {
+        //     querySnapshot.forEach((doc) => {
+        //         var prod = doc.data();
+        //         if( !prod.draft ){
+        //             if( !prod.liked ){
+        //                 prod.liked = Math.floor(Math.random() * 850) + 102;
+        //                 console.log("not like", prod);
+        //             }
+        //             PRODUCTS.push( prod );
+        //         }
+        //         for( var i=0; i<prod.imgs.length; i++ ){
+        //             prod.imgs[i] = getImgSrc(prod.imgs[i]);
+        //         }
+
+        //         if( prod.prices ){
+        //             for( var i=0; i<prod.prices.length; i++ ){
+        //                 prod.prices[i].img = getImgSrc(prod.prices[i].img);
+        //             }
+        //         }
+        //     });
+
+        //     $('#page-content').removeClass('invisible');
+        //     openUrl(window.location.href);
+        // }).catch(function(error) {
+        //     console.log("Error getting products: ", error);
+        // });
+
         $("body").on("click", ".openlink", function(e){
+            e.preventDefault();
             var _url = $(this).attr("href");
             openUrl(_url);
+        });
+
+        $("body").on("click", ".btn-copy", function(e){
             e.preventDefault();
+            copyString( $(this).attr("data-text") );
         });
 
         var arr = getMyCart(),
@@ -1653,11 +1665,11 @@ firebase.auth().onAuthStateChanged(function(_user) {
             }
         });
 
-        $(".btn-openOrder").off().on("click", function(e){
-            e.preventDefault();
-            $(".search-drawer").addClass("search-drawer-open");
-            toggleMenuMobile(false);
-        });
+        // $(".btn-openOrder").off().on("click", function(e){
+        //     e.preventDefault();
+        //     $(".search-drawer").addClass("search-drawer-open");
+        //     toggleMenuMobile(false);
+        // });
 
         $(".btn-viewMyOrder").on("click", function(e){
             var _sdt = $(this).siblings(".input-text").val();
