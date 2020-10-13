@@ -245,7 +245,7 @@
         if($(this).attr('href') == window.location.pathname) $(this).addClass('active');
     })
 
-    var toggleMenuMobile = function(isShow){
+    window.toggleMenuMobile = function(isShow){
     	// console.log("toggleMenuMobile", isShow);
     	if( arguments.length == 0 ){
     		if( $(selectors.mobilenav).hasClass("active") ) toggleMenuMobile(false);
@@ -266,9 +266,9 @@
   	$(selectors.menuToggle).on("click",function(){
   		toggleMenuMobile();
   	});
-    // $(selectors.closemenu).on("click",function(){
-    // 	toggleMenuMobile(false)
-    // });
+    $(selectors.closemenu).on("click",function(){
+    	toggleMenuMobile(false)
+    });
     $(selectors.mobilenav).on('click', "a", function(){
     	if( $(selectors.mobilenav).hasClass("active") ) toggleMenuMobile(false);
     });

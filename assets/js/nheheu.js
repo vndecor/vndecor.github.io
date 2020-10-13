@@ -416,7 +416,9 @@ var renderProd = function(obj){
                 if( !pid ){
                     // Không có mặc định, bắt phải chọn
                     // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
-                    showMessage("Chưa chọn loại hàng", "warning", "d-none d-md-block");
+                    setTimeout(function(){
+                        showMessage("Hãy chọn 1 loại hàng", "warning");//, "d-none d-md-block"
+                    }, 1000);
                     
                     var $wrapSelect = $wrap.find(".product-form-product-template");
                     if( !$wrapSelect.hasClass("onselect") ){
@@ -486,7 +488,10 @@ var renderProd = function(obj){
             if( PRODUCT.prices ){
                 pid = $wrap.find(".swatchInput:checked").val();
                 if( !pid ){
-                    showMessage("Chưa chọn loại hàng", "warning", "d-none d-md-block");
+
+                    setTimeout(function(){
+                        showMessage("Hãy chọn 1 loại hàng", "warning");
+                    }, 1000);
 
                     var $wrapSelect = $wrap.find(".product-form-product-template");
                     if( !$wrapSelect.hasClass("onselect") ){
@@ -1339,6 +1344,8 @@ var openUrl = function(_url, notsave){
         pname = "admin-order";
     }else if(_url.indexOf("/quan-ly") !== -1 ){
         pname = "admin-orders";
+    }else if(_url.indexOf("/huong-dan-mua-hang") !== -1){
+        pname = "huong-dan";
     }else if(_url.indexOf("/bao-hanh") !== -1 ){
         pname = "baohanh";
     }else if( _url.indexOf("/product/?p=") !== -1 ){
@@ -1357,6 +1364,11 @@ var openUrl = function(_url, notsave){
         }
     }else{ // home
         pname = "home";
+    }
+
+    if( pname.indexOf("admin") != -1 && ADMINS.indexOf(USER.email) == -1 ){
+        openUrl(BASEURL);
+        return;
     }
 
     if( pname ){
@@ -1504,40 +1516,40 @@ firebase.auth().onAuthStateChanged(function(_user) {
 
 
 
-        $.getJSON(getFullUrl("products.json?t="+Date.now()), function(data){
-            PRODUCTS = data;
-            $('#page-content').removeClass('invisible');
-
-            if( ADMINS.indexOf(USER.email) !== -1 ) openUrl( getFullUrl("quan-ly") );
-            else openUrl(window.location.href);
-        });
-
-        // db.collection("product").get().then((querySnapshot) => {
-        //     querySnapshot.forEach((doc) => {
-        //         var prod = doc.data();
-        //         if( !prod.draft ){
-        //             if( !prod.liked ){
-        //                 prod.liked = Math.floor(Math.random() * 850) + 102;
-        //                 console.log("not like", prod);
-        //             }
-        //             PRODUCTS.push( prod );
-        //         }
-        //         for( var i=0; i<prod.imgs.length; i++ ){
-        //             prod.imgs[i] = getImgSrc(prod.imgs[i]);
-        //         }
-
-        //         if( prod.prices ){
-        //             for( var i=0; i<prod.prices.length; i++ ){
-        //                 prod.prices[i].img = getImgSrc(prod.prices[i].img);
-        //             }
-        //         }
-        //     });
-
+        // $.getJSON(getFullUrl("products.json?t="+Date.now()), function(data){
+        //     PRODUCTS = data;
         //     $('#page-content').removeClass('invisible');
-        //     openUrl(window.location.href);
-        // }).catch(function(error) {
-        //     console.log("Error getting products: ", error);
+
+        //     if( ADMINS.indexOf(USER.email) !== -1 ) openUrl( getFullUrl("quan-ly") );
+        //     else openUrl(window.location.href);
         // });
+
+        db.collection("product").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var prod = doc.data();
+                if( !prod.draft ){
+                    if( !prod.liked ){
+                        prod.liked = Math.floor(Math.random() * 850) + 102;
+                        console.log("not like", prod);
+                    }
+                    PRODUCTS.push( prod );
+                }
+                for( var i=0; i<prod.imgs.length; i++ ){
+                    prod.imgs[i] = getImgSrc(prod.imgs[i]);
+                }
+
+                if( prod.prices ){
+                    for( var i=0; i<prod.prices.length; i++ ){
+                        prod.prices[i].img = getImgSrc(prod.prices[i].img);
+                    }
+                }
+            });
+
+            $('#page-content').removeClass('invisible');
+            openUrl(window.location.href);
+        }).catch(function(error) {
+            console.log("Error getting products: ", error);
+        });
 
         $("body").on("click", ".openlink", function(e){
             e.preventDefault();
@@ -1665,11 +1677,11 @@ firebase.auth().onAuthStateChanged(function(_user) {
             }
         });
 
-        // $(".btn-openOrder").off().on("click", function(e){
-        //     e.preventDefault();
-        //     $(".search-drawer").addClass("search-drawer-open");
-        //     toggleMenuMobile(false);
-        // });
+        $(".btn-openOrder").off().on("click", function(e){
+            e.preventDefault();
+            $(".search-drawer").addClass("search-drawer-open");
+            toggleMenuMobile(false);
+        });
 
         $(".btn-viewMyOrder").on("click", function(e){
             var _sdt = $(this).siblings(".input-text").val();
