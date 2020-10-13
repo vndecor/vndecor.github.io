@@ -3057,6 +3057,12 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     z-index: 5;
     width: 100%;
 }
+.product-need-select{
+	display: none;position: absolute;
+	top:0;
+	left: 0;
+	z-index: 5;
+}
 .product-selected-image{
 	position: absolute;
     height: 100px;
@@ -3092,6 +3098,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	}
 	.product-form-product-template.onselect + .cover-product-form-product-template{z-index: 1006; opacity: 1;}
 	.product-form-product-template.onselect .product-selected-wrap{display: block; height: 88px; max-height: 88px;}
+	.product-form-product-template.onselect .product-need-select{display: block;}
 	.product-form-product-template.onselect .product-form__item--type .label span:not(.slVariant){visibility: hidden;}
 	.btn-close-product-selected-wrap{
 		position: absolute;
