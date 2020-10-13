@@ -3058,10 +3058,7 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     width: 100%;
 }
 .product-need-select{
-	display: none;position: absolute;
-	top:0;
-	left: 0;
-	z-index: 5;
+	display: none;
 }
 .product-selected-image{
 	position: absolute;
