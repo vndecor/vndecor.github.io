@@ -173,26 +173,7 @@
 	/*-----------------------------------------
 	 5. Setting Box dropdown
 	  -----------------------------------------*/
-	function setting_box(){
-		$(".setting-link").on("click", function() {
-			var stBox = $("#settingsBox");
-		  	stBox.toggleClass("active");
-
-		  	if(USER && USER.email){
-		  		stBox.find(".u-email").html(USER.email);
-                stBox.find(".not-loged").hide();
-                stBox.find(".loged").show();
-            }else{
-                stBox.find(".not-loged").show();
-                stBox.find(".loged").hide();
-            }
-		});
-		$("body").on("click", function(e) {
-			var t = $(e.target);
-			t.parents().is("#settingsBox") || t.parents().is(".setting-link") || t.is(".setting-link") || $("#settingsBox").removeClass("active")
-		});
-	}
-	setting_box();
+	  // removed
 	
 	/*-----------------------------------------
 	 6. Masonry Collection Banners
@@ -1444,3 +1425,5 @@
 	
 
 })(jQuery);
+
+document.addEventListener('contextmenu', event => event.preventDefault());
