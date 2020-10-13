@@ -1,4 +1,4 @@
-var BASEURL = "https://vndecor.github.io/";
+var BASEURL = "http://nheheu.com/";
 var CURRENCY = "₫";
 var PRODUCTS = [];
 var ORDERS = [];
@@ -183,7 +183,7 @@ var renderItem = function(obj, customclass){
         _html += '<div class="product-image">';
                 _html += '<img data-src="'+ getImgSrc(obj.imgs[0]) +'" class="lazyload" alt="'+ obj.name +'">';
                 if( obj.liked ) _html += '<div class="product-liked liked tooltip bs-tooltip-top" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"><i class="icon anm anm-heart"></i> '+ obj.liked +'</div></div>';
-                if( obj.soldout ) _html += '<span class="sold-out"><img src="https://vndecor.github.io/assets/images/soldout2.png" ></span>';
+                if( obj.soldout ) _html += '<span class="sold-out"><img src="http://nheheu.com/assets/images/soldout2.png" ></span>';
         _html += '</div>';
 
         _html += '<div class="product-details text-center">';
