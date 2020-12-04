@@ -123,14 +123,33 @@ button.btn-likeThisProduct .icon{
 .product-form .swatch label{text-transform: none;}
 .product-single__price{display: block;margin-right: 0;}
 .product-horizontal-thumb-mobile{
+	position: relative;
 	white-space: nowrap;
-	overflow-y: scroll;
+	overflow-x: scroll;
+    overflow-y: hidden;
+    padding-right: 60px;
 }
 .product-horizontal-thumb-mobile > a{
 	display: inline-block;
 	margin-right: 0px;
 	border: 2px solid #fff;
 }
+.product-horizontal-thumb{
+	position: relative;
+}
+.product-horizontal-thumb .morethump{
+	position: absolute;
+    top: 10px;
+    right: 0;
+    line-height: 59px;
+    width: 59px;
+    background: #ffffff;
+    text-align: center;
+    color: #696969;
+    opacity: 0.75;
+    font-size: 18px;
+}
+
 .product-horizontal-thumb-mobile a.active{border-color: #e95144;}
 .product-horizontal-thumb-mobile img{
 	width: 55px;

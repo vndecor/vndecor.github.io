@@ -2907,6 +2907,31 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
 	font-weight: bold;
 }
 
+@keyframes helpswap {
+	0%, 5%{
+		opacity: 1;
+		left: 70%
+	}
+	15%, 20%{
+		opacity: 1;
+		left: 30%;
+	}
+	21%{
+		opacity: 0;
+	}
+}
+
+.help-swap{
+	font-size: 32px;
+    color: #fff;
+    position: absolute;
+    z-index: 9999;
+    bottom: 42px;
+    left: 70%;
+    opacity: 0;
+    animation: helpswap 10s infinite;
+}
+
 .product-liked{
 	opacity: 1;
     top: 2px;

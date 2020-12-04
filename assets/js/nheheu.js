@@ -418,6 +418,24 @@
 
         product_thumb1();
 
+        //
+        if( imgs.length * 59 > window.innerWidth+30 ){
+            var _maxShow = Math.ceil(window.innerWidth/59);
+            var _more = Math.max(0, 1+imgs.length-_maxShow);
+            var $more = $('<div class="morethump">+'+_more+'</div>');
+            $wrap.find(".product-horizontal-thumb").append($more);
+            $wrap.find(".product-horizontal-thumb-mobile").on("scroll", function(event){
+                var _maxShow = Math.ceil((window.innerWidth+$(event.target).scrollLeft())/59);
+                var _more = Math.max(0, 1+imgs.length-_maxShow);
+                $more.html('+'+_more);
+            });
+            $more.on("click", function(){
+                $wrap.find(".product-horizontal-thumb-mobile").animate({
+                    scrollLeft: (imgs.length+1)*59+20
+                }, 1000);
+            });
+        }
+
         if( 0 ){
             $wrap.find('.popup-video').magnificPopup({
                 type: 'iframe', mainClass: 'mfp-zoom-in', removalDelay: 400, preloader: false, fixedContentPos: false
@@ -675,6 +693,7 @@
         });
 
         // mobile auto slide
+        var handswip = 1;
         var slmbOptions = {
             index: 0,
             bgOpacity: 0,
@@ -697,6 +716,12 @@
                 if( $this.attr("data-image") == _src ) $this.addClass("active");
                 else $this.removeClass("active");
             });
+
+            if( handswip ){
+                $wrap.find(".help-swap").remove();
+            }
+
+            handswip = 1;
         });
 
         sliderMobile.listen('preventDragEvent', function(e, isDown, preventObj) {
@@ -705,6 +730,7 @@
 
         $wrap.find(".product-thumb-style1").on("click mouseenter", "a", function(e){
             e.preventDefault();
+            handswip = 0;
             var $this = $(this);
             var _src = $this.attr("data-image");
             if( _src ){
@@ -713,6 +739,7 @@
                 var _index = PRODUCT.imgs.indexOf(_src);
                 if( _index >=0 && _index < PRODUCT.imgs.length ) sliderMobile.goTo(_index);
             }
+
         });
 
         /*========== RENDER CONTENT ===============================*/ 
