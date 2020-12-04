@@ -771,7 +771,12 @@
             _review = "<h3>Chưa có nhận xét nào</h3>";
         }
 
-        $(".spr-reviews .review-inner").html( _review );
+        $(".spr-reviews .review-inner").html( _review ).on("click", ".spr-review-content-img", function(){
+            var _src = $(this).attr("src");
+            if( _src ){
+                showPopupImg(_src);
+            }
+        });
 
         if( obj.review && obj.review.length ){
             var _total = 0;
@@ -976,6 +981,20 @@
                 $mes.remove();
             });
             return false;
+        });
+    };
+
+    var showPopupImg = function(_src){
+        var _html = '<div class="popup-img"><div><img src="'+ _src +'"><button class="close-popup"><i class="fa fa-times" aria-hidden="true"></i></button></div></div>';
+        var $elm = $(_html);
+        $("body").append($elm);
+
+        $elm.find("img").css({
+            'max-width': window.innerWidth+'px',
+            'max-height': (window.innerHeight-110)+'px'
+        });
+        $elm.on("click", function(){
+            $("body").children(".popup-img").remove();
         });
     };
 

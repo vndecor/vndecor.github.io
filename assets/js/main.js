@@ -940,21 +940,21 @@
 	/*-------------------------------
 	 20.Scroll Top
 	---------------------------------*/
-	function scroll_top(){
-		$("#site-scroll").on("click", function() {
-			$("html, body").animate({ scrollTop: 0 }, 1000);
-			return false;
-		}); 
-	}
-	scroll_top();
+	// function scroll_top(){
+	// 	$("#site-scroll").on("click", function() {
+	// 		$("html, body").animate({ scrollTop: 0 }, 1000);
+	// 		return false;
+	// 	}); 
+	// }
+	// scroll_top();
 	
-	$(window).scroll(function(){    
-		if($(this).scrollTop()>300){
-		  $("#site-scroll").fadeIn();
-		} else {
-		   $("#site-scroll").fadeOut();
-		}
-	});
+	// $(window).scroll(function(){    
+	// 	if($(this).scrollTop()>300){
+	// 	  $("#site-scroll").fadeIn();
+	// 	} else {
+	// 	   $("#site-scroll").fadeOut();
+	// 	}
+	// });
 	
 	/*-------------------------------
 	  21. Height Product Grid Image
