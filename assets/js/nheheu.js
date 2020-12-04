@@ -288,8 +288,15 @@
             var $wrapSelect = $wrap.find(".product-form-product-template");
             $wrapSelect.find(".product-form__item--type input").prop('checked', false);
             $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
-            $wrapSelect.find(".slVariant").empty();
+            $wrapSelect.find(".slVariant").html("Chọn 1 loại dưới đây");
 
+            if( _type === 2 ){
+                $wrapSelect.find(".buy-it-btn").show();
+                $wrapSelect.find(".btn-addToCartMain").hide();
+            }else{
+                $wrapSelect.find(".buy-it-btn").hide();
+                $wrapSelect.find(".btn-addToCartMain").show();
+            }
 
             $wrapSelect.addClass("onselect");
         };
@@ -507,6 +514,11 @@
                     _to = $('.site-header__cart > .site-cart-count').offset(),
                     _num = $wrap.find(".product-form__input.qty").val();
 
+                if( window.innerWidth < 768 && !PRODUCT.prices ){
+                    var _fromOffset = $wrap.find(".mobile-buyit .btn-addtocart").offset();
+                    _from = {top: _fromOffset.top-80, left: window.innerWidth*4/12-15};
+                }
+
                 $eff.html(_num).css({top: _from.top-4, left: _from.left-10}).appendTo('body');
 
                 $eff.delay(100).animate({
@@ -518,7 +530,7 @@
                     updateCartProd(pid, _num, true);
                     setTimeout(function(){
                         showMessage("Thêm vào giỏ thành công", "success");
-                    }, 800);
+                    }, 300);
                 });
 
                 setTimeout(function(){
@@ -597,10 +609,26 @@
             }
         });
 
-        $wrap.find(".mobile-buyit").off().on("click", function(){
-            // $wrap.find(".product-form-product-template").addClass("onselect");
-            showSelectMobile();
-            return false;
+        $wrap.find(".mobile-buyit .btn-addtocart").off().on("click", function(e){
+            e.preventDefault();
+            if( !PRODUCT.soldout ){
+                if( PRODUCT.prices ){
+                    showSelectMobile(1);
+                }else{
+                    $wrap.find(".btn-addToCartMain").trigger("click");
+                }
+            }
+        });
+
+        $wrap.find(".mobile-buyit .btn-buynow").off().on("click", function(e){
+            e.preventDefault();
+            if( !PRODUCT.soldout ){
+                if( PRODUCT.prices ){
+                    showSelectMobile(2);
+                }else{
+                    $wrap.find(".btn-buyNow").trigger("click");
+                }
+            }
         });
 
         $wrap.find(".cover-product-form-product-template, .btn-close-product-selected-wrap").off().on("click", function(e){
