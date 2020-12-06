@@ -3322,6 +3322,28 @@ input.checkbox { height:auto; vertical-align:middle; padding:0; box-shadow:none;
     right: 0;
     background: #696969;
 }
+.mb-types{overflow: hidden;}
+.mb-types img,
+.mb-types .last-item{
+	width: 45px;
+	height: 45px;
+	margin-right: 8px;
+	float: left;
+	position: relative;
+}
+.mb-select-item{cursor: pointer;}
+.mb-types .last-item span{
+	position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 45px;
+    width: 45px;
+    background: #ffffff;
+    text-align: center;
+    color: #696969;
+    opacity: 0.75;
+    font-size: 18px;
+}
 
 .header .btn-back{min-width: 35px; }
 .header .btn-back .icon:nth-child(1){display: none;}
