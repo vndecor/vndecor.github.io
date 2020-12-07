@@ -1,9 +1,9 @@
 (function(sgdfe){
     var BASEURL = "http://trangtrihomex.com/";
-    if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
-        location.replace("https:"+location.href.substring(location.protocol.length));
-        return;
-    }
+    // if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
+    //     location.replace("https:"+location.href.substring(location.protocol.length));
+    //     return;
+    // }
     if( location.hostname !== "localhost" ) console.log = function(){};
     var CURRENCY = "₫";
     var PRODUCTS = [];
