@@ -1,5 +1,5 @@
 (function(sgdfe){
-    var BASEURL = "https://trangtrihomex/";
+    var BASEURL = "https://trangtrihomex.com/";
     if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
         location.replace("https:"+location.href.substring(location.protocol.length));
         return;
