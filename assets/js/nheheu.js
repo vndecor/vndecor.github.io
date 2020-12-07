@@ -1,5 +1,5 @@
 (function(sgdfe){
-    var BASEURL = "https://nheheu.com/";
+    var BASEURL = "https://trangtrihomex/";
     if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
         location.replace("https:"+location.href.substring(location.protocol.length));
         return;
@@ -788,7 +788,7 @@
                 if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
                 _review += '</div>';
 
-                if( obj.review[i].reply ) _review += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
+                if( obj.review[i].reply ) _review += '<div class="spr-review-reply"><h3 class="spr-review-header-title">HomeX <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.review[i].reply +'</p></div>';
 
                 _review += '</div>';
             }
@@ -825,7 +825,7 @@
                 _question += '</div><div class="spr-review-content">';
                 _question += '<p class="spr-review-content-body">'+ obj.asks[i].content +'</p>';
                 _question += '</div>';
-                if( obj.asks[i].reply ) _question += '<div class="spr-review-reply"><h3 class="spr-review-header-title">Nhẹ Hều <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.asks[i].reply +'</p></div>';
+                if( obj.asks[i].reply ) _question += '<div class="spr-review-reply"><h3 class="spr-review-header-title">HomeX <span class="badge badge-info">Care</span></h3><p class="spr-review-content-body">'+ obj.asks[i].reply +'</p></div>';
                 _question += '</div>';
             }
 
@@ -1071,7 +1071,7 @@
     };
 
     var renderHomePage = function(_url){
-        document.title = "Mua Sắm Phụ Kiện Trang Trí, Quà Tặng - Nhẹ Hều";
+        document.title = "Mua Sắm Phụ Kiện Trang Trí, Quà Tặng - HomeX";
         homeSlider();
 
         var filter = getQueryVariable("t", _url);
@@ -1102,7 +1102,7 @@
             return;
         }
 
-        document.title = PRODUCT.name + " - Nhẹ Hều";
+        document.title = PRODUCT.name + " - HomeX";
 
         renderProd(PRODUCT);
 
@@ -1146,7 +1146,7 @@
     };
 
     var renderCartPage = function(){
-        document.title = "Giỏ Hàng - Nhẹ Hều";
+        document.title = "Giỏ Hàng - HomeX";
 
         var $wrap = $(".cart__list");
         var prods = getMyCart();
@@ -1323,7 +1323,7 @@
             openUrl(BASEURL); return;
         }
 
-        document.title = "Đơn Hàng - Nhẹ Hều";
+        document.title = "Đơn Hàng - HomeX";
 
         var myorders = [];
 
@@ -1389,7 +1389,7 @@
     };
 
     var renderPubPage = function(type){
-        document.title = "Thống Kê Tiếp Thị Liên Kết - Nhẹ Hều";
+        document.title = "Thống Kê Tiếp Thị Liên Kết - HomeX";
         if( !type ) type === 'today';
 
         var _now = new Date();
