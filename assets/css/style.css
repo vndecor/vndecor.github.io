@@ -213,7 +213,7 @@ label { margin-bottom:3px; }
 .header-1 { border-bottom:1px solid #eeeeee; position: relative; z-index: 100; }
 
 .logo { margin:0; }
-.logo img { display:inline-block; height:40px; }
+.logo img { display:inline-block; height:27px; }
 
 .iconset .icon { font-size:18px; vertical-align:middle; text-decoration:none; }
 .iconset { display:inline-block; position:relative; color:#030505; height:30px; line-height:30px; text-align:center; padding:0 9px; cursor:pointer; }
