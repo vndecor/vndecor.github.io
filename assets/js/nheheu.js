@@ -101,9 +101,10 @@
     var getImgSrc = function(_url){
         if( _url.indexOf("daohoa.github.io") == -1 ){
             var arr = _url.split("/");
-            return "https://daohoa.github.io/nheheu/imgs/"+arr[ arr.length-1 ];
+            _url = "http://trangtrihomex.com/assets/images/nheheu/imgs/"+arr[ arr.length-1 ];
         }
-        return _url;
+
+        return _url.replace("https://daohoa.github.io/nheheu/", "http://trangtrihomex.com/assets/images/nheheu/");
     };
 
     var copyString = function(str){
@@ -420,7 +421,7 @@
             _gallery += '<a data-image="'+ getImgSrc(imgs[i])  +'" aria-hidden="true" tabindex="-1"><img src="'+ getImgSrc(imgs[i]) +'"/></a>';
 
             var itemSl = {
-                src : imgs[i],
+                src : getImgSrc(imgs[i]),
                 w: 600,
                 h: 600
             };
@@ -437,7 +438,7 @@
             items.push(itemSl);
         }
 
-        $wrap.find(".zoompro").attr("src", imgs[0]);
+        $wrap.find(".zoompro").attr("src", getImgSrc(imgs[0]));
 
         $wrap.find(".product-thumb-style1").html(_gallery);
 
@@ -447,7 +448,7 @@
         if( imgs.length * 59 > windowWidth+30 ){
             var _maxShow = Math.ceil(windowWidth/59);
             var _more = Math.max(0, 1+imgs.length-_maxShow);
-            var $more = $('<div class="morethump">+'+_more+'</div>');
+            var $more = $('<div class="morethump d-lg-none">+'+_more+'</div>');
             $wrap.find(".product-horizontal-thumb").append($more);
             $wrap.find(".product-horizontal-thumb-mobile").on("scroll", function(event){
                 var _maxShow = Math.ceil((windowWidth+$(event.target).scrollLeft())/59);
@@ -506,49 +507,8 @@
                         // Không có mặc định, bắt phải chọn
                         // pid = PRODUCT.id+'-'+PRODUCT.prices[0].id;
                         showMessage("Hãy chọn 1 loại hàng");
-                        // if( window.innerWidth >= 768 ){
-                        //     showMessage("Hãy chọn 1 loại hàng");//, "d-none d-md-block"
-                        // }else{
-                        //     setTimeout(function(){
-                        //         showMessage("Hãy chọn 1 loại hàng");//, "d-none d-md-block"
-                        //     }, 1000);
-                        // }
-
-                        return;
-                        
-                        var $wrapSelect = $wrap.find(".product-form-product-template");
-                        if( !$wrapSelect.hasClass("onselect") ){
-                            // var _top = $wrapSelect.offset().top - $(window).scrollTop() - 88 - 15;
-                            // $wrapSelect.css('top', _top );
-
-                            if( $wrapSelect.find("input:checked").length){
-                                $wrapSelect.children(".product-need-select").addClass("invisible");
-                                $wrapSelect.children(".product-selected-wrap").removeClass("invisible");
-                            }else{
-                                $wrapSelect.children(".product-need-select").removeClass("invisible");
-                                $wrapSelect.children(".product-selected-wrap").addClass("invisible");
-                            }
-
-                            $wrapSelect.addClass("onselect");
-                            // setTimeout(function(){
-                            //     $wrapSelect.addClass("onselect");
-                            //     setTimeout(function(){
-                            //         if( _top+$wrapSelect.innerHeight() > $(window).height() ){
-                            //             var _nTop = $(window).height()-$wrapSelect.innerHeight();
-                            //             $wrapSelect.css("top", _nTop);
-                            //             $("html, body").animate({ scrollTop: "+="+ Math.abs(_nTop-_top) }, 300);
-                            //         }else if( _top < 60 ){
-                            //             $wrapSelect.css("top", 60);
-                            //             $("html, body").animate({ scrollTop: "-="+ Math.abs(_top - 60) }, 300);
-                            //         }
-                            //     }, 1000);
-                            // }, 50);
-                        }
                         return;
                     }
-
-                    
-
                 }else{
                     pid = PRODUCT.id;
                 }
@@ -580,15 +540,7 @@
                     $eff.addClass("onmoving");
                 }, 150);
 
-                // showLoading(true, 1);
-                // addToCart(pid, $("#Quantity").val());
-
-                // $wrap.find(".product-form-product-template").removeClass("onselect");
-                // updateCartProd(pid, $("#Quantity").val());
-
-                // setTimeout(function(){
-                //     $("#minicart-drawer").modal('show');
-                // }, 100);
+                pushNotifyApp("Thêm vào giỏ "+PRODUCT.name);
             }
         });
 
@@ -782,7 +734,7 @@
         var _review = "";
         if( obj.review ){
             for( var i=0; i< obj.review.length; i++ ){
-                _review += '<div class="spr-review"><img src="https://daohoa.github.io/nheheu/ava/'+  avid[Math.floor(Math.random() * avid.length)] +'.jpg" class="avatar"><div class="spr-review-header"> <div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div> <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
+                _review += '<div class="spr-review"><img src="http://trangtrihomex.com/assets/images/nheheu/ava/'+  avid[Math.floor(Math.random() * avid.length)] +'.jpg" class="avatar"><div class="spr-review-header"> <div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div> <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
                 _review += '</div><div class="spr-review-content">';
                 _review += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
                 if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
