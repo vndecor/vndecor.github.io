@@ -1,9 +1,9 @@
 (function(sgdfe){
-    var BASEURL = "http://trangtrihomex.com/";
-    // if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
-    //     location.replace("https:"+location.href.substring(location.protocol.length));
-    //     return;
-    // }
+    var BASEURL = "https://trangtrihomex.com/";
+    if ( location.hostname !== "localhost" && location.protocol !== 'https:') {
+        location.replace("https:"+location.href.substring(location.protocol.length));
+        return;
+    }
     if( location.hostname !== "localhost" ) console.log = function(){};
     var CURRENCY = "₫";
     var PRODUCTS = [];
@@ -101,10 +101,10 @@
     var getImgSrc = function(_url){
         if( _url.indexOf("daohoa.github.io") == -1 ){
             var arr = _url.split("/");
-            _url = "http://trangtrihomex.com/assets/images/nheheu/imgs/"+arr[ arr.length-1 ];
+            _url = "https://trangtrihomex.com/assets/images/nheheu/imgs/"+arr[ arr.length-1 ];
         }
 
-        return _url.replace("https://daohoa.github.io/nheheu/", "http://trangtrihomex.com/assets/images/nheheu/");
+        return _url.replace("https://daohoa.github.io/nheheu/", "https://trangtrihomex.com/assets/images/nheheu/");
     };
 
     var copyString = function(str){
@@ -734,7 +734,7 @@
         var _review = "";
         if( obj.review ){
             for( var i=0; i< obj.review.length; i++ ){
-                _review += '<div class="spr-review"><img src="http://trangtrihomex.com/assets/images/nheheu/ava/'+  avid[Math.floor(Math.random() * avid.length)] +'.jpg" class="avatar"><div class="spr-review-header"> <div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div> <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
+                _review += '<div class="spr-review"><img src="https://trangtrihomex.com/assets/images/nheheu/ava/'+  avid[Math.floor(Math.random() * avid.length)] +'.jpg" class="avatar"><div class="spr-review-header"> <div class="spr-review-wrap"><h3 class="spr-review-header-title">'+ obj.review[i].name +'</h3><span class="spr-review-header-certify"><i class="anm anm-shield-check" aria-hidden="true"></i> Chứng nhận đã mua hàng</span></div> <span class="product-review spr-starratings spr-review-header-starratings"><span class="reviewLink">'+ renderStar(obj.review[i].vote) +'</span></span>';
                 _review += '</div><div class="spr-review-content">';
                 _review += '<p class="spr-review-content-body">'+ obj.review[i].content +'</p>';
                 if( obj.review[i].img ) _review += '<img class="spr-review-content-img lazyloaded" src="'+ obj.review[i].img +'">';
