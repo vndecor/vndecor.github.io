@@ -291,7 +291,7 @@
         var showSelectMobile = function(_type){
             var $wrapSelect = $wrap.find(".product-form-product-template");
             $wrapSelect.find(".product-form__item--type input").prop('checked', false);
-            $wrapSelect.find(".product-selected-image").attr("src", PRODUCT.imgs[0]);
+            $wrapSelect.find(".product-selected-image").attr("src", getImgSrc(PRODUCT.imgs[0]));
             $wrapSelect.find(".slVariant").html("Chọn 1 loại dưới đây");
 
             if( _type === 2 ){
@@ -1707,6 +1707,7 @@
             checkPublisher();
             //
 
+            pushNotifyApp("Lượt xem mới");
 
 
             $.getJSON(getFullUrl("products.json?t="+Date.now()), function(data){
