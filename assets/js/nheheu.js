@@ -976,7 +976,7 @@
     };
 
     var pushNotifyApp = function(_s){
-        $.get("https://api.telegram.org/bot1226370521:AAE66qXUiGPGE45Chsm0L5XPy0UPdXacn34/sendMessage?chat_id=@fepab&text="+encodeURI(_s), function(data){});
+        if( BASEURL.indexOf("localhost") === -1 ) $.get("https://api.telegram.org/bot1226370521:AAE66qXUiGPGE45Chsm0L5XPy0UPdXacn34/sendMessage?chat_id=@fepab&text="+encodeURI(_s), function(data){});
     };
 
     var homeSlider = function(){
