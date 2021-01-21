@@ -541,6 +541,7 @@
                 }, 150);
 
                 pushNotifyApp("Thêm vào giỏ "+PRODUCT.name);
+                fbq('track', 'AddToCart');
             }
         });
 
@@ -601,6 +602,8 @@
                 setTimeout(function(){
                     openUrl( getFullUrl("cart") );
                 }, 100);
+
+                fbq('track', 'AddToCart');
             }
         });
 
@@ -1249,6 +1252,7 @@
                         updateCartProd("EMPTY");
                         USERPHONE = _phone;
                         openUrl( getFullUrl("order") );
+                        fbq('track', 'InitiateCheckout');
                     }).catch(function(error) {
                         $("#cartCheckout").next().show().delay( 5000 ).fadeOut( 300 ).children(".cart_notify-inner").html("Lỗi hệ thống, vui lòng thử lại");
                     });
