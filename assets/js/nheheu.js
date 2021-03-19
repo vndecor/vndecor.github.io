@@ -533,6 +533,9 @@
                     updateCartProd(pid, _num, true);
                     setTimeout(function(){
                         showMessage("Thêm vào giỏ thành công", "success");
+                        setTimeout(function(){
+                            openUrl( getFullUrl("cart") );
+                        }, 3000);
                     }, 300);
                 });
 
